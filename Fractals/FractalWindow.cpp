@@ -1,12 +1,35 @@
 #include "FractalWindow.h"
 
+#include "BoxFilter.h"
+#include "MitchellNetravaliFilter.h"
 #include "FractalJob.h"
 #include "Mandelbrot.h"
+#include "Julia.h"
+
+#include "ObjectFactoryManager.h"
+
+#include <qerrormessage.h>
+
+template<class T>
+T thresholding(T val, T min, T max)
+{
+	return val < min ? min : val  > max ? max : val;
+}
+
+std::vector<std::string> FractalWindow::myFractalNames;
 
 FractalWindow::FractalWindow(QWidget *parent)
 	: QMainWindow(parent)
+	//,myTypeFractal(this)
 {
+	ILogger::setLogger(new ConsoleLog(std::cout));	
+
+	initFractalNames();
+
 	ui.setupUi(this);
+
+	myTypeFractal.setFractalWindow(this);
+	myTypeFractal.setFractalNames(myFractalNames);
 
 	myParamsByFractal["Mandelbrot"] = Parameters();
 	myCurrentParameters = &myParamsByFractal["Mandelbrot"];
@@ -39,6 +62,7 @@ FractalWindow::FractalWindow(QWidget *parent)
 
 	//ui.myLabelImage->setGeometry(QRect(0, 0, out.getWidth(), out.getHeight()));
 	//ui.myLabelImage->setMinimumSize(out.getWidth(), out.getHeight());
+	QErrorMessage::qtHandler();
 
 	connect(ui.myLabelImage, SIGNAL(signalRightButtonDrawFractal(int, int, int, int)), 
 		this, SLOT(rightButtonDrawFractal(int, int, int, int)));
@@ -48,11 +72,81 @@ FractalWindow::FractalWindow(QWidget *parent)
 	connect(ui.actionZoomPlus, SIGNAL(triggered()), this, SLOT(zoomPlus()));
 	connect(ui.actionZoomMinus, SIGNAL(triggered()), this, SLOT(zoomMinus()));
 
-	myFractal = std::shared_ptr<Mandelbrot>(new Mandelbrot);
-	myProgress = ProgressDialog::ptr(new ProgressDialog);
-	myFractal->addAdvanceListener(myProgress.get());
+	connect(ui.actionTrace_fractal, SIGNAL(triggered()), this, SLOT(traceFractal()));
 
-	computeFractal(*myCurrentParameters);
+	//myFractal = std::shared_ptr<Fractal>(new Julia);
+	myProgress = ProgressDialog::ptr(new ProgressDialog);
+	//myFractal->addAdvanceListener(myProgress.get());
+	//myFractal->addComputationEndsListener(this);
+
+	myProgress->show();
+	computeFractal(*myCurrentParameters);	
+}
+
+void FractalWindow::initState(GuiState::ptr state)
+{
+	state->setFractalWindow(this);
+}
+
+void FractalWindow::setGuiState(GuiState::ptr state)
+{
+	//initState(state);
+	while (popState());
+	pushState(state);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Ajoute un nouvel état de jeu par dessus le précédent (intérêt dans le cas
+// d'un menu qui apparait en jeu. Le jeu est dessiné derrière, soit 2 états
+// affichés, mais seul le premier capte les évènements
+///////////////////////////////////////////////////////////////////////////////
+void FractalWindow::pushState(GuiState::ptr state)
+{
+	initState(state);
+	myStates.push_back(state);
+	state->init();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+bool FractalWindow::popState()
+{
+	if (myStates.size() != 0)
+	{
+		myStates.back()->free();
+		myStates.pop_back();
+
+		return true;
+	}
+
+	return false;
+}
+
+bool FractalWindow::popState(GuiState::ptr state)
+{
+	std::vector<GuiState::ptr>::iterator it = myStates.erase(
+		std::find(myStates.begin(), myStates.end(), state));
+
+	return !(it == myStates.end());
+}
+
+void FractalWindow::initFractalNames()
+{
+	if (myFractalNames.size() != 0)
+		return;
+
+#define USE_FIRST_ELEMENT(x, y)  x,
+#define USE_SECOND_ELEMENT(x, y) y,
+
+	const char *STRING[] =
+	{
+		MYLIST(USE_SECOND_ELEMENT)
+	};
+
+	for (int i = 0; i < FractalNames::END; i++)
+	{
+		myFractalNames.push_back(STRING[i]);
+	}
 	
 }
 
@@ -88,19 +182,32 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 
 void FractalWindow::computeFractal(const Parameters& params)
 {
+	std::string fractal = myCurrentParameters->getString("fractal", "Mandelbrot");
+	auto factory = ObjectFactoryManager<Fractal>::getInstance()->getFactory(fractal);
+	setFractal(factory->create());
+
 	int width = myCurrentParameters->getInt("sizeX", 800);
 	int height = myCurrentParameters->getInt("sizeY", 600);
 
-	myArray.setSize(width, height);
-	myFractal->setArray(myArray);
+	//old
+	//myArray.setSize(width, height);
+	//myFractal->setArray(myArray);
 
-	std::vector<std::shared_ptr<Job> > jobs;
+	myImage = Image::ptr(new Image(width, height));
+	myImage->setFilter(ReconstructionFilter::ptr(new MitchellNetravaliFilter(2., 2., 0.33, 0.33)));
+	myFractal->setImage(myImage);
+	myFractal->compute(params, std::bind(&FractalWindow::computationEnds, this));
+	
+	//old
+	//std::vector<std::shared_ptr<Job> > jobs;
 
-	std::shared_ptr<Job> job(new FractalJob(myFractal, params, width, height));
-	jobs.push_back(job);
-	myManager.addJobs(jobs, std::bind(&FractalWindow::computationEnds, this));
-	//myManager.join();
+	//std::shared_ptr<Job> job(new FractalJob(myFractal, params, width, height));
+	//jobs.push_back(job);
+	//myManager.addJobs(jobs, std::bind(&FractalWindow::computationEnds, this));
+	//myManager.join(); //was commented
 
+
+	//old
 	//Mandelbrot frac;
 	//Array2D<Color> out;
 	//out.setSize(width, height);
@@ -122,13 +229,22 @@ void FractalWindow::computeFractal(const Parameters& params)
 
 void FractalWindow::affectImage()
 {
-	QImage image(myArray.getWidth(), myArray.getHeight(), QImage::Format_RGB32);
-	for (int i = 0; i < myArray.getWidth(); i++)
+	myImage->postProcessColor();
+	Array2D<Pixel>& array = myImage->getPixels();
+
+	QImage image(array.getWidth(), array.getHeight(), QImage::Format_RGB32);
+	for (int i = 0; i < array.getWidth(); i++)
 	{
-		for (int j = 0; j < myArray.getHeight(); j++)
+		for (int j = 0; j < array.getHeight(); j++)
 		{
-			const Color& col = myArray(i, j);
-			image.setPixelColor(i, j, QColor(col.r * 255., col.g * 255., col.b * 255.));
+			//const Color& col = myArray(i, j);
+			const Pixel& col = array(i, j);
+			//if (col.myColor.r > 1. || col.myColor.g > 1. || col.myColor.b > 1.)
+			//	std::cout << col.myColor << std::endl;
+
+			image.setPixelColor(i, j, QColor(thresholding<int>(col.myColor.r * 255., 0, 255), 
+											 thresholding<int>(col.myColor.g * 255., 0, 255), 
+											 thresholding<int>(col.myColor.b * 255., 0, 255)));
 		}
 	}
 	QPixmap pixmap = QPixmap::fromImage(image);
@@ -138,6 +254,7 @@ void FractalWindow::affectImage()
 
 void FractalWindow::computationEnds()
 {
+	std::cout << "fini" << std::endl;
 	myProgress->hide();
 	affectImage();
 }
@@ -196,6 +313,25 @@ void FractalWindow::zoomMinus()
 
 	myProgress->show();
 
+	computeFractal(*myCurrentParameters);
+}
+
+void FractalWindow::setFractal(Fractal::ptr fractal)
+{
+	myFractal = fractal;
+
+	myFractal->addAdvanceListener(myProgress.get());
+	myFractal->addComputationEndsListener(this);
+
+	//Set filter, image
+	//myImage = Image::ptr(new Image(width, height));
+	//myImage->setFilter(ReconstructionFilter::ptr(new MitchellNetravaliFilter(2., 2., 0.33, 0.33)));
+	//myFractal->setImage(myImage);
+}
+
+void FractalWindow::traceFractal()
+{
+	myProgress->show();
 	computeFractal(*myCurrentParameters);
 }
 

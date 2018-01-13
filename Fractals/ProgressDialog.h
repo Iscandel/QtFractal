@@ -20,7 +20,7 @@ public:
 	~ProgressDialog();
 
 public slots:
-void computationAdvances(int perc);// override;
+	void computationAdvances(int perc);// override;
 
 public:
 	void computationAdvances2(int perc);// override;

@@ -1,6 +1,6 @@
 #include "MitchellNetravaliFilter.h"
 
-#include "ObjectFactoryManager.h"
+//#include "ObjectFactoryManager.h"
 
 MitchellNetravaliFilter::MitchellNetravaliFilter(double radiusX, double radiusY, double B, double C)
 :ReconstructionFilter(radiusX, radiusY)
@@ -56,4 +56,4 @@ double MitchellNetravaliFilter::func1D(double val)
 	}
 }
 
-RT_REGISTER_TYPE(MitchellNetravaliFilter, ReconstructionFilter)
+//RT_REGISTER_TYPE(MitchellNetravaliFilter, ReconstructionFilter)

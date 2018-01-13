@@ -71,7 +71,14 @@
     <addaction name="actionSave_image"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuFractal">
+    <property name="title">
+     <string>Fractal</string>
+    </property>
+    <addaction name="actionTrace_fractal"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuFractal"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -84,6 +91,7 @@
    <addaction name="actionConfigure_fractal"/>
    <addaction name="actionZoomPlus"/>
    <addaction name="actionZoomMinus"/>
+   <addaction name="actionTrace_fractal"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave_image">
@@ -114,6 +122,11 @@
   <action name="actionZoomMinus">
    <property name="text">
     <string>Zoom -</string>
+   </property>
+  </action>
+  <action name="actionTrace_fractal">
+   <property name="text">
+    <string>Trace fractal</string>
    </property>
   </action>
  </widget>

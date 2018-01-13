@@ -6,9 +6,9 @@
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
 JobManager::JobManager()
-:myThreadNumber(1)
+:myThreadNumber(8)
 ,myNumberRunning(0)
-,myIsShowProgress(false)
+,myIsShowProgress(true)
 ,myJobsDone(0)
 ,myCoeff(0)
 ,myShowValue(0.1)
@@ -87,6 +87,8 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 
 	myTotalJobs = myJobs.size();
 
+	myIsShowProgress &= myTotalJobs > 2 ? true : false;
+
 	myEndCallback = callback;
 
 	//Single threaded processing
@@ -108,6 +110,8 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 
 		//join();
 
+		//jobsDone();
+
 		//callback();
 	//}
 
@@ -118,6 +122,8 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 ///////////////////////////////////////////////////////////////////////////////
 void JobManager::initJobs()
 {
+	myCoeff = 0;
+	myJobsDone = 0.;
 	myNumberRunning = myThreadNumber;
 
 	if (myThreads.size() != 0)
@@ -180,14 +186,14 @@ void JobManager::jobRun()
 	
 			job = myJobs.back();
 			myJobs.pop_back();
-
-			if (myIsShowProgress)
-			{
-				showProgress();
-			}
 		}
 
 		job->run();
+
+		if (myIsShowProgress)
+		{
+			showProgress();
+		}
 	}
 
 
@@ -202,8 +208,8 @@ void JobManager::jobRun()
 void JobManager::jobsDone()
 {
 	//myThreads.clear();
-
-	myEndCallback();
+	emit signalJobsDone();
+	//myEndCallback();
 }
 
 void JobManager::showProgress()
@@ -213,7 +219,14 @@ void JobManager::showProgress()
 
 	if ((double)myJobsDone / myTotalJobs > myShowValue * myCoeff)
 	{
-		ILogger::log() << myShowValue * myCoeff * 100 << "%\n";
+		double perc = myShowValue * myCoeff * 100;
+		dispatchComputationAdvances(perc);
+		ILogger::log() << perc << "%\n";
 		myCoeff++;
 	}
+}
+
+void JobManager::dispatchComputationAdvances(int perc)
+{
+	emit signalComputationAdvances(perc);
 }

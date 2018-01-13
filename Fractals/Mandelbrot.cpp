@@ -1,6 +1,6 @@
 #include "Mandelbrot.h"
 
-
+#include "ObjectFactoryManager.h"
 
 Mandelbrot::Mandelbrot()
 :myIsLogLog(true)
@@ -14,7 +14,7 @@ Mandelbrot::~Mandelbrot()
 {
 }
 
-void Mandelbrot::compute(const Parameters& params)//, Array2D<Color>& out)
+void Mandelbrot::computeFull(const Parameters& params)//, Array2D<Color>& out)
 {
 	Array2D<Color>& out = *myArray;
 
@@ -114,6 +114,71 @@ void Mandelbrot::compute(const Parameters& params)//, Array2D<Color>& out)
 	}
 }
 
+Color Mandelbrot::computePixel(double a, double b, const Parameters& params)//, Array2D<Color>& out)
+{
+	//Array2D<Color>& out = *myArray;
+
+	//const double XMIN = params.getDouble("xmin", -2.);
+	//const double XMAX = params.getDouble("xmax", 2.);
+	//const double YMIN = params.getDouble("ymin", -2.);
+	//const double YMAX = params.getDouble("ymax", 2.);
+	myIsLogLog = params.getBool("loglog", false);
+	myMaxIt = params.getInt("maxIter", 100);
+	//int width = out.getWidth();
+	//int height = out.getHeight();
+
+	//for (int i = 0; i < 6;i++)          //On sauvegarde le tableau de couleurs de l'objet Infos
+	//	Couleurs[i] = Infos.getCouleur(i);
+
+	//BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
+	////création de l’image au moyen de la classe BufferedImage
+	//WritableRaster raster = image.getRaster();
+	////appel de la méthode getRaster() afin d’obtenir un objet de type WritableRaster, vous    
+	////permettant d’accéder aux pixels de l’image et de les modifier.
+	//ColorModel model = image.getColorModel(); //renvoie le modèle de couleur de l’image       
+	//										  //mémorisée.
+
+	//this.maxIterations = Infos.getIterations();    //Sauvegarde du nombre max d'itérations
+	//fractalColor = Couleurs[5];                   //Couleur de l'Ensemble
+	//int argb = fractalColor.getRGB();             //Renvoie le code RGB de la couleur
+	//Object colorData = model.getDataElements(argb, null);
+	//this.typeRepresentation = Infos.getTypeRepresentation();
+	//System.out.println(Infos.getTypeRepresentation());
+
+	//On calcule le point courant. Il est situé entre XMIN et XMAX (resp. YMIN et YMAX),
+	//et il y a largeur points entre XMIN et XMAX (resp. longueur points entre YMIN etYMAX)
+	//double a = XMIN + x * (XMAX - XMIN) / width;
+	//double b = YMIN + y * (YMAX - YMIN) / height;
+	double preciseIter;
+	int iterations;
+	if (!escapesToInfinity(a, b, iterations, preciseIter))
+	{
+		return Color(1., 0., 0.);
+	}
+	else  //Si ça ne diverge pas
+	{
+		//if (typeRepresentation == "Dégradé de gris") //On regarde le mode de représentation graphique choisi -Gris ici-
+		{
+			double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur
+			int rgb;
+
+			if (!myIsLogLog)
+				rgb = (int)(iterations*coeff);
+			else  //Adoucissement log-log
+			{
+				double fin = preciseIter - iterations;
+				double coeff2 = fin *coeff;
+				rgb = (int)((iterations*coeff) + coeff2);
+				rgb = rgb > 255 ? 255 : rgb;
+			}
+
+			/*On détermine la couleur pour le point en cours de calcul,
+			dépendante du nombre d'itérations*/
+			return Color(rgb / 255.);
+		}
+	}
+}
+
 bool Mandelbrot::escapesToInfinity(double a, double b, int& iterations, double& preciseIter)
 {
 	double x = 0.0;
@@ -166,3 +231,4 @@ bool Mandelbrot::escapesToInfinity(double a, double b, int& iterations, double& 
 	return true;
 }
 
+FACTORY_REGISTER_TYPE(Mandelbrot, Fractal)

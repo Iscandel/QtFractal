@@ -2,13 +2,15 @@
 #include "Fractal.h"
 
 class Mandelbrot :
-	public Fractal
+	public GenericParallelizableFractal
 {
 public:
 	Mandelbrot();
 	~Mandelbrot();
 
-	void compute(const Parameters& params) override;//, Array2D<Color>& out) override;
+	void computeFull(const Parameters& params);//, Array2D<Color>& out) override;
+
+	Color computePixel(double x, double y, const Parameters& params) override;//, Array2D<Color>& out) override;
 
 protected:
 	bool escapesToInfinity(double a, double b, int& iterations, double& preciseIter);

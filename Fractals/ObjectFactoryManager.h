@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ObjectFactory.h"
-#include "Singleton.h"
+#include "tools/Singleton.h"
 
 #include <map>
 #include <memory>
@@ -106,7 +106,7 @@ struct ObjectStaticType
 };
 
 
-#define RT_REGISTER_TYPE(ObjectType, BaseType) \
+#define FACTORY_REGISTER_TYPE(ObjectType, BaseType) \
 struct ObjectType ##_ \
 { \
 	ObjectType ##_ () \
@@ -120,7 +120,16 @@ struct ObjectStaticType<ObjectType> \
 	static const char* get() {return #ObjectType;} \
 };
 
-#define RT_REGISTER_TYPE_WITH_FACTORY(ObjectType, BaseType, Factory) \
+#define FACTORY_REGISTER_TYPE_WITH_KEY(Key, ObjectType, BaseType) \
+struct ObjectType ##_ \
+{ \
+	ObjectType ##_ () \
+	{ \
+		ObjectFactoryManager<BaseType>::getInstance()->addFactory(ObjectFactory<BaseType>::ptr(new TplObjectFactory<BaseType, ObjectType>(Key) )); \
+	} \
+} ObjectType##_RT;  
+
+#define FACTORY_REGISTER_TYPE_WITH_FACTORY(ObjectType, BaseType, Factory) \
 struct ObjectType ##_ \
 { \
 	ObjectType ##_ () \

@@ -35,6 +35,7 @@ public:
     QAction *actionConfigure_fractal;
     QAction *actionZoomPlus;
     QAction *actionZoomMinus;
+    QAction *actionTrace_fractal;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QScrollArea *scrollArea;
@@ -43,6 +44,7 @@ public:
     WidgetFractal *myLabelImage;
     QMenuBar *menuBar;
     QMenu *menuFile;
+    QMenu *menuFractal;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -63,6 +65,8 @@ public:
         actionZoomPlus->setObjectName(QStringLiteral("actionZoomPlus"));
         actionZoomMinus = new QAction(FractalsClass);
         actionZoomMinus->setObjectName(QStringLiteral("actionZoomMinus"));
+        actionTrace_fractal = new QAction(FractalsClass);
+        actionTrace_fractal->setObjectName(QStringLiteral("actionTrace_fractal"));
         centralWidget = new QWidget(FractalsClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -101,6 +105,8 @@ public:
         menuBar->setGeometry(QRect(0, 0, 600, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
+        menuFractal = new QMenu(menuBar);
+        menuFractal->setObjectName(QStringLiteral("menuFractal"));
         FractalsClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(FractalsClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -110,12 +116,15 @@ public:
         FractalsClass->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
+        menuBar->addAction(menuFractal->menuAction());
         menuFile->addAction(actionSave_image);
         menuFile->addAction(actionExit);
+        menuFractal->addAction(actionTrace_fractal);
         mainToolBar->addAction(actionChoose_fractal);
         mainToolBar->addAction(actionConfigure_fractal);
         mainToolBar->addAction(actionZoomPlus);
         mainToolBar->addAction(actionZoomMinus);
+        mainToolBar->addAction(actionTrace_fractal);
 
         retranslateUi(FractalsClass);
 
@@ -131,8 +140,10 @@ public:
         actionConfigure_fractal->setText(QApplication::translate("FractalsClass", "Configure fractal", Q_NULLPTR));
         actionZoomPlus->setText(QApplication::translate("FractalsClass", "Zoom +", Q_NULLPTR));
         actionZoomMinus->setText(QApplication::translate("FractalsClass", "Zoom -", Q_NULLPTR));
+        actionTrace_fractal->setText(QApplication::translate("FractalsClass", "Trace fractal", Q_NULLPTR));
         myLabelImage->setText(QApplication::translate("FractalsClass", "TextLabel", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("FractalsClass", "File", Q_NULLPTR));
+        menuFractal->setTitle(QApplication::translate("FractalsClass", "Fractal", Q_NULLPTR));
     } // retranslateUi
 
 };

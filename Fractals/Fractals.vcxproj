@@ -42,6 +42,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -60,14 +61,15 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoxFilter.cpp" />
     <ClCompile Include="ChooseFractalWidget.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Fractal.cpp" />
@@ -75,6 +77,7 @@
     <ClCompile Include="FractalComputationListener.cpp" />
     <ClCompile Include="FractalJob.cpp" />
     <ClCompile Include="FractalWindow.cpp" />
+    <ClCompile Include="GaussianFilter.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ChooseFractalWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -82,6 +85,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_FractalWindow.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_JobManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ProgressDialog.cpp">
@@ -105,19 +111,32 @@
     <ClCompile Include="GeneratedFiles\Release\moc_FractalWindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_JobManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ProgressDialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_WidgetFractal.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GuiState.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="Job.cpp" />
     <ClCompile Include="JobManager.cpp" />
+    <ClCompile Include="Julia.cpp" />
+    <ClCompile Include="JuliaState.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mandelbrot.cpp" />
+    <ClCompile Include="MandelbrotState.cpp" />
+    <ClCompile Include="MitchellNetravaliFilter.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ObjectFactoryManager.cpp" />
     <ClCompile Include="Parameters.cpp" />
     <ClCompile Include="ProgressDialog.cpp" />
+    <ClCompile Include="ReconstructionFilter.cpp" />
+    <ClCompile Include="tools\Timer.cpp" />
     <ClCompile Include="WidgetFractal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +165,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array2D.h" />
+    <ClInclude Include="BoxFilter.h" />
+    <ClInclude Include="GaussianFilter.h" />
+    <ClInclude Include="GuiState.h" />
+    <ClInclude Include="Julia.h" />
+    <ClInclude Include="JuliaState.h" />
+    <ClInclude Include="MandelbrotState.h" />
+    <ClInclude Include="MitchellNetravaliFilter.h" />
+    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ObjectFactoryManager.h" />
+    <ClInclude Include="ReconstructionFilter.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="tools\Singleton.h" />
+    <ClInclude Include="tools\Timer.h" />
+    <ClInclude Include="WithSmartPtr.h" />
     <CustomBuild Include="ProgressDialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing ProgressDialog.h...</Message>
@@ -210,8 +243,18 @@
     <ClInclude Include="GeneratedFiles\ui_Fractals.h" />
     <ClInclude Include="GeneratedFiles\ui_ProgressDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_WidgetFractal.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="Job.h" />
-    <ClInclude Include="JobManager.h" />
+    <CustomBuild Include="JobManager.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing JobManager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing JobManager.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
+    </CustomBuild>
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Mandelbrot.h" />
     <ClInclude Include="NonCopyable.h" />
@@ -274,6 +317,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Fractals.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

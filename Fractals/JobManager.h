@@ -4,19 +4,25 @@
 
 #include <vector>
 #include <queue>
-
-#ifdef VS_2010
-#include <SFML/System.hpp>
-#else
 #include <thread>
 #include <mutex>
-#endif
+
+#include <QObject>
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief This class allows multithreaded computation of image chunks
 ///////////////////////////////////////////////////////////////////////////////
-class JobManager
+class JobManager : public QObject
 {
+public:
+	Q_OBJECT
+
+signals:
+	void signalComputationAdvances(int perc);
+	void signalJobsDone();
+
+protected:
+	void dispatchComputationAdvances(int perc);
 public:
 	JobManager();
 	~JobManager(void);

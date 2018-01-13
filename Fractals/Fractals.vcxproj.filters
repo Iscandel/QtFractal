@@ -38,6 +38,18 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Gui states">
+      <UniqueIdentifier>{9b985e09-8a42-4afd-8572-5ac71ced0f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{6df53296-359e-405d-9810-a0de99cd6c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reconstruction filters">
+      <UniqueIdentifier>{267b05ad-ed40-4658-9797-5912a7bea13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fractals">
+      <UniqueIdentifier>{097b6c3f-b450-4582-8230-602c6feeadda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,12 +63,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_FractalWindow.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="FractalWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mandelbrot.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files</Filter>
@@ -79,26 +85,17 @@
     <ClCompile Include="GeneratedFiles\Release\moc_WidgetFractal.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="WidgetFractal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ChooseFractalWidget.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ChooseFractalWidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="ChooseFractalWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ProgressDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ProgressDialog.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ProgressDialog.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FractalJob.cpp">
       <Filter>Source Files</Filter>
@@ -112,11 +109,68 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Fractal.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="Fractal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FractalComputationListener.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_JobManager.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_JobManager.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactoryManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelbrotState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseFractalWidget.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FractalWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="WidgetFractal.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="MitchellNetravaliFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="ReconstructionFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Fractal.cpp">
+      <Filter>Fractals</Filter>
+    </ClCompile>
+    <ClCompile Include="Mandelbrot.cpp">
+      <Filter>Fractals</Filter>
+    </ClCompile>
+    <ClCompile Include="Julia.cpp">
+      <Filter>Fractals</Filter>
+    </ClCompile>
+    <ClCompile Include="JuliaState.cpp">
+      <Filter>Gui states</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,23 +180,11 @@
     <CustomBuild Include="Fractals.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="FractalWindow.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="WidgetFractal.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="WidgetFractal.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="ChooseFractalWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="ChooseFractalWidget.ui">
       <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ProgressDialog.h">
-      <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ProgressDialog.ui">
       <Filter>Form Files</Filter>
@@ -150,19 +192,31 @@
     <CustomBuild Include="Fractal2.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Fractal.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="FractalComputationListener.h">
       <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="JobManager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ChooseFractalWidget.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="FractalWindow.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ProgressDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="WidgetFractal.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Fractal.h">
+      <Filter>Fractals</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_Fractals.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mandelbrot.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Array2D.h">
       <Filter>Header Files</Filter>
@@ -182,9 +236,6 @@
     <ClInclude Include="Job.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="JobManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_WidgetFractal.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -197,5 +248,56 @@
     <ClInclude Include="FractalJob.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WithSmartPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactoryManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MandelbrotState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="MitchellNetravaliFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="ReconstructionFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="Mandelbrot.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="Julia.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="JuliaState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Fractals.rc" />
   </ItemGroup>
 </Project>
