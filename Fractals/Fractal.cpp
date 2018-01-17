@@ -49,14 +49,16 @@ void GenericParallelizableFractal::compute(const Parameters& params, std::functi
 {
 	ILogger::log() << "Starting computation..\n";
 
-	//initialize();
+	initialize(params);
 
 	//ILogger::log() << "Elapsed time loading + acceleration structure : " << clock.elapsedTime() << "s.\n";
 
 	ILogger::log() << "Creating jobs...\n";
 
+	myManager.setThreadNumber(params.getInt("threadNumber", 1));
+
 	int blockSizeX, blockSizeY;
-	blockSizeX = blockSizeY = 32;
+	blockSizeX = blockSizeY = params.getInt("blockSize", 32);
 
 	std::vector<std::shared_ptr<Job> > jobs;
 	for (int currentY = 0; currentY < myImage->getSizeY(); currentY += blockSizeY)//myBlockSize.y())

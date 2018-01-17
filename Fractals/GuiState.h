@@ -1,13 +1,20 @@
 #pragma once
+#include "Parameters.h"
 #include "WithSmartPtr.h"
+
+#include <QObject>
 
 class FractalWindow;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief Base class for game state.
 ///////////////////////////////////////////////////////////////////////////////
-class GuiState : public WithSmartPtr<GuiState>
+class GuiState : public QObject, public WithSmartPtr<GuiState>
 {
+public:
+
+	Q_OBJECT
+
 public:
 	///////////////////////////////////////////////////////////////////////////
 	/// Constructor.
@@ -58,8 +65,12 @@ public:
 
 	void setFractalWindow(FractalWindow* window);
 
+	void setParameters(Parameters* params) { myParams = params; }
+
 protected:
 	bool myIsPaused;
 
 	FractalWindow* myWindow;
+
+	Parameters* myParams;
 };

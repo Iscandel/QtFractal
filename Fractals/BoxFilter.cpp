@@ -1,6 +1,6 @@
 #include "BoxFilter.h"
 
-//#include "ObjectFactoryManager.h"
+#include "ObjectFactoryManager.h"
 
 
 BoxFilter::BoxFilter(double radiusX, double radiusY)
@@ -20,4 +20,4 @@ BoxFilter::~BoxFilter(void)
 {
 }
 
-//RT_REGISTER_TYPE(BoxFilter, ReconstructionFilter)
+FACTORY_REGISTER_TYPE(BoxFilter, ReconstructionFilter)

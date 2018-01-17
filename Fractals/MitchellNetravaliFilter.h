@@ -10,7 +10,7 @@ class MitchellNetravaliFilter :
 	public ReconstructionFilter
 {
 public:
-	MitchellNetravaliFilter(double radiusX, double radiusY, double B, double C);
+	MitchellNetravaliFilter(double radiusX = 2., double radiusY = 2., double B = 0.33, double C = 0.33);
 	MitchellNetravaliFilter(const Parameters& params);
 	~MitchellNetravaliFilter(void);
 

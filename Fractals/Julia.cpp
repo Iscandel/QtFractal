@@ -2,7 +2,7 @@
 
 #include "ObjectFactoryManager.h"
 
-Julia::Julia()
+Julia::Julia(const Parameters&)
 :myIsLogLog(false)
 ,myMaxIt(100)
 ,myRefreshFrequency(10)

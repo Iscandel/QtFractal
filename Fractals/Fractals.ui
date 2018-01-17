@@ -88,7 +88,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionChoose_fractal"/>
-   <addaction name="actionConfigure_fractal"/>
    <addaction name="actionZoomPlus"/>
    <addaction name="actionZoomMinus"/>
    <addaction name="actionTrace_fractal"/>
@@ -107,11 +106,6 @@
   <action name="actionChoose_fractal">
    <property name="text">
     <string>Choose fractal</string>
-   </property>
-  </action>
-  <action name="actionConfigure_fractal">
-   <property name="text">
-    <string>Configure fractal</string>
    </property>
   </action>
   <action name="actionZoomPlus">

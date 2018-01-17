@@ -7,9 +7,20 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
-	
-	FractalWindow w;
-	w.show();
-	return a.exec();
+	try
+	{
+		QApplication a(argc, argv);
+
+		FractalWindow w;
+		w.show();
+		return a.exec();
+	}
+	catch (const std::exception& exc)
+	{
+		ILogger::log() << exc.what() << "\n";
+	}
+	catch (...)
+	{
+		ILogger::log() << "Unknown exception\n";
+	}
 }

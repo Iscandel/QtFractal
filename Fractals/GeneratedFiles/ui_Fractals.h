@@ -32,7 +32,6 @@ public:
     QAction *actionSave_image;
     QAction *actionExit;
     QAction *actionChoose_fractal;
-    QAction *actionConfigure_fractal;
     QAction *actionZoomPlus;
     QAction *actionZoomMinus;
     QAction *actionTrace_fractal;
@@ -59,8 +58,6 @@ public:
         actionExit->setObjectName(QStringLiteral("actionExit"));
         actionChoose_fractal = new QAction(FractalsClass);
         actionChoose_fractal->setObjectName(QStringLiteral("actionChoose_fractal"));
-        actionConfigure_fractal = new QAction(FractalsClass);
-        actionConfigure_fractal->setObjectName(QStringLiteral("actionConfigure_fractal"));
         actionZoomPlus = new QAction(FractalsClass);
         actionZoomPlus->setObjectName(QStringLiteral("actionZoomPlus"));
         actionZoomMinus = new QAction(FractalsClass);
@@ -121,7 +118,6 @@ public:
         menuFile->addAction(actionExit);
         menuFractal->addAction(actionTrace_fractal);
         mainToolBar->addAction(actionChoose_fractal);
-        mainToolBar->addAction(actionConfigure_fractal);
         mainToolBar->addAction(actionZoomPlus);
         mainToolBar->addAction(actionZoomMinus);
         mainToolBar->addAction(actionTrace_fractal);
@@ -137,7 +133,6 @@ public:
         actionSave_image->setText(QApplication::translate("FractalsClass", "Save image", Q_NULLPTR));
         actionExit->setText(QApplication::translate("FractalsClass", "Exit", Q_NULLPTR));
         actionChoose_fractal->setText(QApplication::translate("FractalsClass", "Choose fractal", Q_NULLPTR));
-        actionConfigure_fractal->setText(QApplication::translate("FractalsClass", "Configure fractal", Q_NULLPTR));
         actionZoomPlus->setText(QApplication::translate("FractalsClass", "Zoom +", Q_NULLPTR));
         actionZoomMinus->setText(QApplication::translate("FractalsClass", "Zoom -", Q_NULLPTR));
         actionTrace_fractal->setText(QApplication::translate("FractalsClass", "Trace fractal", Q_NULLPTR));

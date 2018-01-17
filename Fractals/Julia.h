@@ -4,7 +4,7 @@ class Julia :
 	public GenericParallelizableFractal
 {
 public:
-	Julia();
+	Julia(const Parameters&);
 	~Julia();
 
 protected:

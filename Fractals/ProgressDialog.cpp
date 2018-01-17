@@ -10,6 +10,11 @@ ProgressDialog::~ProgressDialog()
 {
 }
 
+void ProgressDialog::resetProgressBar()
+{
+	ui.myProgressBar->setValue(0);
+}
+
 void ProgressDialog::computationAdvances(int perc)
 {
 	ui.myProgressBar->setValue(perc);

@@ -57,6 +57,11 @@ public:
 	template<class T> 
 	void addParameter(const std::string& key, T value) {}
 
+	void addActionToToolbar(QAction* action);
+	void removeActionFromToolbar(QAction* action);
+
+	void resetParameters();
+
 public:
 	static void initFractalNames();
 
@@ -96,8 +101,8 @@ private:
 	Ui::FractalsClass ui;
 
 	std::map<std::string, Parameters> myParamsByFractal;
-	Parameters myGeneralParameters;
-	Parameters* myCurrentParameters;
+	Parameters myOriginParameters;
+	Parameters myCurrentParameters;
 
 	Fractal::ptr myFractal;
 
@@ -117,22 +122,22 @@ private:
 
 template<>
 inline void FractalWindow::addParameter<double>(const std::string& key, double value) {
-	myCurrentParameters->addDouble(key, value);
+	myCurrentParameters.addDouble(key, value);
 }
 
 template<>
 inline void FractalWindow::addParameter<int>(const std::string& key, int value) {
-	myCurrentParameters->addInt(key, value);
+	myCurrentParameters.addInt(key, value);
 }
 
 template<>
 inline void FractalWindow::addParameter<std::string>(const std::string& key, std::string value) {
-	myCurrentParameters->addString(key, value);
+	myCurrentParameters.addString(key, value);
 }
 
 template<>
 inline void FractalWindow::addParameter<const char*>(const std::string& key, const char* value) {
-	myCurrentParameters->addString(key, value);
+	myCurrentParameters.addString(key, value);
 }
 
 #undef USE_FIRST_ELEMENT

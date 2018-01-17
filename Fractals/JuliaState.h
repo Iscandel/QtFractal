@@ -1,14 +1,22 @@
 #pragma once
 #include "GuiState.h"
 
+class QAction;
 class FractalWindow;
 
 class JuliaState :
 	public GuiState
 {
 public:
-	JuliaState(FractalWindow* window = nullptr);
+	JuliaState(const Parameters&);
 	~JuliaState();
 
-	virtual void init() override;
+	void init() override;
+
+	void free() override;
+protected:
+	void onClickGeneralConfig();
+
+protected:
+	QAction* myActionGeneralConfig;
 };

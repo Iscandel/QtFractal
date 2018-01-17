@@ -50,6 +50,9 @@
     <Filter Include="Fractals">
       <UniqueIdentifier>{097b6c3f-b450-4582-8230-602c6feeadda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Job">
+      <UniqueIdentifier>{22fc26c9-f702-4a94-8902-144d324a03bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,12 +76,6 @@
     <ClCompile Include="Parameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Job.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="JobManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_WidgetFractal.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ProgressDialog.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="FractalJob.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Fractal2.cpp">
       <Filter>Source Files</Filter>
@@ -172,6 +166,78 @@
     <ClCompile Include="JuliaState.cpp">
       <Filter>Gui states</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GeneralConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GeneralConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiState.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiState.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelbrotConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelbrotConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelbrotConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="FractalJob.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="JobManager.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BoxFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BoxFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MitchellNetravaliFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MitchellNetravaliFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GaussianFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GaussianFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxFilterConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianFilterConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MitchellNetravaliFilterConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaRandomRendererDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaRandomRendererDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaRandomRendererDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Buddhabrot.cpp">
+      <Filter>Fractals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Fractals.ui">
@@ -195,9 +261,6 @@
     <CustomBuild Include="FractalComputationListener.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="JobManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="ChooseFractalWidget.h">
       <Filter>GUI</Filter>
     </CustomBuild>
@@ -212,6 +275,48 @@
     </CustomBuild>
     <CustomBuild Include="Fractal.h">
       <Filter>Fractals</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneralConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GuiState.h">
+      <Filter>Gui states</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GeneralConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelbrotConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelbrotConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="JobManager.h">
+      <Filter>Job</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BoxFilterConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MitchellNetravaliFilterConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GaussianFilterConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BoxFilterConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MitchellNetravaliFilterConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GaussianFilterConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaRandomRendererDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaRandomRendererDialog.h">
+      <Filter>GUI</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +338,6 @@
     <ClInclude Include="Parameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Job.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_WidgetFractal.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -244,9 +346,6 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_ProgressDialog.h">
       <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FractalJob.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>Header Files</Filter>
@@ -267,9 +366,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MandelbrotState.h">
-      <Filter>Gui states</Filter>
-    </ClInclude>
-    <ClInclude Include="GuiState.h">
       <Filter>Gui states</Filter>
     </ClInclude>
     <ClInclude Include="BoxFilter.h">
@@ -295,6 +391,36 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GeneralConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MandelbrotConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FractalJob.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BoxFilterConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MitchellNetravaliFilterConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GaussianFilterConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRendererDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SignalBlocker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Buddhabrot.h">
+      <Filter>Fractals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,8 @@ public:
 	ProgressDialog(QWidget *parent = Q_NULLPTR);
 	~ProgressDialog();
 
+	void resetProgressBar();
+
 public slots:
 	void computationAdvances(int perc);// override;
 

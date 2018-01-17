@@ -2,6 +2,7 @@
 
 #include "Color.h"
 
+#include <boost\any.hpp>
 #include <map>
 
 template<class Type>
@@ -26,6 +27,7 @@ public:
 	void addString(const std::string& name, const std::string& val);
 	//void addVector(const std::string& name, const Vector3d& val);
 	void addColor(const std::string& name, const Color& val);
+	void addVector(const std::string& name, const std::vector<boost::any>& val);
 	//void addTransform(const std::string& name, Transform::ptr val);
 	//void addBSDF(const std::string& name, BSDF::ptr val);
 	//void addLight(const std::string& name, Light::ptr val);
@@ -37,7 +39,7 @@ public:
 	double getDouble(const std::string& name, double defaultValue) const;
 	std::string getString(const std::string& name, const std::string& defaultValue) const;
 	//Point3d getPoint(const std::string& name, const Point3d& defaultValue) const;
-	//Vector3d getVector(const std::string& name, const Vector3d& defaultValue) const;
+	std::vector<boost::any> getVector(const std::string& name, const std::vector<boost::any>& defaultValue) const;
 	Color getColor(const std::string& name, const Color& defaultValue) const;
 	//Transform::ptr getTransform(const std::string& name, Transform::ptr defaultValue) const;
 	//BSDF::ptr getBSDF(const std::string& name, BSDF::ptr defaultValue) const;
@@ -80,8 +82,7 @@ protected:
 	//String
 	std::map<std::string, std::string> myString;
 	//Vector
-	//std::map<std::string, Vector3d, std::less<std::string>,
-	//	Eigen::aligned_allocator<std::pair<const std::string, Vector3d>> > myVector;
+	std::map<std::string, std::vector<boost::any>> myVector;
 	//Color
 	std::map<std::string, Color> myColor;
 	//Transform

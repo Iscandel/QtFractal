@@ -32,6 +32,8 @@ public:
 
 	void setImage(Image::ptr image) { myImage = image; }
 
+	virtual void initialize(const Parameters&) {}
+
 signals:
 	void signalComputationAdvances(int perc);
 

@@ -1,6 +1,6 @@
 #include "GaussianFilter.h"
 
-//#include "ObjectFactoryManager.h"
+#include "ObjectFactoryManager.h"
 
 GaussianFilter::GaussianFilter(double radiusX, double radiusY, double a, double w)
 :ReconstructionFilter(radiusX, radiusY)
@@ -41,4 +41,4 @@ double GaussianFilter::func1D(double val)
 	return std::max((double)0., std::exp(-myAlpha * val * val) - std::exp(-myAlpha * myOmega * myOmega));
 }
 
-//RT_REGISTER_TYPE(GaussianFilter, ReconstructionFilter)
+FACTORY_REGISTER_TYPE(GaussianFilter, ReconstructionFilter)

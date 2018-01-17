@@ -4,6 +4,8 @@
 #include <string>
 #include <memory>
 
+#include "Parameters.h"
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief Base class of object factory.
@@ -43,7 +45,7 @@ public:
 	// \brief Creates a widget with the given name.
 	///////////////////////////////////////////////////////////////////////////
 	//virtual typename BaseType::ptr create(Args&&... args) = 0;//const std::string& name) = 0;
-	virtual typename BaseType::ptr create() = 0;//const std::string& name) = 0;
+	virtual typename BaseType::ptr create(const Parameters& = Parameters()) = 0;//const std::string& name) = 0;
 
 protected:
 	std::string myType;
@@ -89,9 +91,9 @@ public:
 	/// \return A smart pointer to the newly created widget.
 	///////////////////////////////////////////////////////////////////////////
 	//typename BaseType::ptr create(Args&&... args) override//const std::string& name) 
-	typename BaseType::ptr create() override//const std::string& name) 
+	typename BaseType::ptr create(const Parameters& params = Parameters()) override//const std::string& name) 
 	{
-		return BaseType::ptr(new ObjectType());
+		return BaseType::ptr(new ObjectType(params));
 		//return std::make_shared<ObjectType>(params);
 		//return std::make_shared<ObjectType>(std::forward<Args>(args)...);
 	}
