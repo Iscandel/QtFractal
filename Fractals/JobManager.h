@@ -17,6 +17,9 @@ class JobManager : public QObject
 public:
 	Q_OBJECT
 
+public:
+	void setJoinMode(bool join) { myIsJoinMode = join; }
+
 signals:
 	void signalComputationAdvances(int perc);
 	void signalJobsDone();
@@ -83,6 +86,8 @@ protected:
 	int myTotalJobs;
 	int myCoeff;
 	double myShowValue;
+
+	bool myIsJoinMode;
 
 	std::function<void()> myEndCallback;
 };

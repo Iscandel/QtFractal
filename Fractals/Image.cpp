@@ -157,3 +157,12 @@ void Image::merge(Image& subScreen)
 		tmpX++;
 	}
 }
+
+void Image::resize(int sizeX, int sizeY, int minX, int minY)
+{
+	myPixels.setSize(sizeX, sizeY);
+	mySizeX = sizeX;
+	mySizeY = sizeY;
+	myMinX = minX;
+	myMinY = minY;
+}

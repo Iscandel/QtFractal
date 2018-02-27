@@ -12,6 +12,7 @@ JobManager::JobManager()
 ,myJobsDone(0)
 ,myCoeff(0)
 ,myShowValue(0.1)
+,myIsJoinMode(false)
 {
 }
 
@@ -108,7 +109,9 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 			initJobs();
 		}
 
-		//join();
+		//If the job manager is run in a threaded way, join can be called (and the end callback will be called after)
+		if(myIsJoinMode)
+			join();
 
 		//jobsDone();
 
@@ -199,7 +202,7 @@ void JobManager::jobRun()
 
 	std::lock_guard<std::mutex> lock(myRemainingTasksMutex);
 	myNumberRunning--;
-	if (myNumberRunning == 0)
+	if (myNumberRunning == 0 && !myIsJoinMode)
 	{
 		jobsDone();
 	}

@@ -25,8 +25,8 @@ public:
 	//virtual void compute(const Parameters& params, Array2D<Color>& out) = 0;
 	virtual void compute(const Parameters& params, std::function<void()> callback) = 0;
 
-	void addAdvanceListener(QObject* listener);//FractalComputationListener* listener);
-	void addComputationEndsListener(QObject* listener);//FractalComputationListener* listener);
+	virtual void addAdvanceListener(QObject* listener);//FractalComputationListener* listener);
+	virtual void addComputationEndsListener(QObject* listener);//FractalComputationListener* listener);
 
 	void setArray(Array2D<Color>& array) { myArray = &array; }
 

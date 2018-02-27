@@ -88,6 +88,8 @@ public:
 	int getSizeX() const { return mySizeX; }
 	int getSizeY() const { return mySizeY; }
 
+	void resize(int x, int y, int minX = 0, int minY = 0);
+
 protected:
 	Array2D<Pixel> myPixels;
 	//Pixel** myPixels;

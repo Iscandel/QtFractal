@@ -19,6 +19,7 @@
 #define MYLIST(x)       \
 x(MANDELBROT, "Mandelbrot") \
 x(JULIA,   "Julia") \
+x(BUDDHABROT,   "Buddhabrot") \
 x(END,  "")
 
 #define USE_FIRST_ELEMENT(x, y)  x,

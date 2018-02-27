@@ -40,8 +40,22 @@ void Mandelbrot::initRenderer(const std::string& renderer, const Parameters& par
 			myIterationsColors.push_back(boost::any_cast<Color>(elem));
 		}
 	}
-	else if (renderer == "3D")
+	else if (renderer == "Sine")
 	{
+		myFractalColor = params.getColor("fractalColor", Color());
+		myIsMode3D = params.getBool("isMode3D", false);
+		std::vector<boost::any> tmp = params.getVector("amplitudes", std::vector<boost::any>());
+		for (auto elem : tmp)
+			myAmplitudes.push_back(boost::any_cast<double>(elem));
+		
+		tmp = params.getVector("phases", std::vector<boost::any>());
+		for (auto elem : tmp)
+			myPhases.push_back(boost::any_cast<double>(elem));
+		
+		tmp = params.getVector("pulsations", std::vector<boost::any>());
+		for (auto elem : tmp)
+			myPulsations.push_back(boost::any_cast<double>(elem));
+
 	}
 	else if (renderer == "Black & white")
 	{
@@ -154,35 +168,9 @@ void Mandelbrot::computeFull(const Parameters& params)//, Array2D<Color>& out)
 
 Color Mandelbrot::computePixel(double a, double b, const Parameters& params)//, Array2D<Color>& out)
 {
-	//Array2D<Color>& out = *myArray;
-
 	myIsLogLog = params.getBool("logLog", false);
 	myMaxIt = params.getInt("maxIter", 100);
-	//int width = out.getWidth();
-	//int height = out.getHeight();
 
-	//for (int i = 0; i < 6;i++)          //On sauvegarde le tableau de couleurs de l'objet Infos
-	//	Couleurs[i] = Infos.getCouleur(i);
-
-	//BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
-	////création de l’image au moyen de la classe BufferedImage
-	//WritableRaster raster = image.getRaster();
-	////appel de la méthode getRaster() afin d’obtenir un objet de type WritableRaster, vous    
-	////permettant d’accéder aux pixels de l’image et de les modifier.
-	//ColorModel model = image.getColorModel(); //renvoie le modèle de couleur de l’image       
-	//										  //mémorisée.
-
-	//this.maxIterations = Infos.getIterations();    //Sauvegarde du nombre max d'itérations
-	//fractalColor = Couleurs[5];                   //Couleur de l'Ensemble
-	//int argb = fractalColor.getRGB();             //Renvoie le code RGB de la couleur
-	//Object colorData = model.getDataElements(argb, null);
-	//this.typeRepresentation = Infos.getTypeRepresentation();
-	//System.out.println(Infos.getTypeRepresentation());
-
-	//On calcule le point courant. Il est situé entre XMIN et XMAX (resp. YMIN et YMAX),
-	//et il y a largeur points entre XMIN et XMAX (resp. longueur points entre YMIN etYMAX)
-	//double a = XMIN + x * (XMAX - XMIN) / width;
-	//double b = YMIN + y * (YMAX - YMIN) / height;
 	double preciseIter;
 	int iterations;
 	if (!escapesToInfinity(a, b, iterations, preciseIter))
@@ -197,6 +185,8 @@ Color Mandelbrot::computePixel(double a, double b, const Parameters& params)//, 
 			return predefinedAndRandomRenderer(iterations, preciseIter);
 		else if (myRenderer == "Random")
 			return predefinedAndRandomRenderer(iterations, preciseIter);
+		else if (myRenderer == "Sine")
+			return sineRenderer(iterations, preciseIter, false);
 
 		//if (typeRepresentation == "Dégradé de gris") //On regarde le mode de représentation graphique choisi -Gris ici-
 		{
@@ -265,7 +255,7 @@ bool Mandelbrot::escapesToInfinity(double a, double b, int& iterations, double& 
 		double reDiv = x*xPrime + y*yPrime;
 		double imDiv = x*yPrime - y*xPrime;
 
-		//mode3D = (double)Math.atan2(imDiv, reDiv);
+		mode3D = (double)std::atan2(imDiv, reDiv);
 
 		preciseIter = -(float)(std::log(0.5* std::log(x*x + y*y) / std::log(2)) / std::log(2) - iterations - 3);
 	}
@@ -369,6 +359,45 @@ Color Mandelbrot::blackAndWhiteRenderer(int iterations, double preciseIter)
 	/*On détermine la couleur pour le point en cours de calcul,
 	dépendante du nombre d'itérations*/
 	return Color(rgb / 255.);
+}
+
+Color Mandelbrot::sineRenderer(int iterations, double preciseIter, bool is3Dmode)
+{
+	Color fractal;
+	if (!is3Dmode)
+	{
+		double rouge = 0, vert = 0, bleu = 0;
+
+		double r = (double)(myAmplitudes[0]*std::sin(myPulsations[0]*preciseIter + myPhases[0]));
+		double g = (double)(myAmplitudes[1]*std::sin(myPulsations[1]*preciseIter + myPhases[1]));
+		double bl = (double)(myAmplitudes[2]*std::sin(myPulsations[2]*preciseIter + myPhases[2]));
+		//System.out.println((int)(rouge*255.99));
+		//rouge = (int)(r*255.99) > 255 ? 255 : (int)(r*255.99) < 0 ? 0 : (int)(r*255.99);
+		//vert = (int)(g*255.99) > 255 ? 255 : (int)(g*255.99) < 0 ? 0 : (int)(g*255.99);
+		//bleu = (int)(bl*255.99) > 255 ? 255 : (int)(bl*255.99) < 0 ? 0 : (int)(bl*255.99);
+
+		fractal = Color(r, g, bl);   //On crée la couleur
+	}
+	else
+	{
+		double rouge = 0, vert = 0, bleu = 0;
+
+		double r = (double)(myAmplitudes[0]*std::sin(myPulsations[0] *mode3D + myPhases[0]));
+		double g = (double)(myAmplitudes[1]*std::sin(myPulsations[1] *mode3D + myPhases[1]));
+		double bl = (double)(myAmplitudes[2]*std::sin(myPulsations[2] *mode3D + myPhases[2]));
+		//System.out.println((int)(rouge*255.99));
+		//rouge = (int)(r*255.99) > 255 ? 255 : (int)(r*255.99) < 0 ? 0 : (int)(r*255.99);
+		//vert = (int)(g*255.99) > 255 ? 255 : (int)(g*255.99) < 0 ? 0 : (int)(g*255.99);
+		//bleu = (int)(bl*255.99) > 255 ? 255 : (int)(bl*255.99) < 0 ? 0 : (int)(bl*255.99);
+
+		fractal = Color(r, g, bl);   //On crée la couleur
+
+		//argb = fractal.getRGB();
+		//colorData = model.getDataElements(argb, null);
+		//raster.setDataElements(i, j, colorData);
+	}
+
+	return fractal;
 }
 
 FACTORY_REGISTER_TYPE(Mandelbrot, Fractal)

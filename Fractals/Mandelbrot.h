@@ -19,6 +19,7 @@ protected:
 
 	Color predefinedAndRandomRenderer(int iterations, double preciseIter);
 	Color blackAndWhiteRenderer(int iterations, double preciseIter);
+	Color sineRenderer(int iterations, double preciseIter, bool is3Dmode);
 
 protected:
 	bool myIsLogLog;
@@ -33,5 +34,11 @@ protected:
 
 	Color myFractalColor;
 	std::vector<Color> myIterationsColors;
+	std::vector<double> myAmplitudes;
+	std::vector<double> myPhases;
+	std::vector<double> myPulsations;
+
+	double mode3D;
+	bool myIsMode3D;
 };
 

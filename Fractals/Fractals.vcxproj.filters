@@ -53,6 +53,9 @@
     <Filter Include="Job">
       <UniqueIdentifier>{22fc26c9-f702-4a94-8902-144d324a03bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderers">
+      <UniqueIdentifier>{45f70343-ba53-4526-9fca-5a3243b74964}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -238,6 +241,36 @@
     <ClCompile Include="Buddhabrot.cpp">
       <Filter>Fractals</Filter>
     </ClCompile>
+    <ClCompile Include="BuddhabrotJob.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_BuddhabrotConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_BuddhabrotConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="BuddhabrotConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BuddhabrotState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaSineRendererDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaSineRendererDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaSineRendererDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaSineRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Fractals.ui">
@@ -317,6 +350,18 @@
     </CustomBuild>
     <CustomBuild Include="MandelJuliaRandomRendererDialog.h">
       <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BuddhabrotConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="BuddhabrotConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaSineRendererDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaSineRendererDialog.ui">
+      <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +466,24 @@
     </ClInclude>
     <ClInclude Include="Buddhabrot.h">
       <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="BuddhabrotJob.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BuddhabrotConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BuddhabrotState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaSineRendererDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MandelJuliaRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MandelJuliaSineRenderer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

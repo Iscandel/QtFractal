@@ -199,7 +199,7 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 
 void FractalWindow::computeFractal(const Parameters& params)
 {
-	std::string fractal = myCurrentParameters.getString("fractal", "Mandelbrot");
+	std::string fractal = myCurrentParameters.getString("fractal", "Buddhabrot");
 	auto factory = ObjectFactoryManager<Fractal>::getInstance()->getFactory(fractal);
 	setFractal(factory->create(params));
 
