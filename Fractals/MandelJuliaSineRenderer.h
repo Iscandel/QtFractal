@@ -1,12 +1,12 @@
 #pragma once
-#include "MandelJuliaRenderer.h"
+#include "MandelJuliaBaseRenderer.h"
 
 #include <vector>
 
 #include "Parameters.h"
 
 class MandelJuliaSineRenderer :
-	public MandelJuliaRenderer
+	public MandelJuliaBaseRenderer
 {
 public:
 	MandelJuliaSineRenderer(const Parameters& params);
@@ -21,5 +21,7 @@ protected:
 	std::vector<double> myAmplitudes;
 	std::vector<double> myPhases;
 	std::vector<double> myPulsations;
+
+	int myMaxIt;
 };
 

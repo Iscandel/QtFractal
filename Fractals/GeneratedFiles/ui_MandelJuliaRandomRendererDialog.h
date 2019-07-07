@@ -54,12 +54,14 @@ public:
     QScrollBar *myScrollBarBlue;
     QLabel *label_5;
     QLabel *myLabelColorPreview;
+    QPushButton *myButtonPredefined;
+    QPushButton *myButtonRandom;
 
     void setupUi(QDialog *MandelJuliaRandomRendererDialog)
     {
         if (MandelJuliaRandomRendererDialog->objectName().isEmpty())
             MandelJuliaRandomRendererDialog->setObjectName(QStringLiteral("MandelJuliaRandomRendererDialog"));
-        MandelJuliaRandomRendererDialog->resize(400, 300);
+        MandelJuliaRandomRendererDialog->resize(400, 313);
         label = new QLabel(MandelJuliaRandomRendererDialog);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 20, 211, 16));
@@ -112,7 +114,7 @@ public:
         label_2->setGeometry(QRect(250, 20, 101, 16));
         horizontalLayoutWidget_2 = new QWidget(MandelJuliaRandomRendererDialog);
         horizontalLayoutWidget_2->setObjectName(QStringLiteral("horizontalLayoutWidget_2"));
-        horizontalLayoutWidget_2->setGeometry(QRect(10, 240, 195, 31));
+        horizontalLayoutWidget_2->setGeometry(QRect(100, 270, 195, 31));
         horizontalLayout_2 = new QHBoxLayout(horizontalLayoutWidget_2);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -197,6 +199,12 @@ public:
         myLabelColorPreview = new QLabel(MandelJuliaRandomRendererDialog);
         myLabelColorPreview->setObjectName(QStringLiteral("myLabelColorPreview"));
         myLabelColorPreview->setGeometry(QRect(250, 90, 111, 111));
+        myButtonPredefined = new QPushButton(MandelJuliaRandomRendererDialog);
+        myButtonPredefined->setObjectName(QStringLiteral("myButtonPredefined"));
+        myButtonPredefined->setGeometry(QRect(80, 220, 93, 28));
+        myButtonRandom = new QPushButton(MandelJuliaRandomRendererDialog);
+        myButtonRandom->setObjectName(QStringLiteral("myButtonRandom"));
+        myButtonRandom->setGeometry(QRect(220, 220, 93, 28));
 
         retranslateUi(MandelJuliaRandomRendererDialog);
 
@@ -220,6 +228,8 @@ public:
         label_4->setText(QApplication::translate("MandelJuliaRandomRendererDialog", "Green", Q_NULLPTR));
         label_5->setText(QApplication::translate("MandelJuliaRandomRendererDialog", "Blue", Q_NULLPTR));
         myLabelColorPreview->setText(QString());
+        myButtonPredefined->setText(QApplication::translate("MandelJuliaRandomRendererDialog", "Predefined", Q_NULLPTR));
+        myButtonRandom->setText(QApplication::translate("MandelJuliaRandomRendererDialog", "Random", Q_NULLPTR));
     } // retranslateUi
 
 };

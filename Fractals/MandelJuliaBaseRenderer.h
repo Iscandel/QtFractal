@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Color.h"
-class MandelJuliaRenderer
+class MandelJuliaBaseRenderer
 {
 public:
-	MandelJuliaRenderer();
-	~MandelJuliaRenderer();
+	MandelJuliaBaseRenderer();
+	~MandelJuliaBaseRenderer();
 
 	virtual Color computeColor(int iter, double preciseIter, double x, double y, double xPrime, double yPrime) = 0;
 };

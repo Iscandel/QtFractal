@@ -74,7 +74,7 @@ public:
 
     void retranslateUi(QWidget *ChooseFractalWidget)
     {
-        ChooseFractalWidget->setWindowTitle(QApplication::translate("ChooseFractalWidget", "ChooseFractalWidget", Q_NULLPTR));
+        ChooseFractalWidget->setWindowTitle(QApplication::translate("ChooseFractalWidget", "Choose fractal", Q_NULLPTR));
         myOkButton->setText(QApplication::translate("ChooseFractalWidget", "OK", Q_NULLPTR));
         myCancelButton->setText(QApplication::translate("ChooseFractalWidget", "Cancel", Q_NULLPTR));
     } // retranslateUi

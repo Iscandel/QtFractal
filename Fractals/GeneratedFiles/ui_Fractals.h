@@ -64,6 +64,10 @@ public:
         actionZoomMinus->setObjectName(QStringLiteral("actionZoomMinus"));
         actionTrace_fractal = new QAction(FractalsClass);
         actionTrace_fractal->setObjectName(QStringLiteral("actionTrace_fractal"));
+        QFont font;
+        font.setBold(true);
+        font.setWeight(75);
+        actionTrace_fractal->setFont(font);
         centralWidget = new QWidget(FractalsClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);

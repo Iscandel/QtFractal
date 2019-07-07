@@ -56,6 +56,9 @@
     <Filter Include="Renderers">
       <UniqueIdentifier>{45f70343-ba53-4526-9fca-5a3243b74964}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FParser">
+      <UniqueIdentifier>{06bae8ad-a922-4650-be49-6a698e6ecd02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -262,13 +265,94 @@
     <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaSineRendererDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaSineRendererDialog.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MandelJuliaBlackAndWhiteRenderer.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaRenderer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="MandelJuliaPredefRandomRenderer.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
     <ClCompile Include="MandelJuliaSineRenderer.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaSineRendererDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Rng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lyapunov.cpp">
+      <Filter>Fractals</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LyapunovConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LyapunovConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="LyapunovConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_LyapunovRandomRendererDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_LyapunovRandomRendererDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaBaseRenderer.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="LyapunovBaseRenderer.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="LyapunovRandomRenderer.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="LyapunovRenderer1.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="LyapunovRandomRendererDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="LyapunovState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaRandomRenderer2Dialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaRandomRenderer2Dialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaRandomRenderer2Dialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Newton.cpp">
+      <Filter>Fractals</Filter>
+    </ClCompile>
+    <ClCompile Include="NewtonState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="Complex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaRandomRenderer2.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="FParser\fparser.cc">
+      <Filter>FParser</Filter>
+    </ClCompile>
+    <ClCompile Include="FParser\fpoptimizer.cc">
+      <Filter>FParser</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaLayerConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaLayerConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="MandelJuliaLayerConfigurationDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MathParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -357,10 +441,34 @@
     <CustomBuild Include="BuddhabrotConfigurationDialog.h">
       <Filter>GUI</Filter>
     </CustomBuild>
+    <CustomBuild Include="MandelJuliaSineRendererDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
     <CustomBuild Include="MandelJuliaSineRendererDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="LyapunovConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="LyapunovConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="LyapunovRandomRendererDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="LyapunovRandomRendererDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaRandomRenderer2Dialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="MandelJuliaSineRendererDialog.ui">
+    <CustomBuild Include="MandelJuliaRandomRenderer2Dialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaLayerConfigurationDialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MandelJuliaLayerConfigurationDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -479,14 +587,97 @@
     <ClInclude Include="GeneratedFiles\ui_MandelJuliaSineRendererDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="MandelJuliaRenderer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="MandelJuliaBlackAndWhiteRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="MandelJuliaPredefRandomRenderer.h">
+      <Filter>Renderers</Filter>
     </ClInclude>
     <ClInclude Include="MandelJuliaSineRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Rng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lyapunov.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LyapunovConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LyapunovRandomRendererDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MandelJuliaBaseRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="LyapunovBaseRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="LyapunovRandomRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="LyapunovRenderer1.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="LyapunovState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRenderer2Dialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Newton.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="NewtonState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="Complex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MandelJuliaRandomRenderer2.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="exprtk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FParser\fparser.hh">
+      <Filter>FParser</Filter>
+    </ClInclude>
+    <ClInclude Include="FParser\fparser_gmpint.hh">
+      <Filter>FParser</Filter>
+    </ClInclude>
+    <ClInclude Include="FParser\fparser_mpfr.hh">
+      <Filter>FParser</Filter>
+    </ClInclude>
+    <ClInclude Include="FParser\extrasrc\fpaux.hh">
+      <Filter>FParser</Filter>
+    </ClInclude>
+    <ClInclude Include="FParser\fpconfig.hh">
+      <Filter>FParser</Filter>
+    </ClInclude>
+    <ClInclude Include="FParser\extrasrc\fptypes.hh">
+      <Filter>FParser</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaLayerConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StrEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Fractals.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FParser\extrasrc\fp_identifier_parser.inc">
+      <Filter>FParser</Filter>
+    </None>
+    <None Include="FParser\extrasrc\fp_opcode_add.inc">
+      <Filter>FParser</Filter>
+    </None>
   </ItemGroup>
 </Project>

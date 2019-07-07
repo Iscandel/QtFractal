@@ -22,6 +22,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
@@ -64,6 +65,8 @@ public:
     QWidget *verticalLayoutWidget_5;
     QVBoxLayout *verticalLayout_5;
     QCheckBox *myCheckBoxLogLog;
+    QDoubleSpinBox *mySpinBailout;
+    QLabel *label_10;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *myButtonOk;
@@ -77,18 +80,36 @@ public:
     QVBoxLayout *verticalLayout_10;
     QLabel *label;
     QPushButton *myButtonConfigureRenderer;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout_11;
+    QCheckBox *myCheckBoxUseFunction;
+    QLineEdit *myEditFunction;
+    QComboBox *myComboComputationType;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *verticalLayout_12;
+    QCheckBox *myCheckBoxUseAddEnd;
+    QLineEdit *myEditAddEndFunction;
+    QCheckBox *myCheckBoxLambertCorrection;
+    QWidget *verticalLayoutWidget_3;
+    QVBoxLayout *verticalLayout_13;
+    QCheckBox *myCheckBoxUseRerange;
+    QLineEdit *myEditRerangeFunction;
+    QWidget *verticalLayoutWidget_4;
+    QVBoxLayout *verticalLayout_14;
+    QCheckBox *myCheckBoxUseRerangeHeight;
+    QLineEdit *myEditRerangeHeight;
 
     void setupUi(QDialog *MandelbrotConfigurationDialog)
     {
         if (MandelbrotConfigurationDialog->objectName().isEmpty())
             MandelbrotConfigurationDialog->setObjectName(QStringLiteral("MandelbrotConfigurationDialog"));
-        MandelbrotConfigurationDialog->resize(346, 546);
+        MandelbrotConfigurationDialog->resize(378, 862);
         groupBox = new QGroupBox(MandelbrotConfigurationDialog);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(20, 10, 291, 171));
+        groupBox->setGeometry(QRect(20, 10, 341, 171));
         gridLayoutWidget = new QWidget(groupBox);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 30, 271, 103));
+        gridLayoutWidget->setGeometry(QRect(10, 30, 315, 103));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -104,6 +125,7 @@ public:
 
         mySpinXMin = new QDoubleSpinBox(gridLayoutWidget);
         mySpinXMin->setObjectName(QStringLiteral("mySpinXMin"));
+        mySpinXMin->setDecimals(15);
         mySpinXMin->setMinimum(-1000);
         mySpinXMin->setMaximum(1000);
         mySpinXMin->setValue(-2);
@@ -120,8 +142,10 @@ public:
 
         mySpinXMax = new QDoubleSpinBox(gridLayoutWidget);
         mySpinXMax->setObjectName(QStringLiteral("mySpinXMax"));
+        mySpinXMax->setDecimals(15);
         mySpinXMax->setMinimum(-1000);
         mySpinXMax->setMaximum(1000);
+        mySpinXMax->setValue(2);
 
         verticalLayout->addWidget(mySpinXMax);
 
@@ -141,6 +165,7 @@ public:
 
         mySpinYMin = new QDoubleSpinBox(gridLayoutWidget);
         mySpinYMin->setObjectName(QStringLiteral("mySpinYMin"));
+        mySpinYMin->setDecimals(15);
         mySpinYMin->setMinimum(-1000);
         mySpinYMin->setMaximum(1000);
         mySpinYMin->setValue(-2);
@@ -157,6 +182,7 @@ public:
 
         mySpinYMax = new QDoubleSpinBox(gridLayoutWidget);
         mySpinYMax->setObjectName(QStringLiteral("mySpinYMax"));
+        mySpinYMax->setDecimals(15);
         mySpinYMax->setMinimum(-1000);
         mySpinYMax->setMaximum(1000);
         mySpinYMax->setValue(2);
@@ -171,7 +197,7 @@ public:
 
         groupBox_2 = new QGroupBox(MandelbrotConfigurationDialog);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(20, 190, 291, 80));
+        groupBox_2->setGeometry(QRect(20, 190, 341, 80));
         verticalLayoutWidget_6 = new QWidget(groupBox_2);
         verticalLayoutWidget_6->setObjectName(QStringLiteral("verticalLayoutWidget_6"));
         verticalLayoutWidget_6->setGeometry(QRect(10, 20, 81, 51));
@@ -214,7 +240,7 @@ public:
 
         groupBox_3 = new QGroupBox(MandelbrotConfigurationDialog);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(20, 280, 291, 80));
+        groupBox_3->setGeometry(QRect(20, 280, 341, 131));
         verticalLayoutWidget_9 = new QWidget(groupBox_3);
         verticalLayoutWidget_9->setObjectName(QStringLiteral("verticalLayoutWidget_9"));
         verticalLayoutWidget_9->setGeometry(QRect(10, 20, 111, 51));
@@ -248,9 +274,17 @@ public:
 
         verticalLayout_5->addWidget(myCheckBoxLogLog);
 
+        mySpinBailout = new QDoubleSpinBox(groupBox_3);
+        mySpinBailout->setObjectName(QStringLiteral("mySpinBailout"));
+        mySpinBailout->setGeometry(QRect(60, 100, 211, 22));
+        mySpinBailout->setMaximum(1e+20);
+        mySpinBailout->setValue(128);
+        label_10 = new QLabel(groupBox_3);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setGeometry(QRect(110, 80, 55, 16));
         horizontalLayoutWidget = new QWidget(MandelbrotConfigurationDialog);
         horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(70, 470, 195, 41));
+        horizontalLayoutWidget->setGeometry(QRect(70, 510, 195, 41));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -268,7 +302,7 @@ public:
 
         groupBox_4 = new QGroupBox(MandelbrotConfigurationDialog);
         groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
-        groupBox_4->setGeometry(QRect(20, 370, 291, 80));
+        groupBox_4->setGeometry(QRect(20, 410, 341, 80));
         horizontalLayoutWidget_2 = new QWidget(groupBox_4);
         horizontalLayoutWidget_2->setObjectName(QStringLiteral("horizontalLayoutWidget_2"));
         horizontalLayoutWidget_2->setGeometry(QRect(10, 20, 271, 55));
@@ -309,6 +343,84 @@ public:
 
         horizontalLayout_2->addLayout(verticalLayout_10);
 
+        verticalLayoutWidget = new QWidget(MandelbrotConfigurationDialog);
+        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(20, 600, 160, 51));
+        verticalLayout_11 = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout_11->setSpacing(6);
+        verticalLayout_11->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_11->setObjectName(QStringLiteral("verticalLayout_11"));
+        verticalLayout_11->setContentsMargins(0, 0, 0, 0);
+        myCheckBoxUseFunction = new QCheckBox(verticalLayoutWidget);
+        myCheckBoxUseFunction->setObjectName(QStringLiteral("myCheckBoxUseFunction"));
+
+        verticalLayout_11->addWidget(myCheckBoxUseFunction);
+
+        myEditFunction = new QLineEdit(verticalLayoutWidget);
+        myEditFunction->setObjectName(QStringLiteral("myEditFunction"));
+
+        verticalLayout_11->addWidget(myEditFunction);
+
+        myComboComputationType = new QComboBox(MandelbrotConfigurationDialog);
+        myComboComputationType->setObjectName(QStringLiteral("myComboComputationType"));
+        myComboComputationType->setGeometry(QRect(200, 610, 151, 22));
+        verticalLayoutWidget_2 = new QWidget(MandelbrotConfigurationDialog);
+        verticalLayoutWidget_2->setObjectName(QStringLiteral("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(110, 670, 197, 51));
+        verticalLayout_12 = new QVBoxLayout(verticalLayoutWidget_2);
+        verticalLayout_12->setSpacing(6);
+        verticalLayout_12->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_12->setObjectName(QStringLiteral("verticalLayout_12"));
+        verticalLayout_12->setContentsMargins(0, 0, 0, 0);
+        myCheckBoxUseAddEnd = new QCheckBox(verticalLayoutWidget_2);
+        myCheckBoxUseAddEnd->setObjectName(QStringLiteral("myCheckBoxUseAddEnd"));
+
+        verticalLayout_12->addWidget(myCheckBoxUseAddEnd);
+
+        myEditAddEndFunction = new QLineEdit(verticalLayoutWidget_2);
+        myEditAddEndFunction->setObjectName(QStringLiteral("myEditAddEndFunction"));
+
+        verticalLayout_12->addWidget(myEditAddEndFunction);
+
+        myCheckBoxLambertCorrection = new QCheckBox(MandelbrotConfigurationDialog);
+        myCheckBoxLambertCorrection->setObjectName(QStringLiteral("myCheckBoxLambertCorrection"));
+        myCheckBoxLambertCorrection->setGeometry(QRect(180, 560, 141, 20));
+        verticalLayoutWidget_3 = new QWidget(MandelbrotConfigurationDialog);
+        verticalLayoutWidget_3->setObjectName(QStringLiteral("verticalLayoutWidget_3"));
+        verticalLayoutWidget_3->setGeometry(QRect(80, 740, 221, 51));
+        verticalLayout_13 = new QVBoxLayout(verticalLayoutWidget_3);
+        verticalLayout_13->setSpacing(6);
+        verticalLayout_13->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_13->setObjectName(QStringLiteral("verticalLayout_13"));
+        verticalLayout_13->setContentsMargins(0, 0, 0, 0);
+        myCheckBoxUseRerange = new QCheckBox(verticalLayoutWidget_3);
+        myCheckBoxUseRerange->setObjectName(QStringLiteral("myCheckBoxUseRerange"));
+
+        verticalLayout_13->addWidget(myCheckBoxUseRerange);
+
+        myEditRerangeFunction = new QLineEdit(verticalLayoutWidget_3);
+        myEditRerangeFunction->setObjectName(QStringLiteral("myEditRerangeFunction"));
+
+        verticalLayout_13->addWidget(myEditRerangeFunction);
+
+        verticalLayoutWidget_4 = new QWidget(MandelbrotConfigurationDialog);
+        verticalLayoutWidget_4->setObjectName(QStringLiteral("verticalLayoutWidget_4"));
+        verticalLayoutWidget_4->setGeometry(QRect(80, 800, 221, 51));
+        verticalLayout_14 = new QVBoxLayout(verticalLayoutWidget_4);
+        verticalLayout_14->setSpacing(6);
+        verticalLayout_14->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_14->setObjectName(QStringLiteral("verticalLayout_14"));
+        verticalLayout_14->setContentsMargins(0, 0, 0, 0);
+        myCheckBoxUseRerangeHeight = new QCheckBox(verticalLayoutWidget_4);
+        myCheckBoxUseRerangeHeight->setObjectName(QStringLiteral("myCheckBoxUseRerangeHeight"));
+
+        verticalLayout_14->addWidget(myCheckBoxUseRerangeHeight);
+
+        myEditRerangeHeight = new QLineEdit(verticalLayoutWidget_4);
+        myEditRerangeHeight->setObjectName(QStringLiteral("myEditRerangeHeight"));
+
+        verticalLayout_14->addWidget(myEditRerangeHeight);
+
 
         retranslateUi(MandelbrotConfigurationDialog);
 
@@ -329,6 +441,7 @@ public:
         groupBox_3->setTitle(QApplication::translate("MandelbrotConfigurationDialog", "General", Q_NULLPTR));
         label_2->setText(QApplication::translate("MandelbrotConfigurationDialog", "Iterations", Q_NULLPTR));
         myCheckBoxLogLog->setText(QApplication::translate("MandelbrotConfigurationDialog", "Log log smoothing", Q_NULLPTR));
+        label_10->setText(QApplication::translate("MandelbrotConfigurationDialog", "Bailout", Q_NULLPTR));
         myButtonOk->setText(QApplication::translate("MandelbrotConfigurationDialog", "OK", Q_NULLPTR));
         myButtonCancel->setText(QApplication::translate("MandelbrotConfigurationDialog", "Cancel", Q_NULLPTR));
         groupBox_4->setTitle(QApplication::translate("MandelbrotConfigurationDialog", "Renderer", Q_NULLPTR));
@@ -336,13 +449,31 @@ public:
         myComboRenderer->clear();
         myComboRenderer->insertItems(0, QStringList()
          << QApplication::translate("MandelbrotConfigurationDialog", "Black & white", Q_NULLPTR)
-         << QApplication::translate("MandelbrotConfigurationDialog", "Predefined", Q_NULLPTR)
          << QApplication::translate("MandelbrotConfigurationDialog", "Random", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Random 2", Q_NULLPTR)
          << QApplication::translate("MandelbrotConfigurationDialog", "Sine", Q_NULLPTR)
-         << QApplication::translate("MandelbrotConfigurationDialog", "3D", Q_NULLPTR)
         );
         label->setText(QString());
         myButtonConfigureRenderer->setText(QApplication::translate("MandelbrotConfigurationDialog", "Configure", Q_NULLPTR));
+        myCheckBoxUseFunction->setText(QApplication::translate("MandelbrotConfigurationDialog", "Function", Q_NULLPTR));
+        myComboComputationType->clear();
+        myComboComputationType->insertItems(0, QStringList()
+         << QApplication::translate("MandelbrotConfigurationDialog", "Normal", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Triangle inequality", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Average curvature 1", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Average curvature 2", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Average curvature 3", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Stripe average", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Fold line", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Fold square", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Fold circle", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Exp smoothing", Q_NULLPTR)
+         << QApplication::translate("MandelbrotConfigurationDialog", "Z smoothing", Q_NULLPTR)
+        );
+        myCheckBoxUseAddEnd->setText(QApplication::translate("MandelbrotConfigurationDialog", "Function (addEnd, branching)", Q_NULLPTR));
+        myCheckBoxLambertCorrection->setText(QApplication::translate("MandelbrotConfigurationDialog", "Lambert correction", Q_NULLPTR));
+        myCheckBoxUseRerange->setText(QApplication::translate("MandelbrotConfigurationDialog", "Re-range value function ", Q_NULLPTR));
+        myCheckBoxUseRerangeHeight->setText(QApplication::translate("MandelbrotConfigurationDialog", "Re-range 3D height", Q_NULLPTR));
     } // retranslateUi
 
 };

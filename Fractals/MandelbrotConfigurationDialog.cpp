@@ -1,7 +1,10 @@
 #include "MandelbrotConfigurationDialog.h"
 
 #include "MandelJuliaRandomRendererDialog.h"
+#include "MandelJuliaRandomRenderer2Dialog.h"
 #include "MandelJuliaSineRendererDialog.h"
+
+#include "Mandelbrot.h"
 
 MandelbrotConfigurationDialog::MandelbrotConfigurationDialog(QWidget *parent)
 	: QDialog(parent)
@@ -33,6 +36,42 @@ void MandelbrotConfigurationDialog::setParameters(Parameters* params)
 	ui.mySpinIterations->setValue(myParams->getInt("maxIter", 50));
 	ui.myCheckBoxLogLog->setChecked(myParams->getBool("logLog", false));
 	ui.myComboRenderer->setCurrentText(myParams->getString("renderer", "Random").c_str());
+	ui.mySpinBailout->setValue(myParams->getDouble("bailout", 128));
+	//
+	ui.myCheckBoxLambertCorrection->setChecked(myParams->getBool("lambertCorrection", false));
+	int val = std::log(myParams->getInt("computationType", 1)) / std::log(2);
+	ui.myComboComputationType->setCurrentIndex(val);
+
+	std::vector<boost::any> vec = myParams->getVector("parsers", std::vector<boost::any>());
+	for (unsigned int i = 0; i < vec.size(); i++)
+	{
+		MathParser parser = boost::any_cast<MathParser>(vec[i]);
+		if(parser.getId() == Mandelbrot::FUNCTION)
+		{
+			ui.myCheckBoxUseFunction->setChecked(true);
+			ui.myEditFunction->setText(QString::fromStdString(parser.getExpr()));
+		}
+
+		if (parser.getId() == Mandelbrot::ADDEND_FUNCTION)
+		{
+			ui.myCheckBoxUseAddEnd->setChecked(true);
+			ui.myEditAddEndFunction->setText(QString::fromStdString(parser.getExpr()));
+		}
+
+		if (parser.getId() == Mandelbrot::VALUE_RERANGE)
+		{
+			ui.myCheckBoxUseRerange->setChecked(true);
+			ui.myEditRerangeFunction->setText(QString::fromStdString(parser.getExpr()));
+		}
+
+		if (parser.getId() == Mandelbrot::RERANGE_3D_HEIGHT)
+		{
+			ui.myCheckBoxUseRerangeHeight->setChecked(true);
+			ui.myEditRerangeHeight->setText(QString::fromStdString(parser.getExpr()));
+		}
+	}
+	
+	std::cout << val << std::endl;
 }
 
 void MandelbrotConfigurationDialog::onOk()
@@ -46,6 +85,51 @@ void MandelbrotConfigurationDialog::onOk()
 	myParams->addInt("maxIter", ui.mySpinIterations->value());
 	myParams->addBool("logLog", ui.myCheckBoxLogLog->isChecked());
 	myParams->addString("renderer", ui.myComboRenderer->currentText().toStdString());
+	myParams->addDouble("bailout", ui.mySpinBailout->value());
+
+	//
+	myParams->addBool("lambertCorrection", ui.myCheckBoxLambertCorrection->isChecked());
+	std::cout << std::pow(2, ui.myComboComputationType->currentIndex()) << std::endl;
+	myParams->addInt("computationType", std::pow(2, ui.myComboComputationType->currentIndex()));
+
+	//
+	std::vector<boost::any> parsers;
+	std::map<int, std::string> functionById;
+	if (ui.myCheckBoxUseFunction->isChecked()) {
+		std::string vars = "zn, zprev, zpprev, c";
+		MathParser parser(ui.myEditFunction->text().toStdString(), vars);
+		parser.setId((int)Mandelbrot::FUNCTION);
+		parsers.push_back(parser);
+	}
+	//functionById[(int)Mandelbrot::FUNCTION] = ui.myEditFunction->text().toStdString();
+
+	if (ui.myCheckBoxUseAddEnd->isChecked())
+	{
+		std::string vars = "zn, zprev, zpprev, c, sum";
+		MathParser parser(ui.myEditAddEndFunction->text().toStdString(), vars);
+		parser.setId((int)Mandelbrot::ADDEND_FUNCTION);
+		parsers.push_back(parser);
+	}
+	//functionById[(int)Mandelbrot::ADDEND_FUNCTION] = ui.myEditAddEndFunction->text().toStdString();
+
+	if (ui.myCheckBoxUseRerange->isChecked())
+	{
+		std::string vars = "value";
+		MathParser parser(ui.myEditRerangeFunction->text().toStdString(), vars);
+		parser.setId((int)Mandelbrot::VALUE_RERANGE);
+		parsers.push_back(parser);
+	}
+
+	if (ui.myCheckBoxUseRerangeHeight->isChecked())
+	{
+		std::string vars = "value";
+		MathParser parser(ui.myEditRerangeHeight->text().toStdString(), vars);
+		parser.setId((int)Mandelbrot::RERANGE_3D_HEIGHT);
+		parsers.push_back(parser);
+	}
+	myParams->addVector("parsers", parsers);
+		//functionById[(int)Mandelbrot::VALUE_RERANGE] = ui.myEditRerangeFunction->text().toStdString();
+		//myParams->addString("function", ui.myEditFunction->text().toStdString());
 
 	hide();
 }
@@ -66,6 +150,13 @@ void MandelbrotConfigurationDialog::onClickConfigureRenderer()
 	if (ui.myComboRenderer->currentText() == "Random")
 	{
 		MandelJuliaRandomRendererDialog dlg(this, myParams);
+		dlg.setWindowModality(Qt::WindowModality::WindowModal);
+		//dlg->setAttribute(Qt::WA_DeleteOnClose);
+		dlg.exec();
+	}
+	if (ui.myComboRenderer->currentText() == "Random 2")
+	{
+		MandelJuliaRandomRenderer2Dialog dlg(this, myParams);
 		dlg.setWindowModality(Qt::WindowModality::WindowModal);
 		//dlg->setAttribute(Qt::WA_DeleteOnClose);
 		dlg.exec();

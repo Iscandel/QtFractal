@@ -5,9 +5,11 @@
 #include "FractalJob.h"
 #include "Mandelbrot.h"
 #include "Julia.h"
+#include "Newton.h"
 
 #include "ObjectFactoryManager.h"
 
+#include <qfiledialog.h>
 #include <qerrormessage.h>
 
 template<class T>
@@ -73,6 +75,7 @@ FractalWindow::FractalWindow(QWidget *parent)
 	connect(ui.actionZoomMinus, SIGNAL(triggered()), this, SLOT(zoomMinus()));
 
 	connect(ui.actionTrace_fractal, SIGNAL(triggered()), this, SLOT(traceFractal()));
+	connect(ui.actionSave_image, SIGNAL(triggered()), this, SLOT(saveFractal()));
 
 	//myFractal = std::shared_ptr<Fractal>(new Julia);
 	myProgress = ProgressDialog::ptr(new ProgressDialog);
@@ -199,7 +202,7 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 
 void FractalWindow::computeFractal(const Parameters& params)
 {
-	std::string fractal = myCurrentParameters.getString("fractal", "Buddhabrot");
+	std::string fractal = myCurrentParameters.getString("fractal", "Mandelbrot");
 	auto factory = ObjectFactoryManager<Fractal>::getInstance()->getFactory(fractal);
 	setFractal(factory->create(params));
 
@@ -322,11 +325,11 @@ void FractalWindow::zoomMinus()
 	double ymax = myCurrentParameters.getDouble("ymax", 2.);
 
 	double areaWidth = std::abs(xmax - xmin);   //Calcul de la taille de la fenêtre en x
-	double newWidth = areaWidth / 2.;    //Longueur à enlever au total
+	double newWidth = areaWidth;    //Longueur à enlever au total
 	xmin -= newWidth / 2;                   //Calcul de la nouvelle coord en xmin
 	xmax += newWidth / 2;					//Calcul de la nouvelle coord en xmax
 	double areaHeight = std::abs(ymax - ymin);   //Calcul de la taille de la fenêtre en y
-	double newHeight = areaHeight / 2;    //Longueur à enlever au total
+	double newHeight = areaHeight;    //Longueur à enlever au total
 	ymin -= newHeight / 2;					//Calcul de la nouvelle coord en ymin
 	ymax += newHeight / 2;					//Calcul de la nouvelle coord en yMax
 
@@ -355,9 +358,21 @@ void FractalWindow::setFractal(Fractal::ptr fractal)
 
 void FractalWindow::traceFractal()
 {
+
 	myProgress->resetProgressBar();
 	myProgress->show();
 	computeFractal(myCurrentParameters);
+}
+
+void FractalWindow::saveFractal()
+{
+	QString fileName = QFileDialog::getSaveFileName(this,
+		tr("Save image"), "",
+		tr("JPG (*.jpg);;PNG (*.png);;JPEG(*.jpeg);;BMP(*.bmp);;All Files (*)"));
+
+	bool saved = ui.myLabelImage->pixmap()->save(fileName, "PNG");
+
+	ILogger::log() << "saved ? " << saved << " " << fileName.toStdString() << "\n";
 }
 
 //void FractalWindow::computationAdvances(int perc)

@@ -5,6 +5,7 @@
 
 #include "Color.h"
 #include "Parameters.h"
+#include "Rng.h"
 
 class MandelJuliaRandomRendererDialog : public QDialog
 {
@@ -23,12 +24,21 @@ public:
 
 	int getIndexSelectedRadio();
 
+	void onPredefined();
+
+	void onRandom();
+
+	void updateGUI();
+
 	void setPreviewColor(int r, int g, int b);
+
+	void setParameters(Parameters* params);
 private:
 	Ui::MandelJuliaRandomRendererDialog ui;
 
 	std::vector<Color> myColors;
 	//Color myFractalColor;
 
+	Rng myRng;
 	Parameters* myParams;
 };

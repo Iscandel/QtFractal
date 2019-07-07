@@ -1,5 +1,8 @@
 #pragma once
 #include "Fractal.h"
+
+#include "MandelJuliaBaseRenderer.h"
+
 class Julia :
 	public GenericParallelizableFractal
 {
@@ -8,9 +11,11 @@ public:
 	~Julia();
 
 protected:
-	bool escapesToInfinity(double a, double b, double xDepart, double yDepart, int& iterations, double& preciseIter);
+	bool escapesToInfinity(double a, double b, double xDepart, double yDepart, int& iterations, double& preciseIter, double& x, double& y, double& xPrime, double& yPrime);
 
-	Color computePixel(double x, double y, const Parameters& params) override;
+	Color computePixel(double x, double y, const Parameters& params, ParserById& parserById) override;
+
+	void initRenderer(const std::string& renderer, const Parameters& params);
 
 protected:
 	bool myIsLogLog;
@@ -19,6 +24,9 @@ protected:
 
 	double myInitialX;
 	double myInitialY;
+
+	std::string myStrRenderer;
+	std::unique_ptr<MandelJuliaBaseRenderer> myRenderer;
 };
 
 //class Julia extends Fractale

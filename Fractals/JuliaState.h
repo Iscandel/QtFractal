@@ -14,9 +14,11 @@ public:
 	void init() override;
 
 	void free() override;
-protected:
+protected:	
+	void onClickConfigureFractal();
 	void onClickGeneralConfig();
 
 protected:
 	QAction* myActionGeneralConfig;
+	std::unique_ptr<QAction> myActionConfigureFractal;
 };

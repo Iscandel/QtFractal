@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MandelJuliaLayerConfigurationDialog</class>
+ <widget class="QDialog" name="MandelJuliaLayerConfigurationDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>732</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MandelJuliaLayerConfigurationDialog</string>
+  </property>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>50</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Normal</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Triangle inequality</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Average curvature 1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Average curvature 2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Average curvature 3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Stripe average</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fold line</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fold square</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fold circle</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>20</y>
+     <width>55</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

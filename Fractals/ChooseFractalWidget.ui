@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ChooseFractalWidget</string>
+   <string>Choose fractal</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">

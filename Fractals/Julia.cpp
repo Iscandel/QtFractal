@@ -1,22 +1,47 @@
 #include "Julia.h"
 
+#include "MandelJuliaBlackAndWhiteRenderer.h"
+#include "MandelJuliaPredefRandomRenderer.h"
+#include "MandelJuliaSineRenderer.h"
+
 #include "ObjectFactoryManager.h"
 
-Julia::Julia(const Parameters&)
+Julia::Julia(const Parameters& params)
 :myIsLogLog(false)
 ,myMaxIt(100)
 ,myRefreshFrequency(10)
 ,myInitialX(-0.181)
 ,myInitialY(0.667)
+, myStrRenderer(params.getString("renderer", "Black & white"))
 {
+	initRenderer(myStrRenderer, params);
 }
-
 
 Julia::~Julia()
 {
 }
 
-Color Julia::computePixel(double a, double b, const Parameters& params)//, Array2D<Color>& out)
+void Julia::initRenderer(const std::string& renderer, const Parameters& params)
+{
+	if (renderer == "Black & white")
+	{
+		myRenderer = std::make_unique<MandelJuliaBlackAndWhiteRenderer>(params);
+	}
+	else if (renderer == "Random")
+	{
+		myRenderer = std::make_unique<MandelJuliaPredefRandomRenderer>(params);
+	}
+	else if (renderer == "Sine")
+	{
+		myRenderer = std::make_unique<MandelJuliaSineRenderer>(params);
+	}
+	else
+	{
+		ILogger::log() << "unknown renderer " << renderer << "\n";
+	}
+}
+
+Color Julia::computePixel(double a, double b, const Parameters& params, ParserById& parserById)//, Array2D<Color>& out)
 {
 	//Array2D<Color>& out = *myArray;
 
@@ -45,40 +70,46 @@ Color Julia::computePixel(double a, double b, const Parameters& params)//, Array
 
 	double preciseIter;
 	int iterations;
-	if (!escapesToInfinity(a, b, myInitialX, myInitialY, iterations, preciseIter))
-	{
-		return Color(1., 0., 0.);
-	}
-	else  //Si ça ne diverge pas
-	{
-		//if (typeRepresentation == "Dégradé de gris") //On regarde le mode de représentation graphique choisi -Gris ici-
-		{
-			double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur
-			int rgb;
+	double x, y;
+	double xPrime, yPrime;
 
-			if (!myIsLogLog)
-				rgb = (int)(iterations*coeff);
-			else  //Adoucissement log-log
-			{
-				double fin = preciseIter - iterations;
-				double coeff2 = fin *coeff;
-				rgb = (int)((iterations*coeff) + coeff2);
-				rgb = rgb > 255 ? 255 : rgb;
-			}
+	escapesToInfinity(a, b, myInitialX, myInitialY, iterations, preciseIter, x, y, xPrime, yPrime);
+	return myRenderer->computeColor(iterations, preciseIter, x, y, xPrime, yPrime);
 
-			/*On détermine la couleur pour le point en cours de calcul,
-			dépendante du nombre d'itérations*/
-			return Color(rgb / 255.);
-		}
-	}
+	//if (!escapesToInfinity(a, b, myInitialX, myInitialY, iterations, preciseIter))
+	//{
+	//	return Color(1., 0., 0.);
+	//}
+	//else  //Si ça ne diverge pas
+	//{
+	//	//if (typeRepresentation == "Dégradé de gris") //On regarde le mode de représentation graphique choisi -Gris ici-
+	//	{
+	//		double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur
+	//		int rgb;
+
+	//		if (!myIsLogLog)
+	//			rgb = (int)(iterations*coeff);
+	//		else  //Adoucissement log-log
+	//		{
+	//			double fin = preciseIter - iterations;
+	//			double coeff2 = fin *coeff;
+	//			rgb = (int)((iterations*coeff) + coeff2);
+	//			rgb = rgb > 255 ? 255 : rgb;
+	//		}
+
+	//		/*On détermine la couleur pour le point en cours de calcul,
+	//		dépendante du nombre d'itérations*/
+	//		return Color(rgb / 255.);
+	//	}
+	//}
 }
 
-bool Julia::escapesToInfinity(double a, double b, double initialX, double initialY, int& iterations, double& preciseIter)
+bool Julia::escapesToInfinity(double a, double b, double initialX, double initialY, int& iterations, double& preciseIter, double& x, double& y, double& xPrime, double& yPrime)
 {
-	double x = initialX;       // -0.6;
-	double y = initialY;       //-0.5
-	double xPrime = 0;
-	double yPrime = 0;
+	x = initialX;       // -0.6;
+	y = initialY;       //-0.5
+	xPrime = 0;
+	yPrime = 0;
 	iterations = 0;
 
 	do

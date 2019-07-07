@@ -20,6 +20,8 @@
 x(MANDELBROT, "Mandelbrot") \
 x(JULIA,   "Julia") \
 x(BUDDHABROT,   "Buddhabrot") \
+x(LYAPUNOV,   "Lyapunov") \
+x(NEWTON,   "Newton") \
 x(END,  "")
 
 #define USE_FIRST_ELEMENT(x, y)  x,
@@ -91,6 +93,8 @@ public slots:
 	void zoomMinus();
 
 	void traceFractal();
+
+	void saveFractal();
 
 protected:
 	void initState(GuiState::ptr state);

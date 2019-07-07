@@ -4,11 +4,13 @@
 #include "Image.h"
 #include "FractalComputationListener.h"
 #include "JobManager.h"
+#include "MathParser.h"
 #include "Parameters.h"
 
 #include <memory>
 
 #include <QObject>
+
 
 class Fractal : public QObject
 {
@@ -51,9 +53,12 @@ protected:
 	//boost::signals2::signal<void(int) > mySig;
 };
 
+//#include "FParser\fparser.hh"
 class GenericParallelizableFractal : public Fractal
 {
 public:
+	typedef std::map<int, MathParser> ParserById;
+public:
 	virtual void compute(const Parameters& params, std::function<void()> callback) override;
-	virtual Color computePixel(double x, double y, const Parameters& params) = 0;
+	virtual Color computePixel(double x, double y, const Parameters& params, ParserById& parserById) = 0;
 };

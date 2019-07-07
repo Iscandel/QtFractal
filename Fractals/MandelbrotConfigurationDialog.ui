@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>346</width>
-    <height>546</height>
+    <width>378</width>
+    <height>862</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <rect>
      <x>20</x>
      <y>10</y>
-     <width>291</width>
+     <width>341</width>
      <height>171</height>
     </rect>
    </property>
@@ -30,7 +30,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>271</width>
+      <width>315</width>
       <height>103</height>
      </rect>
     </property>
@@ -46,6 +46,9 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="mySpinXMin">
+         <property name="decimals">
+          <number>15</number>
+         </property>
          <property name="minimum">
           <double>-1000.000000000000000</double>
          </property>
@@ -68,11 +71,17 @@
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="mySpinXMax">
+           <property name="decimals">
+            <number>15</number>
+           </property>
            <property name="minimum">
             <double>-1000.000000000000000</double>
            </property>
            <property name="maximum">
             <double>1000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>2.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -91,6 +100,9 @@
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="mySpinYMin">
+         <property name="decimals">
+          <number>15</number>
+         </property>
          <property name="minimum">
           <double>-1000.000000000000000</double>
          </property>
@@ -113,6 +125,9 @@
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="mySpinYMax">
+           <property name="decimals">
+            <number>15</number>
+           </property>
            <property name="minimum">
             <double>-1000.000000000000000</double>
            </property>
@@ -136,7 +151,7 @@
     <rect>
      <x>20</x>
      <y>190</y>
-     <width>291</width>
+     <width>341</width>
      <height>80</height>
     </rect>
    </property>
@@ -207,8 +222,8 @@
     <rect>
      <x>20</x>
      <y>280</y>
-     <width>291</width>
-     <height>80</height>
+     <width>341</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="title">
@@ -262,12 +277,41 @@
      </item>
     </layout>
    </widget>
+   <widget class="QDoubleSpinBox" name="mySpinBailout">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>100</y>
+      <width>211</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <double>100000000000000000000.000000000000000</double>
+    </property>
+    <property name="value">
+     <double>128.000000000000000</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>80</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bailout</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>470</y>
+     <y>510</y>
      <width>195</width>
      <height>41</height>
     </rect>
@@ -293,8 +337,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>370</y>
-     <width>291</width>
+     <y>410</y>
+     <width>341</width>
      <height>80</height>
     </rect>
    </property>
@@ -329,22 +373,17 @@
          </item>
          <item>
           <property name="text">
-           <string>Predefined</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
            <string>Random</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Sine</string>
+           <string>Random 2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>3D</string>
+           <string>Sine</string>
           </property>
          </item>
         </widget>
@@ -371,6 +410,172 @@
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>600</y>
+     <width>160</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_11">
+    <item>
+     <widget class="QCheckBox" name="myCheckBoxUseFunction">
+      <property name="text">
+       <string>Function</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="myEditFunction"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QComboBox" name="myComboComputationType">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>610</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Normal</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Triangle inequality</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Average curvature 1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Average curvature 2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Average curvature 3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Stripe average</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fold line</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fold square</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Fold circle</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Exp smoothing</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Z smoothing</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>670</y>
+     <width>197</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_12">
+    <item>
+     <widget class="QCheckBox" name="myCheckBoxUseAddEnd">
+      <property name="text">
+       <string>Function (addEnd, branching)</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="myEditAddEndFunction"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QCheckBox" name="myCheckBoxLambertCorrection">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>560</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lambert correction</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>740</y>
+     <width>221</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_13">
+    <item>
+     <widget class="QCheckBox" name="myCheckBoxUseRerange">
+      <property name="text">
+       <string>Re-range value function </string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="myEditRerangeFunction"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>800</y>
+     <width>221</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_14">
+    <item>
+     <widget class="QCheckBox" name="myCheckBoxUseRerangeHeight">
+      <property name="text">
+       <string>Re-range 3D height</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="myEditRerangeHeight"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

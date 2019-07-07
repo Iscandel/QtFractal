@@ -53,12 +53,30 @@ MandelJuliaRandomRendererDialog::MandelJuliaRandomRendererDialog(QWidget *parent
 			this,
 			&MandelJuliaRandomRendererDialog::onRadioChanged);
 
+	connect(ui.myButtonPredefined, &QPushButton::clicked, this, &MandelJuliaRandomRendererDialog::onPredefined);
+	connect(ui.myButtonRandom, &QPushButton::clicked, this, &MandelJuliaRandomRendererDialog::onRandom);
+
 	ui.myRadioColor1->setChecked(true);
 	//Tirer aléatoirement
+
+	setParameters(params);
 }
 
 MandelJuliaRandomRendererDialog::~MandelJuliaRandomRendererDialog()
 {
+}
+
+void MandelJuliaRandomRendererDialog::setParameters(Parameters* params)
+{
+	std::vector<boost::any> vec = myParams->getVector("iterationColors", std::vector<boost::any>());
+	for (unsigned int i = 0; i < vec.size(); i++)
+	{
+		myColors[i] = boost::any_cast<Color>(vec[i]);
+	}
+
+	myColors[myColors.size() - 1] = myParams->getColor("fractalColor", Color());
+
+
 }
 
 void MandelJuliaRandomRendererDialog::onValueScrollbarsChanged(int value)
@@ -99,16 +117,7 @@ void MandelJuliaRandomRendererDialog::onCancel()
 
 void MandelJuliaRandomRendererDialog::onRadioChanged(int checked)
 {
-	int selectedRadio = getIndexSelectedRadio();
-
-	std::cout << selectedRadio << std::endl;
-
-	//Don't fire signals
-	whileBlocking(ui.myScrollBarRed)->setValue(myColors[selectedRadio].r * 255);
-	whileBlocking(ui.myScrollBarGreen)->setValue(myColors[selectedRadio].g * 255);
-	whileBlocking(ui.myScrollBarBlue)->setValue(myColors[selectedRadio].b * 255);
-
-	setPreviewColor(ui.myScrollBarRed->value(), ui.myScrollBarGreen->value(), ui.myScrollBarBlue->value());
+	updateGUI();
 }
 
 void MandelJuliaRandomRendererDialog::setPreviewColor(int r, int g, int b)
@@ -138,4 +147,37 @@ int MandelJuliaRandomRendererDialog::getIndexSelectedRadio()
 		return 5;
 	else
 		return -1;
+}
+
+void MandelJuliaRandomRendererDialog::onPredefined()
+{
+	myColors[0] = Color(1., 0., 0.);
+	myColors[1] = Color(1., 0.5, 0.);
+	myColors[2] = Color(1., 1., 0.);
+	myColors[3] = Color(0., 1., 0.);
+	myColors[4] = Color(0., 0., 1.);
+
+	updateGUI();
+}
+
+void MandelJuliaRandomRendererDialog::onRandom()
+{
+	for(int i = 0; i < 6; i++)
+		myColors[i] = Color(myRng.nextDouble(), myRng.nextDouble(), myRng.nextDouble());
+
+	updateGUI();
+}
+
+void MandelJuliaRandomRendererDialog::updateGUI()
+{
+	int selectedRadio = getIndexSelectedRadio();
+
+	std::cout << selectedRadio << std::endl;
+
+	//Don't fire signals
+	whileBlocking(ui.myScrollBarRed)->setValue(myColors[selectedRadio].r * 255);
+	whileBlocking(ui.myScrollBarGreen)->setValue(myColors[selectedRadio].g * 255);
+	whileBlocking(ui.myScrollBarBlue)->setValue(myColors[selectedRadio].b * 255);
+
+	setPreviewColor(ui.myScrollBarRed->value(), ui.myScrollBarGreen->value(), ui.myScrollBarBlue->value());
 }
