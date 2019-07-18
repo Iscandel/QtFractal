@@ -480,8 +480,9 @@ void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int ove
 
 	int sizeX = myImage->getSizeX();
 	int sizeY = myImage->getSizeY();
-	int blockSize = maxX - minX;
-	int destEndX = maxX, destEndY = maxY;
+	//Block size, including borders due to reconstruction filter
+	int blockSize = maxX - minX; 
+
 	if (minX == 0)
 		maxX -= overlapX;
 	else if(maxX >= sizeX)
