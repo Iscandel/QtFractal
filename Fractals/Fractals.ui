@@ -91,6 +91,7 @@
    <addaction name="actionZoomPlus"/>
    <addaction name="actionZoomMinus"/>
    <addaction name="actionTrace_fractal"/>
+   <addaction name="actionStop"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionSave_image">
@@ -121,6 +122,17 @@
   <action name="actionTrace_fractal">
    <property name="text">
     <string>Trace fractal</string>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
    </property>
    <property name="font">
     <font>

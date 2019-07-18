@@ -82,7 +82,7 @@ void Buddhabrot::compute(const Parameters& params, std::function<void()> callbac
 	//	myManager.addJobs(jobs, callback);
 	//});
 
-	myManager.addJobs(jobs, callback);
+	myManager.setJobs(jobs, "Computation...", callback);
 }
 
 std::vector<std::vector<TraceSample>> Buddhabrot::computePixel(double a, double b, const Parameters& params)
@@ -235,6 +235,11 @@ bool Buddhabrot::escapesToInfinity(double a, double b, bool passage2, int compos
 		if (iterations == myCurrentMaxIt) return false;
 	} while (x*x + y*y <= 4);// <= 2 && y <= 2);
 	return true;
+}
+
+bool Buddhabrot::isComputing()
+{
+	return !myManager.isIdle();
 }
 
 FACTORY_REGISTER_TYPE(Buddhabrot, Fractal)

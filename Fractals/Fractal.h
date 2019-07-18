@@ -26,6 +26,7 @@ public:
 
 	//virtual void compute(const Parameters& params, Array2D<Color>& out) = 0;
 	virtual void compute(const Parameters& params, std::function<void()> callback) = 0;
+	virtual void cancelComputation(bool wait = true) {};
 
 	virtual void addAdvanceListener(QObject* listener);//FractalComputationListener* listener);
 	virtual void addComputationEndsListener(QObject* listener);//FractalComputationListener* listener);
@@ -35,6 +36,7 @@ public:
 	void setImage(Image::ptr image) { myImage = image; }
 
 	virtual void initialize(const Parameters&) {}
+	virtual bool isComputing() = 0;
 
 signals:
 	void signalComputationAdvances(int perc);
@@ -61,4 +63,6 @@ public:
 public:
 	virtual void compute(const Parameters& params, std::function<void()> callback) override;
 	virtual Color computePixel(double x, double y, const Parameters& params, ParserById& parserById) = 0;
+	void cancelComputation(bool wait) override;
+	bool isComputing() override;
 };

@@ -4,6 +4,8 @@
 #include "Job.h"
 #include "Parameters.h"
 
+#include "ProgressNotifier.h"
+
 class GenericFractalJob :
 	public Job
 {
@@ -35,6 +37,8 @@ protected:
 	//int myHeight;
 
 	std::map<int, std::string> myParserExprByContext;
+
+	ProgressNotifier myProgress;
 };
 
 

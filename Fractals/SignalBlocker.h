@@ -6,8 +6,8 @@ template<class T> class SignalBlocker {
 	bool previous;
 public:
 	SignalBlocker(T *blocked)
-		: blocked(blocked),
-		previous(blocked->blockSignals(true)) {}
+		: blocked(blocked)
+		,previous(blocked->blockSignals(true)) {}
 	~SignalBlocker() { blocked->blockSignals(previous); }
 	T *operator->() { return blocked; }
 };

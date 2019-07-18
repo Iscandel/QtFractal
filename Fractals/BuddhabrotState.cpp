@@ -67,4 +67,4 @@ void BuddhabrotState::onClickConfigureFractal()
 }
 
 //FACTORY_REGISTER_TYPE_WITH_KEY(FractalWindow::getStrFractalName(FractalWindow::BUDDHABROT), BuddhabrotState, GuiState)
-FACTORY_REGISTER_TYPE_WITH_KEY("Buddhabrot", BuddhabrotState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Buddhabrot>::get(), BuddhabrotState, GuiState)

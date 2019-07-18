@@ -42,6 +42,8 @@ public:
 public:
 	FractalWindow(QWidget *parent = Q_NULLPTR);
 
+	~FractalWindow();
+
 	void computeFractal(const Parameters& params);
 
 	void affectImage();
@@ -65,6 +67,8 @@ public:
 
 	void resetParameters();
 
+	void cleanApp();
+
 public:
 	static void initFractalNames();
 
@@ -82,6 +86,10 @@ public:
 
 public:
 	//void computationAdvances(int perc) override;
+	void computationAdvances(const QString&, float perc);
+
+protected:
+	void closeEvent(QCloseEvent *event) override;
 
 public slots:
 	void rightButtonDrawFractal(int startX, int startY, int endX, int endY);
@@ -95,6 +103,10 @@ public slots:
 	void traceFractal();
 
 	void saveFractal();
+
+	void cancelComputation();
+
+	void refreshImage(int minX, int maxX, int minY, int maxY, int overlapX, int overlapY, const std::vector<uint8_t>& vecData);
 
 protected:
 	void initState(GuiState::ptr state);
@@ -113,6 +125,9 @@ private:
 
 	ProgressDialog::ptr myProgress;
 
+	QProgressBar* myProgressBar;
+	QLabel* myStatusLabel;
+
 	JobManager myManager; //old
 
 	Array2D<Color> myArray; //old
@@ -122,6 +137,10 @@ private:
 	std::vector<GuiState::ptr> myStates;
 
 	ChooseFractalWidget myTypeFractal;
+
+	std::vector<uchar> myRefreshImage;
+
+	std::mutex myRefreshMutex;
 
 };
 

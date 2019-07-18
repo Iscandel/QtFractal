@@ -3,6 +3,11 @@
 #include "Logger.h"
 #include "ReconstructionFilter.h"
 
+template<class T>
+T thresholding(T val, T min, T max)
+{
+	return val < min ? min : val  > max ? max : val;
+}
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
@@ -134,7 +139,7 @@ std::unique_ptr<Image> Image::createSubImage(int sizeX, int sizeY, int minX, int
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-void Image::merge(Image& subScreen)
+void Image::merge(Image& subScreen, std::vector<uint8_t>* modifiedData, bool rowMajor)
 {
 	int offsetX = subScreen.getMinX() - myMinX + myOverlapX - subScreen.getOverlapX();
 	int offsetY = subScreen.getMinY() - myMinY + myOverlapY - subScreen.getOverlapY();
@@ -142,20 +147,58 @@ void Image::merge(Image& subScreen)
 	int sizeX = subScreen.getSizeX() + 2 * subScreen.getOverlapX();
 	int sizeY = subScreen.getSizeY() + 2 * subScreen.getOverlapY();
 
+	if(modifiedData)
+		modifiedData->resize(sizeX *sizeY * 3);
+
 	std::lock_guard<std::mutex> lock(myMergeMutex);
 
-	int tmpX = 0;
-	for (int x = offsetX; x < offsetX + sizeX; x++)
+	int cpt = 0;
+	int tmpY = 0;
+	for (int y = offsetY; y < offsetY + sizeY; y++)
 	{
-		int tmpY = 0;
-		for (int y = offsetY; y < offsetY + sizeY; y++)
+		int tmpX = 0;
+		for (int x = offsetX; x < offsetX + sizeX; x++)
 		{
 			myPixels(x, y).myColor += subScreen.getPixel(tmpX, tmpY).myColor;
 			myPixels(x, y).myWeight += subScreen.getPixel(tmpX, tmpY).myWeight;
-			tmpY++;
+			if (modifiedData)
+			{
+				Color c = myPixels(x, y).myColor / myPixels(x, y).myWeight;
+
+				if (rowMajor)
+				{
+					(*modifiedData)[(tmpY * sizeX + tmpX) * 3] = thresholding<uint8_t>(c.r * 255, 0, 255);
+					(*modifiedData)[(tmpY * sizeX + tmpX) * 3 + 1] = thresholding<uint8_t>(c.g * 255, 0, 255);
+					(*modifiedData)[(tmpY * sizeX + tmpX) * 3 + 2] = thresholding<uint8_t>(c.b * 255, 0, 255);
+				}
+				else
+				{
+					(*modifiedData)[(tmpX * sizeY + tmpY) * 3] = thresholding<uint8_t>(c.r * 255, 0, 255);
+					(*modifiedData)[(tmpX * sizeY + tmpY) * 3 + 1] = thresholding<uint8_t>(c.g * 255, 0, 255);
+					(*modifiedData)[(tmpX * sizeY + tmpY) * 3 + 2] = thresholding<uint8_t>(c.b * 255, 0, 255);
+				}
+			}
+
+			tmpX++;
 		}
-		tmpX++;
+		tmpY++;
 	}
+	
+}
+
+void Image::getTrueImageMinMax(int& minX, int& maxX, int& minY, int& maxY)
+{
+	minX = myMinX; //(int)std::ceil(myMinX - myOverlapX);
+	int sizeX = getSizeX() + 2 * getOverlapX();
+	int sizeY = getSizeY() + 2 * getOverlapY();
+	maxX = myMinX + sizeX;//(int)std::floor(myMinX + mySizeX + myOverlapX);
+	minY = myMinY;//(int)std::ceil(myMinY - myOverlapX);
+	maxY = myMinY + sizeY;//(int)std::floor(myMinY + mySizeY + myOverlapY);
+
+	//minX = std::max(0, startX);
+	//maxX = std::min((int)myPixels.getWidth() - 1, endX);
+	//minY = std::max(0, startY);
+	//maxY = std::min((int)myPixels.getHeight() - 1, endY);
 }
 
 void Image::resize(int sizeX, int sizeY, int minX, int minY)

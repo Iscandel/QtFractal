@@ -64,4 +64,4 @@ void LyapunovState::onClickConfigureFractal()
 	dlg.exec();
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(FractalWindow::getStrFractalName(FractalWindow::LYAPUNOV), LyapunovState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Lyapunov>::get(), LyapunovState, GuiState)

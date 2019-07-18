@@ -6,13 +6,14 @@
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
 JobManager::JobManager()
-:myThreadNumber(8)
+:myThreadNumber(0)
 ,myNumberRunning(0)
 ,myIsShowProgress(true)
 ,myJobsDone(0)
 ,myCoeff(0)
-,myShowValue(0.1)
+,myShowValue(0.02)
 ,myIsJoinMode(false)
+, myProgress(0)
 {
 }
 
@@ -54,11 +55,13 @@ void JobManager::destroyThreads()
 			myThreads[i]->join();
 		//delete myThreads[i];
 	}
+
+	myThreads.clear();
 }
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-bool JobManager::isFinished()
+bool JobManager::isIdle()
 {
 	std::lock_guard<std::mutex> lock(myRemainingTasksMutex);
 
@@ -67,7 +70,7 @@ bool JobManager::isFinished()
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-int JobManager::remainingTasks()
+int JobManager::remainingThreads()
 {
 	std::lock_guard<std::mutex> lock(myRemainingTasksMutex);
 
@@ -80,17 +83,68 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 {
 	//Timer clock;
 
+	std::lock_guard<std::mutex> lock(myMutex);
 	//Enqueue jobs
 	for(unsigned int i = 0; i < jobs.size(); i++)
 	{
 		myJobs.push_back(jobs[i]);
 	}
 
-	myTotalJobs = myJobs.size();
+	//myTotalJobs = myJobs.size();
 
-	myIsShowProgress &= myTotalJobs > 2 ? true : false;
+	//myIsShowProgress &= myTotalJobs > 2 ? true : false;
 
-	myEndCallback = callback;
+	//myEndCallback = callback;
+
+	//myProgress.setTotal(myTotalJobs);
+
+	////Single threaded processing
+	////if(myThreadNumber == 1)
+	////{
+	////	myNumberRunning = myThreadNumber;
+	////	for(unsigned int i = 0; i < jobs.size(); i++)
+	////	{
+	////		myJobs[i]->run();
+	////	}
+	////	myNumberRunning = 0;
+	////}
+	////else
+	////{
+	//	//if(myThreads.size() == 0) 
+	//	{
+	//		initJobs();
+	//	}
+
+	//	//If the job manager is run in a threaded way, join can be called (and the end callback will be called after)
+	//	if(myIsJoinMode)
+	//		join();
+
+	//	//jobsDone();
+
+	//	//callback();
+	////}
+
+	////ILogger::log() << "Render time : " << clock.elapsedTime() << " s.\n";
+}
+
+void JobManager::setJobs(const std::vector<std::shared_ptr<Job> >& jobs, const std::string& progressMessage, std::function<void()> callback)
+{
+	//Timer clock;
+	myProgressMessage = progressMessage;
+	//Enqueue jobs
+	//for (unsigned int i = 0; i < jobs.size(); i++)
+	//{
+	//	myJobs.push_back(jobs[i]);
+	//}
+
+	//myTotalJobs = myJobs.size();
+
+	//myIsShowProgress &= myTotalJobs > 2 ? true : false;
+
+	//myEndCallback = callback;
+
+	//myProgress.setTotal(myTotalJobs);
+	//
 
 	//Single threaded processing
 	//if(myThreadNumber == 1)
@@ -104,18 +158,18 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 	//}
 	//else
 	//{
-		//if(myThreads.size() == 0) 
-		{
-			initJobs();
-		}
+	//if(myThreads.size() == 0) 
+	{
+		initJobs(jobs);
+	}
 
-		//If the job manager is run in a threaded way, join can be called (and the end callback will be called after)
-		if(myIsJoinMode)
-			join();
+	//If the job manager is run in a threaded way, join can be called (and the end callback will be called after)
+	if (myIsJoinMode)
+		join();
 
-		//jobsDone();
+	//jobsDone();
 
-		//callback();
+	//callback();
 	//}
 
 	//ILogger::log() << "Render time : " << clock.elapsedTime() << " s.\n";
@@ -123,22 +177,40 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-void JobManager::initJobs()
+void JobManager::initJobs(const std::vector<std::shared_ptr<Job> >& jobs)
 {
-	myCoeff = 0;
-	myJobsDone = 0.;
-	myNumberRunning = myThreadNumber;
-
 	if (myThreads.size() != 0)
 	{
-		for (int i = 0; i < myThreadNumber; i++)
+		for (int i = 0; i < myThreads.size(); i++)
 		{
 			if (myThreads[i]->joinable())
 				myThreads[i]->join();
 		}
 	}
-
 	myThreads.clear();
+
+	myIsCancelled = false;
+	myCoeff = 0;
+	myJobsDone = 0.;
+	myNumberRunning = myThreadNumber;
+
+	//
+	myJobs.clear();
+
+	//Enqueue jobs
+	for (unsigned int i = 0; i < jobs.size(); i++)
+	{
+		myJobs.push_back(jobs[i]);
+	}
+
+	myTotalJobs = myJobs.size();
+
+	myIsShowProgress &= myTotalJobs > 2 ? true : false;
+
+	//myEndCallback = callback;
+
+	myProgress.setTotal(myTotalJobs);
+	//
 
 	myThreads.resize(myThreadNumber);
 	for(int i = 0; i < myThreadNumber; i++) 
@@ -151,14 +223,18 @@ void JobManager::initJobs()
 ///////////////////////////////////////////////////////////////////////////////
 void JobManager::join()
 {
-	for (int i = 0; i < myThreadNumber; i++)
+	bool someRunning = !isIdle();
+	for (int i = 0; i < myThreads.size(); i++)
 	{
-		myThreads[i]->join();
+		if (myThreads[i]->joinable())
+			myThreads[i]->join();
 	}
 
 	myThreads.clear();
 
-	myEndCallback();
+	if(someRunning)
+		myProgress.reportJobsEnded("", myIsCancelled);
+	//myEndCallback();
 }
 
 //void JobManager::stopJobs()
@@ -184,7 +260,7 @@ void JobManager::jobRun()
 		{	
 			std::lock_guard<std::mutex> lock(myMutex);
 
-			if(myJobs.size() == 0)
+			if(myJobs.size() == 0 || myIsCancelled)
 				break;
 	
 			job = myJobs.back();
@@ -204,7 +280,8 @@ void JobManager::jobRun()
 	myNumberRunning--;
 	if (myNumberRunning == 0 && !myIsJoinMode)
 	{
-		jobsDone();
+		myProgress.reportJobsEnded("", myIsCancelled);
+		//jobsDone();
 	}
 }
 
@@ -215,6 +292,13 @@ void JobManager::jobsDone()
 	//myEndCallback();
 }
 
+void JobManager::cancelComputation(bool wait)
+{
+	myIsCancelled = true;
+	if(wait)
+		join();
+}
+
 void JobManager::showProgress()
 {
 	std::lock_guard<std::mutex> lock(myProgressMutex);
@@ -222,9 +306,10 @@ void JobManager::showProgress()
 
 	if ((double)myJobsDone / myTotalJobs > myShowValue * myCoeff)
 	{
-		double perc = myShowValue * myCoeff * 100;
-		dispatchComputationAdvances(perc);
-		ILogger::log() << perc << "%\n";
+		myProgress.reportProgress(myProgressMessage, myJobsDone);
+		//double perc = myShowValue * myCoeff * 100;
+		//dispatchComputationAdvances(perc);
+		//ILogger::log() << perc << "%\n";
 		myCoeff++;
 	}
 }

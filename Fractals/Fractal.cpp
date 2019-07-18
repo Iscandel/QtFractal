@@ -74,5 +74,15 @@ void GenericParallelizableFractal::compute(const Parameters& params, std::functi
 		}
 	}
 
-	myManager.addJobs(jobs, callback);
+	myManager.setJobs(jobs, "Computation...", callback);
+}
+
+void GenericParallelizableFractal::cancelComputation(bool wait)
+{
+	myManager.cancelComputation(wait);
+}
+
+bool GenericParallelizableFractal::isComputing()
+{
+	return !myManager.isIdle();
 }

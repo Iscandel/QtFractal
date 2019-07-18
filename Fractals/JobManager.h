@@ -9,6 +9,9 @@
 
 #include <QObject>
 
+
+#include "ProgressNotifier.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief This class allows multithreaded computation of image chunks
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,6 +20,8 @@ class JobManager : public QObject
 public:
 	Q_OBJECT
 
+public:
+	ProgressNotifier myProgress; //to change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public:
 	void setJoinMode(bool join) { myIsJoinMode = join; }
 
@@ -29,6 +34,7 @@ protected:
 public:
 	JobManager();
 	~JobManager(void);
+
 
 	///////////////////////////////////////////////////////////////////////////////
 	/// Defines the number of threads to be used.
@@ -44,20 +50,21 @@ public:
 	///////////////////////////////////////////////////////////////////////////////
 	/// Returns the number of active tasks (threads).
 	///////////////////////////////////////////////////////////////////////////////
-	int remainingTasks();
+	int remainingThreads();
 
 	///////////////////////////////////////////////////////////////////////////////
 	/// Pauses the program execution until the end of all the jobs.
 	///////////////////////////////////////////////////////////////////////////////
 	void join();
 
-	bool isFinished();
+	bool isIdle();
 
 	void addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::function<void()> callback);
+	void setJobs(const std::vector<std::shared_ptr<Job> >& jobs, const std::string& progressMessage, std::function<void()> callback);
 
 	//void stopJobs();
 
-	void initJobs();
+	void initJobs(const std::vector<std::shared_ptr<Job> >& jobs);
 	
 	void jobRun();
 
@@ -68,6 +75,8 @@ public:
 	void setShowProgress(bool show) { myIsShowProgress = show; }
 
 	void jobsDone();
+
+	void cancelComputation(bool wait);
 
 protected:
 	int myThreadNumber;
@@ -81,6 +90,7 @@ protected:
 	std::vector<std::shared_ptr<Job> > myJobs;
 
 	bool myIsShowProgress;
+	bool myIsCancelled;
 
 	int myJobsDone;
 	int myTotalJobs;
@@ -88,6 +98,7 @@ protected:
 	double myShowValue;
 
 	bool myIsJoinMode;
+	std::string myProgressMessage;
 
 	std::function<void()> myEndCallback;
 };

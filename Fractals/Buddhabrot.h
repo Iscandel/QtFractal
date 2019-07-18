@@ -28,6 +28,8 @@ public:
 
 	void postProcessing();
 
+	bool isComputing() override;
+
 protected:
 	int myCurrentMaxIt;
 	int myMaxItRed;

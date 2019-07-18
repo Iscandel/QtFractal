@@ -41,6 +41,13 @@ public:
 	///////////////////////////////////////////////////////////////////////////
 	typename ObjectFactory<ReturnType>::ptr getFactory(const std::string& type);
 
+	///////////////////////////////////////////////////////////////////////////
+	/// \brief Returns a vector containing the factory list
+	///
+	/// \return A vector containing a pointer to each registered factory
+	///////////////////////////////////////////////////////////////////////////
+	std::vector<typename ObjectFactory<ReturnType>::ptr> getFactoryList() const;
+
 protected:
 	FactoryMap myFactories;
 };
@@ -91,6 +98,18 @@ typename ObjectFactory< ReturnType>::ptr ObjectFactoryManager<ReturnType>::getFa
 	{
 		throw std::runtime_error(std::string("The requested factory " + type + " doesn't exist"));
 	}
+}
+
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+template<class ReturnType>
+std::vector<typename ObjectFactory<ReturnType>::ptr> ObjectFactoryManager<ReturnType>::getFactoryList() const
+{
+	std::vector<typename ObjectFactory<ReturnType>::ptr> res;
+	auto it = myFactories.cbegin();
+		for (;it != myFactories.cend();++it)
+			res.push_back(it->second);
+	return res;
 }
 
 //Should we define template<class T> struct WidgetStaticType; instead

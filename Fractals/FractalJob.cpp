@@ -6,13 +6,14 @@
 
 GenericFractalJob::GenericFractalJob(int offsetX, int offsetY, int sizeX, int sizeY, GenericParallelizableFractal* fractal, const Parameters& params, Image::ptr image)
 :myOffsetX(offsetX)
-,myOffsetY(offsetY)
-,mySizeX(sizeX)
-,mySizeY(sizeY)
-,myIsFinished(false)
-,myFractal(fractal)
-,myParameters(params)
-,myImage(image)
+, myOffsetY(offsetY)
+, mySizeX(sizeX)
+, mySizeY(sizeY)
+, myIsFinished(false)
+, myFractal(fractal)
+, myParameters(params)
+, myImage(image)
+, myProgress(0)
 //,myWidth(width)
 //,myHeight(height)
 {
@@ -101,6 +102,20 @@ void GenericFractalJob::run()
 		}
 	}
 
+	std::vector<uint8_t> modifiedData;
 	//Merge the subblock with the full screen
-	myImage->merge(*subScreen);
+	myImage->merge(*subScreen, &modifiedData, true);
+
+	int minX, maxX, minY, maxY;
+	subScreen->getTrueImageMinMax(minX, maxX, minY, maxY);
+	//minX = std::max(0, startX);
+	//maxX = std::min((int)myImage->getSizeX(), endX);
+	//minY = std::max(0, startY);
+	//maxY = std::min((int)myImage->getSizeY(), endY);
+
+	uint8_t* tmp = new uint8_t[modifiedData.size()];
+	for (int i = 0; i < modifiedData.size(); i++)
+		tmp[i] = modifiedData[i];
+	//memcpy(tmp, modifiedData.data(), modifiedData.size());
+	myProgress.reportDataModified(minX, maxX, minY, maxY, myImage->getOverlapX(), myImage->getOverlapY(), modifiedData);//.data());
 }

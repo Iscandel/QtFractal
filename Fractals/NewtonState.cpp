@@ -3,6 +3,7 @@
 #include "FractalWindow.h"
 #include "GeneralConfigurationDialog.h"
 #include "ObjectFactoryManager.h"
+#include "Newton.h"
 
 NewtonState::NewtonState(const Parameters&)
 :GuiState(nullptr)
@@ -61,4 +62,4 @@ void NewtonState::onClickConfigureFractal()
 	//dlg.exec();
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY("Newton", NewtonState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Newton>::get(), NewtonState, GuiState)

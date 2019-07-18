@@ -65,4 +65,7 @@ void MandelbrotState::onClickConfigureFractal()
 	dlg.exec();
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(FractalWindow::getStrFractalName(FractalWindow::MANDELBROT), MandelbrotState, GuiState)
+//getStaticType<Mandelbrot>() is better than Mandelbrot only because it can only work if the fractal type was defined
+//Moreover, it is evaluated at compile time, so there is no issues with the class order definition, 
+//ie getStaticType<Mandelbrot>() always exist when the macro is called
+FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Mandelbrot>::get(), MandelbrotState, GuiState)

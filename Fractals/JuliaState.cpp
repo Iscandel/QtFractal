@@ -64,4 +64,4 @@ void JuliaState::onClickGeneralConfig()
 
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(FractalWindow::getStrFractalName(FractalWindow::JULIA), JuliaState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Julia>::get(), JuliaState, GuiState)

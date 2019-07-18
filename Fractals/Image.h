@@ -66,7 +66,7 @@ public:
 	///////////////////////////////////////////////////////////////////////////
 	/// \brief 
 	///////////////////////////////////////////////////////////////////////////
-	void merge(Image& subScreen);
+	void merge(Image& subScreen, std::vector<uint8_t>* modifiedData = nullptr, bool rowMajor = true);
 
 	///////////////////////////////////////////////////////////////////////////
 	/// \brief 
@@ -87,6 +87,8 @@ public:
 
 	int getSizeX() const { return mySizeX; }
 	int getSizeY() const { return mySizeY; }
+
+	void getTrueImageMinMax(int& minX, int& maxX, int& minY, int& maxY);
 
 	void resize(int x, int y, int minX = 0, int minY = 0);
 

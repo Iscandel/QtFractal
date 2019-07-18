@@ -12,6 +12,13 @@
 #include <qfiledialog.h>
 #include <qerrormessage.h>
 
+
+#include "ProgressNotifier.h"
+#include "tools/Timer.h"
+
+
+Timer timer;
+
 template<class T>
 T thresholding(T val, T min, T max)
 {
@@ -66,6 +73,26 @@ FractalWindow::FractalWindow(QWidget *parent)
 	//ui.myLabelImage->setMinimumSize(out.getWidth(), out.getHeight());
 	QErrorMessage::qtHandler();
 
+	//typedef const std::vector<uint8_t> QtType;
+	//Q_DECLARE_METATYPE(Combination)
+	//qRegisterMetaType<Combination>("Combination");
+	typedef std::vector<uint8_t> QtType;
+	qRegisterMetaType<QtType>("std::vector<uint8_t>");
+
+	myProgressBar = new QProgressBar(ui.statusBar);
+	myStatusLabel = new QLabel(ui.statusBar);
+	
+	ui.statusBar->addWidget(myStatusLabel, 1);
+	ui.statusBar->addWidget(myProgressBar, 3);
+	Notifier::ptr notifier(new QtUiNotifier);
+	std::cout << notifier.get() << std::endl;
+	std::cout << (QtUiNotifier*)notifier.get() << std::endl;
+	connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalComputationAdvances, this, &FractalWindow::computationAdvances);
+	connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalJobsDone, this, &FractalWindow::computationEnds, Qt::QueuedConnection);
+	connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalReportDataModified, this, &FractalWindow::refreshImage, Qt::QueuedConnection); //queued connection is ok, but copies the vector
+	//connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalReportDataModified, this, &FractalWindow::refreshImage, Qt::ConnectionType::DirectConnection); //direct connection is ok only if view refresh is then call with emit
+	ProgressNotifier::addNotifier(notifier);
+
 	connect(ui.myLabelImage, SIGNAL(signalRightButtonDrawFractal(int, int, int, int)), 
 		this, SLOT(rightButtonDrawFractal(int, int, int, int)));
 
@@ -77,13 +104,26 @@ FractalWindow::FractalWindow(QWidget *parent)
 	connect(ui.actionTrace_fractal, SIGNAL(triggered()), this, SLOT(traceFractal()));
 	connect(ui.actionSave_image, SIGNAL(triggered()), this, SLOT(saveFractal()));
 
+	//connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanApp()));
+	bool res = connect(ui.actionStop, SIGNAL(triggered()), this, SLOT(cancelComputation()));
+
 	//myFractal = std::shared_ptr<Fractal>(new Julia);
 	myProgress = ProgressDialog::ptr(new ProgressDialog);
 	//myFractal->addAdvanceListener(myProgress.get());
 	//myFractal->addComputationEndsListener(this);
-
-	myProgress->show();
+	//std::vector<QtUiNotifier2::ptr> p;
+	//QtUiNotifier2::ptr notifier2(new QtUiNotifier2);
+	//p.push_back(std::move(notifier2));
+	//p.clear();
+	//std::unique_ptr<Notifier> p2(new QtUiNotifier2);
+	//p.clearNotifiers();
+	//myProgress->show();
 	computeFractal(myCurrentParameters);	
+}
+
+FractalWindow::~FractalWindow()
+{
+	//ProgressNotifier::clearNotifiers();
 }
 
 void FractalWindow::addActionToToolbar(QAction* action)
@@ -163,10 +203,14 @@ void FractalWindow::initFractalNames()
 		MYLIST(USE_SECOND_ELEMENT)
 	};
 
-	for (int i = 0; i < FractalNames::END; i++)
-	{
-		myFractalNames.push_back(STRING[i]);
-	}
+	auto vec = ObjectFactoryManager<Fractal>::getInstance()->getFactoryList();
+	for (auto factory : vec)
+		myFractalNames.push_back(factory->getObjectType());
+
+	//for (int i = 0; i < FractalNames::END; i++)
+	//{
+	//	myFractalNames.push_back(STRING[i]);
+	//}
 	
 }
 
@@ -202,6 +246,9 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 
 void FractalWindow::computeFractal(const Parameters& params)
 {
+	//To do
+	//if (myFractal->isComputing())
+	//	myFractal->cancelComputation(true);
 	std::string fractal = myCurrentParameters.getString("fractal", "Mandelbrot");
 	auto factory = ObjectFactoryManager<Fractal>::getInstance()->getFactory(fractal);
 	setFractal(factory->create(params));
@@ -223,6 +270,15 @@ void FractalWindow::computeFractal(const Parameters& params)
 	}
 		
 	myFractal->setImage(myImage);
+	int minX, maxX, minY, maxY;
+	myImage->getTrueImageMinMax(minX, maxX, minY, maxY);
+
+	if (ui.myLabelImage->pixmap())
+		if (ui.myLabelImage->pixmap()->size().width() != (maxX - minX) || ui.myLabelImage->pixmap()->size().height() != (maxY - minY))
+			ui.myLabelImage->setPixmap(QPixmap());
+
+	//myRefreshImage.resize((maxX - minX) * (maxY - minY) * 4, 0);
+	myRefreshImage.resize(width * height * 4, 0);
 	myFractal->compute(params, std::bind(&FractalWindow::computationEnds, this));
 	
 	//old
@@ -256,9 +312,12 @@ void FractalWindow::computeFractal(const Parameters& params)
 
 void FractalWindow::affectImage()
 {
+	std::cout << "affect" << std::endl;
+
+	ui.myLabelImage->setPixmap(QPixmap());
 	myImage->postProcessColor();
 	Array2D<Pixel>& array = myImage->getPixels();
-
+	//std::lock_guard<std::mutex> lock(myRefreshMutex);
 	QImage image(array.getWidth(), array.getHeight(), QImage::Format_RGB32);
 	for (int i = 0; i < array.getWidth(); i++)
 	{
@@ -268,22 +327,37 @@ void FractalWindow::affectImage()
 			const Pixel& col = array(i, j);
 			//if (col.myColor.r > 1. || col.myColor.g > 1. || col.myColor.b > 1.)
 			//	std::cout << col.myColor << std::endl;
-
+			myRefreshImage[(j * array.getWidth() + i) * 4] = (uchar)thresholding<int>(col.myColor.b * 255., 0, 255);
+			myRefreshImage[(j * array.getWidth() + i) * 4 + 1] = (uchar)thresholding<int>(col.myColor.g * 255., 0, 255);
+			myRefreshImage[(j * array.getWidth() + i) * 4 + 2] = (uchar)thresholding<int>(col.myColor.r * 255., 0, 255);
+			myRefreshImage[(j * array.getWidth() + i) * 4 + 3] = (uchar)0xff;
 			image.setPixelColor(i, j, QColor(thresholding<int>(col.myColor.r * 255., 0, 255), 
 											 thresholding<int>(col.myColor.g * 255., 0, 255), 
 											 thresholding<int>(col.myColor.b * 255., 0, 255)));
 		}
 	}
+
+
+	image = QImage( myRefreshImage.data(), array.getWidth(), array.getHeight(), array.getWidth() * 4, QImage::Format_RGB32);
+
 	QPixmap pixmap = QPixmap::fromImage(image);
+	//pixmap.detach();
 	ui.myLabelImage->setPixmap(pixmap);
 	ui.myLabelImage->adjustSize();
 }
 
 void FractalWindow::computationEnds()
 {
+	std::cout << timer.elapsedTime() << std::endl;
 	std::cout << "fini" << std::endl;
+	if (!myFractal->isComputing())
+	{
+		myProgressBar->hide();
+		myStatusLabel->hide();
+		affectImage();
+	}
 	myProgress->hide();
-	affectImage();
+	//affectImage();
 }
 
 void FractalWindow::showTypeFractal()
@@ -358,10 +432,25 @@ void FractalWindow::setFractal(Fractal::ptr fractal)
 
 void FractalWindow::traceFractal()
 {
+	timer.reset();
+	if (myFractal)
+		myFractal->cancelComputation(true);
 
-	myProgress->resetProgressBar();
-	myProgress->show();
+	ui.myLabelImage->setPixmap(QPixmap());
+
+	myProgressBar->setValue(0);
+	myProgressBar->show();
+	myStatusLabel->show();
+	
+	//myProgress->resetProgressBar();
+	//myProgress->show();
 	computeFractal(myCurrentParameters);
+	
+}
+
+void FractalWindow::cancelComputation()
+{
+	myFractal->cancelComputation();
 }
 
 void FractalWindow::saveFractal()
@@ -375,9 +464,74 @@ void FractalWindow::saveFractal()
 	ILogger::log() << "saved ? " << saved << " " << fileName.toStdString() << "\n";
 }
 
-//void FractalWindow::computationAdvances(int perc)
-//{
-//	//std::cout << perc << std::endl;
-//	myProgress->computationAdvances(perc);
-//	myProgress->repaint();
-//}
+void FractalWindow::computationAdvances(const QString& message, float perc)
+{
+	myStatusLabel->setText(message);
+	myProgressBar->setValue(perc);
+	myProgressBar->repaint();
+
+	//myProgress->computationAdvances(perc);
+	//myProgress->repaint();
+}
+
+void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int overlapX, int overlapY, const std::vector<uint8_t>& vecData)
+{
+	//ui.myLabelImage->setPixmap(QPixmap());
+
+	int sizeX = myImage->getSizeX();
+	int sizeY = myImage->getSizeY();
+	int blockSize = maxX - minX;
+	int destEndX = maxX, destEndY = maxY;
+	if (minX == 0)
+		maxX -= overlapX;
+	else if(maxX >= sizeX)
+		maxX = sizeX;
+	else
+		overlapX = 0;
+	if (minY == 0)
+		maxY -= overlapY;
+	else if(maxY >= sizeY)
+		maxY = sizeY;
+	else
+		overlapY = 0;
+	
+//std::lock_guard<std::mutex> lock(myRefreshMutex);
+	const uint8_t* data = vecData.data();
+	int tmpY = 0;
+	for (int y = minY; y < maxY; y++)
+	{
+		int tmpX = 0;
+		for (int x = minX; x < maxX; x++)
+		{	
+			myRefreshImage[(y * sizeX + x) * 4 + 2] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3];
+			myRefreshImage[(y * sizeX + x) * 4 + 1] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 1];
+			myRefreshImage[(y * sizeX + x) * 4] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 2];
+			myRefreshImage[(y * sizeX + x) * 4 + 3] = (uchar)0xff;
+			tmpX++;
+		}
+		tmpY++;
+	}
+	
+	QImage image(myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
+	QPixmap pixmap = QPixmap::fromImage(image);
+	//pixmap.detach();
+	ui.myLabelImage->setPixmap(pixmap);
+	ui.myLabelImage->adjustSize();
+}
+
+void FractalWindow::cleanApp()
+{
+	ProgressNotifier::clearNotifiers();
+}
+
+void FractalWindow::closeEvent(QCloseEvent *event)
+{
+	cleanApp();
+	//ProgressNotifier::clearNotifiers();
+	QMainWindow::closeEvent(event);
+}
+
+
+//cancelComputation -> supprimer job done si pas de job qui étaient en cours
+//affect image à remettre
+//directConnection + emit updateUI
