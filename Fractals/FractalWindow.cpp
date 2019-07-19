@@ -16,6 +16,8 @@
 #include "ProgressNotifier.h"
 #include "tools/Timer.h"
 
+#include <qpixmapcache.h>
+
 
 Timer timer;
 
@@ -273,12 +275,13 @@ void FractalWindow::computeFractal(const Parameters& params)
 	int minX, maxX, minY, maxY;
 	myImage->getTrueImageMinMax(minX, maxX, minY, maxY);
 
-	if (ui.myLabelImage->pixmap())
-		if (ui.myLabelImage->pixmap()->size().width() != (maxX - minX) || ui.myLabelImage->pixmap()->size().height() != (maxY - minY))
-			ui.myLabelImage->setPixmap(QPixmap());
-
+	if(myRefreshImage.size() != width * height * 4)
+	{
+		myRefreshImage.clear();	
+		myRefreshImage.resize(width * height * 4, 0);
+	}
 	//myRefreshImage.resize((maxX - minX) * (maxY - minY) * 4, 0);
-	myRefreshImage.resize(width * height * 4, 0);
+
 	myFractal->compute(params, std::bind(&FractalWindow::computationEnds, this));
 	
 	//old
@@ -317,20 +320,24 @@ void FractalWindow::affectImage()
 	ui.myLabelImage->setPixmap(QPixmap());
 	myImage->postProcessColor();
 	Array2D<Pixel>& array = myImage->getPixels();
+	int sizeX = myImage->getSizeX();
+	int sizeY = myImage->getSizeY();
+	int overlapX = myImage->getOverlapX();
+	int overlapY = myImage->getOverlapY();
 	//std::lock_guard<std::mutex> lock(myRefreshMutex);
 	QImage image(array.getWidth(), array.getHeight(), QImage::Format_RGB32);
-	for (int i = 0; i < array.getWidth(); i++)
+	for (int i = 0; i < sizeX; i++)
 	{
-		for (int j = 0; j < array.getHeight(); j++)
+		for (int j = 0; j < sizeY; j++)
 		{
 			//const Color& col = myArray(i, j);
-			const Pixel& col = array(i, j);
+			const Pixel& col = array(i + overlapX, j + overlapY);
 			//if (col.myColor.r > 1. || col.myColor.g > 1. || col.myColor.b > 1.)
 			//	std::cout << col.myColor << std::endl;
-			myRefreshImage[(j * array.getWidth() + i) * 4] = (uchar)thresholding<int>(col.myColor.b * 255., 0, 255);
-			myRefreshImage[(j * array.getWidth() + i) * 4 + 1] = (uchar)thresholding<int>(col.myColor.g * 255., 0, 255);
-			myRefreshImage[(j * array.getWidth() + i) * 4 + 2] = (uchar)thresholding<int>(col.myColor.r * 255., 0, 255);
-			myRefreshImage[(j * array.getWidth() + i) * 4 + 3] = (uchar)0xff;
+			myRefreshImage[(j * sizeX + i) * 4] = (uchar)thresholding<int>(col.myColor.b * 255., 0, 255);
+			myRefreshImage[(j * sizeX + i) * 4 + 1] = (uchar)thresholding<int>(col.myColor.g * 255., 0, 255);
+			myRefreshImage[(j * sizeX + i) * 4 + 2] = (uchar)thresholding<int>(col.myColor.r * 255., 0, 255);
+			myRefreshImage[(j * sizeX + i) * 4 + 3] = (uchar)0xff;
 			image.setPixelColor(i, j, QColor(thresholding<int>(col.myColor.r * 255., 0, 255), 
 											 thresholding<int>(col.myColor.g * 255., 0, 255), 
 											 thresholding<int>(col.myColor.b * 255., 0, 255)));
@@ -338,7 +345,7 @@ void FractalWindow::affectImage()
 	}
 
 
-	image = QImage( myRefreshImage.data(), array.getWidth(), array.getHeight(), array.getWidth() * 4, QImage::Format_RGB32);
+	image = QImage( myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
 
 	QPixmap pixmap = QPixmap::fromImage(image);
 	//pixmap.detach();
@@ -372,14 +379,14 @@ void FractalWindow::zoomPlus()
 	double ymin = myCurrentParameters.getDouble("ymin", -2.);
 	double ymax = myCurrentParameters.getDouble("ymax", 2.);
 
-	double areaWidth = std::abs(xmax - xmin);   //Calcul de la taille de la fenêtre en x
-	double newWidth = areaWidth / 2.;    //Longueur à enlever au total
-	xmin += newWidth / 2;                   //Calcul de la nouvelle coord en xmin
-	xmax -= newWidth / 2;					//Calcul de la nouvelle coord en xmax
-	double areaHeight = std::abs(ymax - ymin);   //Calcul de la taille de la fenêtre en y
-	double newHeight = areaHeight / 2;    //Longueur à enlever au total
-	ymin += newHeight / 2;					//Calcul de la nouvelle coord en ymin
-	ymax -= newHeight / 2;					//Calcul de la nouvelle coord en yMax
+	double areaWidth = std::abs(xmax - xmin);   //Window size X
+	double newWidth = areaWidth / 2.;    //New window size X
+	xmin += newWidth / 2;                   //New xmin
+	xmax -= newWidth / 2;					//New xmax
+	double areaHeight = std::abs(ymax - ymin);   //Window size Y
+	double newHeight = areaHeight / 2;    //New window size X
+	ymin += newHeight / 2;					
+	ymax -= newHeight / 2;					
 	
 	myCurrentParameters.addDouble("xmin", xmin);
 	myCurrentParameters.addDouble("xmax", xmax);
@@ -474,6 +481,10 @@ void FractalWindow::computationAdvances(const QString& message, float perc)
 	//myProgress->repaint();
 }
 
+//void FractalWindow::update()
+//{
+//
+//}
 void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int overlapX, int overlapY, const std::vector<uint8_t>& vecData)
 {
 	//ui.myLabelImage->setPixmap(QPixmap());
@@ -515,14 +526,17 @@ void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int ove
 	
 	QImage image(myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
 	QPixmap pixmap = QPixmap::fromImage(image);
+
 	//pixmap.detach();
 	ui.myLabelImage->setPixmap(pixmap);
-	ui.myLabelImage->adjustSize();
+	//ui.myLabelImage->adjustSize();
 }
 
 void FractalWindow::cleanApp()
 {
 	ProgressNotifier::clearNotifiers();
+	if (myFractal)
+		myFractal->cancelComputation();
 }
 
 void FractalWindow::closeEvent(QCloseEvent *event)
