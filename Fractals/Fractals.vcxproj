@@ -224,6 +224,7 @@
     </ClCompile>
     <ClCompile Include="GuiState.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageUtils.cpp" />
     <ClCompile Include="Job.cpp" />
     <ClCompile Include="JobManager.cpp" />
     <ClCompile Include="Julia.cpp" />
@@ -365,6 +366,7 @@
     <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRendererDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_MandelJuliaSineRendererDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_MitchellNetravaliFilterConfigurationDialog.h" />
+    <ClInclude Include="ImageUtils.h" />
     <ClInclude Include="Julia.h" />
     <ClInclude Include="JuliaState.h" />
     <ClInclude Include="Lyapunov.h" />

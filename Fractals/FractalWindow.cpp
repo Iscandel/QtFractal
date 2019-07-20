@@ -1,6 +1,7 @@
 #include "FractalWindow.h"
 
 #include "BoxFilter.h"
+#include "ImageUtils.h"
 #include "MitchellNetravaliFilter.h"
 #include "FractalJob.h"
 #include "Mandelbrot.h"
@@ -275,12 +276,17 @@ void FractalWindow::computeFractal(const Parameters& params)
 	int minX, maxX, minY, maxY;
 	myImage->getTrueImageMinMax(minX, maxX, minY, maxY);
 
-	if(myRefreshImage.size() != width * height * 4)
-	{
-		myRefreshImage.clear();	
-		myRefreshImage.resize(width * height * 4, 0);
-	}
+	//if(myRefreshImage.size() != width * height * 4)
+	//{
+	//	myRefreshImage.clear();	
+	//	myRefreshImage.resize(width * height * 4, 0);
+	//}
 	//myRefreshImage.resize((maxX - minX) * (maxY - minY) * 4, 0);
+	if (myRefreshImage.size() != width * height)
+	{
+		myRefreshImage.clear();
+		myRefreshImage.resize(width * height, 0);
+	}
 
 	myFractal->compute(params, std::bind(&FractalWindow::computationEnds, this));
 	
@@ -316,6 +322,7 @@ void FractalWindow::computeFractal(const Parameters& params)
 void FractalWindow::affectImage()
 {
 	std::cout << "affect" << std::endl;
+	return;
 
 	ui.myLabelImage->setPixmap(QPixmap());
 	myImage->postProcessColor();
@@ -326,26 +333,26 @@ void FractalWindow::affectImage()
 	int overlapY = myImage->getOverlapY();
 	//std::lock_guard<std::mutex> lock(myRefreshMutex);
 	QImage image(array.getWidth(), array.getHeight(), QImage::Format_RGB32);
-	for (int i = 0; i < sizeX; i++)
-	{
-		for (int j = 0; j < sizeY; j++)
-		{
-			//const Color& col = myArray(i, j);
-			const Pixel& col = array(i + overlapX, j + overlapY);
-			//if (col.myColor.r > 1. || col.myColor.g > 1. || col.myColor.b > 1.)
-			//	std::cout << col.myColor << std::endl;
-			myRefreshImage[(j * sizeX + i) * 4] = (uchar)thresholding<int>(col.myColor.b * 255., 0, 255);
-			myRefreshImage[(j * sizeX + i) * 4 + 1] = (uchar)thresholding<int>(col.myColor.g * 255., 0, 255);
-			myRefreshImage[(j * sizeX + i) * 4 + 2] = (uchar)thresholding<int>(col.myColor.r * 255., 0, 255);
-			myRefreshImage[(j * sizeX + i) * 4 + 3] = (uchar)0xff;
-			image.setPixelColor(i, j, QColor(thresholding<int>(col.myColor.r * 255., 0, 255), 
-											 thresholding<int>(col.myColor.g * 255., 0, 255), 
-											 thresholding<int>(col.myColor.b * 255., 0, 255)));
-		}
-	}
+	//for (int i = 0; i < sizeX; i++)
+	//{
+	//	for (int j = 0; j < sizeY; j++)
+	//	{
+	//		//const Color& col = myArray(i, j);
+	//		const Pixel& col = array(i + overlapX, j + overlapY);
+	//		//if (col.myColor.r > 1. || col.myColor.g > 1. || col.myColor.b > 1.)
+	//		//	std::cout << col.myColor << std::endl;
+	//		myRefreshImage[(j * sizeX + i) * 4] = (uchar)thresholding<int>(col.myColor.b * 255., 0, 255);
+	//		myRefreshImage[(j * sizeX + i) * 4 + 1] = (uchar)thresholding<int>(col.myColor.g * 255., 0, 255);
+	//		myRefreshImage[(j * sizeX + i) * 4 + 2] = (uchar)thresholding<int>(col.myColor.r * 255., 0, 255);
+	//		myRefreshImage[(j * sizeX + i) * 4 + 3] = (uchar)0xff;
+	//		image.setPixelColor(i, j, QColor(thresholding<int>(col.myColor.r * 255., 0, 255), 
+	//										 thresholding<int>(col.myColor.g * 255., 0, 255), 
+	//										 thresholding<int>(col.myColor.b * 255., 0, 255)));
+	//	}
+	//}
 
-
-	image = QImage( myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
+	ImageUtils::convert(array, overlapX, overlapY, sizeX, sizeY, myRefreshImage, ImageUtils::ARGB32);
+	image = QImage((uchar*)myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
 
 	QPixmap pixmap = QPixmap::fromImage(image);
 	//pixmap.detach();
@@ -492,39 +499,46 @@ void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int ove
 	int sizeX = myImage->getSizeX();
 	int sizeY = myImage->getSizeY();
 	//Block size, including borders due to reconstruction filter
-	int blockSize = maxX - minX; 
+//	int blockSize = maxX - minX; 
+//
+//	if (minX == 0)
+//		maxX -= overlapX;
+//	else if(maxX >= sizeX)
+//		maxX = sizeX;
+//	else
+//		overlapX = 0;
+//	if (minY == 0)
+//		maxY -= overlapY;
+//	else if(maxY >= sizeY)
+//		maxY = sizeY;
+//	else
+//		overlapY = 0;
+//	
+////std::lock_guard<std::mutex> lock(myRefreshMutex);
+//	const uint8_t* data = vecData.data();
+//	int tmpY = 0;
+//	for (int y = minY; y < maxY; y++)
+//	{
+//		int tmpX = 0;
+//		for (int x = minX; x < maxX; x++)
+//		{	
+//			uint32_t argb = Color::toARGB32((uint8_t)0xff,
+//				(uint8_t)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3],
+//				(uint8_t)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 1],
+//				(uint8_t)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 2]);
+//			//myRefreshImage[(y * sizeX + x) * 4] = argb;
+//			myRefreshImage[(y * sizeX + x) * 4 + 2] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3];
+//			myRefreshImage[(y * sizeX + x) * 4 + 1] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 1];
+//			myRefreshImage[(y * sizeX + x) * 4] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 2];
+//			myRefreshImage[(y * sizeX + x) * 4 + 3] = (uchar)0xff;
+//			tmpX++;
+//		}
+//		tmpY++;
+//	}
+	
+	ImageUtils::convert(vecData, 3, minX, maxX, minY, maxY, overlapX, overlapY, sizeX, sizeY, myRefreshImage, ImageUtils::ARGB32);
 
-	if (minX == 0)
-		maxX -= overlapX;
-	else if(maxX >= sizeX)
-		maxX = sizeX;
-	else
-		overlapX = 0;
-	if (minY == 0)
-		maxY -= overlapY;
-	else if(maxY >= sizeY)
-		maxY = sizeY;
-	else
-		overlapY = 0;
-	
-//std::lock_guard<std::mutex> lock(myRefreshMutex);
-	const uint8_t* data = vecData.data();
-	int tmpY = 0;
-	for (int y = minY; y < maxY; y++)
-	{
-		int tmpX = 0;
-		for (int x = minX; x < maxX; x++)
-		{	
-			myRefreshImage[(y * sizeX + x) * 4 + 2] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3];
-			myRefreshImage[(y * sizeX + x) * 4 + 1] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 1];
-			myRefreshImage[(y * sizeX + x) * 4] = (uchar)data[((tmpY + overlapY) * blockSize + (tmpX + overlapX)) * 3 + 2];
-			myRefreshImage[(y * sizeX + x) * 4 + 3] = (uchar)0xff;
-			tmpX++;
-		}
-		tmpY++;
-	}
-	
-	QImage image(myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
+	QImage image((uchar*)myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
 	QPixmap pixmap = QPixmap::fromImage(image);
 
 	//pixmap.detach();

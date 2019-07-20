@@ -113,9 +113,9 @@ void GenericFractalJob::run()
 	//minY = std::max(0, startY);
 	//maxY = std::min((int)myImage->getSizeY(), endY);
 
-	uint8_t* tmp = new uint8_t[modifiedData.size()];
-	for (int i = 0; i < modifiedData.size(); i++)
-		tmp[i] = modifiedData[i];
+	//uint8_t* tmp = new uint8_t[modifiedData.size()];
+	//for (int i = 0; i < modifiedData.size(); i++)
+	//	tmp[i] = modifiedData[i];
 	//memcpy(tmp, modifiedData.data(), modifiedData.size());
 	myProgress.reportDataModified(minX, maxX, minY, maxY, myImage->getOverlapX(), myImage->getOverlapY(), modifiedData);//.data());
 }

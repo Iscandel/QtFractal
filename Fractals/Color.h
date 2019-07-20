@@ -42,6 +42,16 @@ public:
 		return false;
 	}
 
+	static uint32_t toARGB32(uint8_t a, uint8_t r, uint8_t g, uint8_t b)
+	{
+		return (a << 24) | (r << 16) | (g << 8) | b;
+	}
+
+	static uint32_t toRGBA32(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+	{
+		return (r << 24) | (g << 16) | (b << 8) | a;
+	}
+
 public:
 	double r;
 	double g;

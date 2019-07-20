@@ -138,7 +138,7 @@ private:
 
 	ChooseFractalWidget myTypeFractal;
 
-	std::vector<uchar> myRefreshImage;
+	std::vector<uint32_t> myRefreshImage;
 
 	std::mutex myRefreshMutex;
 
