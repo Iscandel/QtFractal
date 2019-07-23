@@ -59,139 +59,49 @@
     <Filter Include="FParser">
       <UniqueIdentifier>{06bae8ad-a922-4650-be49-6a698e6ecd02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{18df12c0-8db9-4512-bac4-6a6b9e30eaec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{8187685e-3b5e-44ab-8f04-cf4577735975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{37582ab4-5be7-489b-aceb-0fc1021a04dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_Fractals.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_FractalWindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="FParser\fparser.cc">
+      <Filter>FParser</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_FractalWindow.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="FParser\fpoptimizer.cc">
+      <Filter>FParser</Filter>
     </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Parameters.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_WidgetFractal.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_WidgetFractal.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ChooseFractalWidget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ChooseFractalWidget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_ProgressDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_ProgressDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Fractal2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FractalComputationListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectFactoryManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MandelbrotState.cpp">
-      <Filter>Gui states</Filter>
-    </ClCompile>
-    <ClCompile Include="ChooseFractalWidget.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="FractalWindow.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ProgressDialog.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="WidgetFractal.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GuiState.cpp">
-      <Filter>Gui states</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxFilter.cpp">
-      <Filter>Reconstruction filters</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianFilter.cpp">
-      <Filter>Reconstruction filters</Filter>
-    </ClCompile>
-    <ClCompile Include="MitchellNetravaliFilter.cpp">
-      <Filter>Reconstruction filters</Filter>
-    </ClCompile>
-    <ClCompile Include="ReconstructionFilter.cpp">
-      <Filter>Reconstruction filters</Filter>
-    </ClCompile>
-    <ClCompile Include="Fractal.cpp">
+    <ClCompile Include="src\fractal\Buddhabrot.cpp">
       <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="Mandelbrot.cpp">
+    <ClCompile Include="src\fractal\Fractal.cpp">
       <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="Julia.cpp">
+    <ClCompile Include="src\fractal\Fractal2.cpp">
       <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="JuliaState.cpp">
-      <Filter>Gui states</Filter>
+    <ClCompile Include="src\fractal\Julia.cpp">
+      <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GeneralConfigurationDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="src\fractal\Lyapunov.cpp">
+      <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GeneralConfigurationDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="src\fractal\Mandelbrot.cpp">
+      <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GuiState.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="src\fractal\Newton.cpp">
+      <Filter>Fractals</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GuiState.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneralConfigurationDialog.cpp">
+    <ClCompile Include="src\gui\BoxFilterConfigurationDialog.cpp">
       <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="MandelbrotConfigurationDialog.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MandelbrotConfigurationDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MandelbrotConfigurationDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="FractalJob.cpp">
-      <Filter>Job</Filter>
-    </ClCompile>
-    <ClCompile Include="Job.cpp">
-      <Filter>Job</Filter>
-    </ClCompile>
-    <ClCompile Include="JobManager.cpp">
-      <Filter>Job</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_BoxFilterConfigurationDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -199,41 +109,8 @@
     <ClCompile Include="GeneratedFiles\Release\moc_BoxFilterConfigurationDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MitchellNetravaliFilterConfigurationDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MitchellNetravaliFilterConfigurationDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_GaussianFilterConfigurationDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_GaussianFilterConfigurationDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxFilterConfigurationDialog.cpp">
+    <ClCompile Include="src\gui\BuddhabrotConfigurationDialog.cpp">
       <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianFilterConfigurationDialog.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="MitchellNetravaliFilterConfigurationDialog.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaRandomRendererDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaRandomRendererDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="MandelJuliaRandomRendererDialog.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Buddhabrot.cpp">
-      <Filter>Fractals</Filter>
-    </ClCompile>
-    <ClCompile Include="BuddhabrotJob.cpp">
-      <Filter>Job</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_BuddhabrotConfigurationDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -241,35 +118,44 @@
     <ClCompile Include="GeneratedFiles\Release\moc_BuddhabrotConfigurationDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="BuddhabrotConfigurationDialog.cpp">
+    <ClCompile Include="src\gui\ChooseFractalWidget.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="BuddhabrotState.cpp">
-      <Filter>Gui states</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaSineRendererDialog.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_ChooseFractalWidget.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaSineRendererDialog.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_ChooseFractalWidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaBlackAndWhiteRenderer.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="MandelJuliaPredefRandomRenderer.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="MandelJuliaSineRenderer.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="MandelJuliaSineRendererDialog.cpp">
+    <ClCompile Include="src\gui\FractalWindow.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="Rng.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_FractalWindow.cpp">
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Lyapunov.cpp">
-      <Filter>Fractals</Filter>
+    <ClCompile Include="GeneratedFiles\Release\moc_FractalWindow.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\GaussianFilterConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GaussianFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GaussianFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\GeneralConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GeneralConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GeneralConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\LyapunovConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_LyapunovConfigurationDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -277,7 +163,7 @@
     <ClCompile Include="GeneratedFiles\Release\moc_LyapunovConfigurationDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="LyapunovConfigurationDialog.cpp">
+    <ClCompile Include="src\gui\LyapunovRandomRendererDialog.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_LyapunovRandomRendererDialog.cpp">
@@ -286,65 +172,164 @@
     <ClCompile Include="GeneratedFiles\Release\moc_LyapunovRandomRendererDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaBaseRenderer.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="LyapunovBaseRenderer.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="LyapunovRandomRenderer.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="LyapunovRenderer1.cpp">
-      <Filter>Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="LyapunovRandomRendererDialog.cpp">
+    <ClCompile Include="src\gui\MandelbrotConfigurationDialog.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="LyapunovState.cpp">
-      <Filter>Gui states</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaRandomRenderer2Dialog.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelbrotConfigurationDialog.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaRandomRenderer2Dialog.cpp">
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelbrotConfigurationDialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaRandomRenderer2Dialog.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\gui\MandelJuliaLayerConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="Newton.cpp">
-      <Filter>Fractals</Filter>
+    <ClCompile Include="src\gui\MandelJuliaRandomRenderer2Dialog.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="NewtonState.cpp">
+    <ClCompile Include="src\gui\MandelJuliaRandomRendererDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaRandomRendererDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaRandomRendererDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\MandelJuliaSineRendererDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaSineRendererDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaSineRendererDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\MitchellNetravaliFilterConfigurationDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MitchellNetravaliFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MitchellNetravaliFilterConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\ProgressDialog.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ProgressDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ProgressDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\WidgetFractal.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_WidgetFractal.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_WidgetFractal.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guiState\BuddhabrotState.cpp">
       <Filter>Gui states</Filter>
     </ClCompile>
-    <ClCompile Include="Complex.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\guiState\GuiState.cpp">
+      <Filter>Gui states</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaRandomRenderer2.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiState.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiState.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guiState\JuliaState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guiState\LyapunovState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guiState\MandelbrotState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guiState\NewtonState.cpp">
+      <Filter>Gui states</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job\BuddhabrotJob.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job\FractalJob.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job\Job.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job\JobManager.cpp">
+      <Filter>Job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filter\BoxFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filter\GaussianFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filter\MitchellNetravaliFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filter\ReconstructionFilter.cpp">
+      <Filter>Reconstruction filters</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer\LyapunovBaseRenderer.cpp">
       <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="FParser\fparser.cc">
-      <Filter>FParser</Filter>
+    <ClCompile Include="src\renderer\LyapunovRandomRenderer.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="FParser\fpoptimizer.cc">
-      <Filter>FParser</Filter>
+    <ClCompile Include="src\renderer\LyapunovRenderer1.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaLayerConfigurationDialog.cpp">
-      <Filter>Generated Files\Debug</Filter>
+    <ClCompile Include="src\renderer\MandelJuliaBaseRenderer.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaLayerConfigurationDialog.cpp">
-      <Filter>Generated Files\Release</Filter>
+    <ClCompile Include="src\renderer\MandelJuliaBlackAndWhiteRenderer.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="MandelJuliaLayerConfigurationDialog.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\renderer\MandelJuliaPredefRandomRenderer.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="MathParser.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\renderer\MandelJuliaRandomRenderer2.cpp">
+      <Filter>Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="ProgressNotifier.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\renderer\MandelJuliaSineRenderer.cpp">
+      <Filter>Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Color.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Complex.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\FractalComputationListener.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Image.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\main.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\MathParser.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Maths.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Parameters.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\ProgressNotifier.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ProgressNotifier.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -352,301 +337,148 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ProgressNotifier.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="ImageUtils.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\core\Rng.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Maths.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaRandomRenderer2Dialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaRandomRenderer2Dialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\ImageUtils.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\Logger.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools\Timer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\factory\ObjectFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\factory\ObjectFactoryManager.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MandelJuliaLayerConfigurationDialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MandelJuliaLayerConfigurationDialog.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Fractals.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="Fractals.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="WidgetFractal.ui">
+    <CustomBuild Include="src\gui\BoxFilterConfigurationDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="ChooseFractalWidget.ui">
+    <CustomBuild Include="src\gui\BuddhabrotConfigurationDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="ProgressDialog.ui">
+    <CustomBuild Include="src\gui\ChooseFractalWidget.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Fractal2.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="FractalComputationListener.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ChooseFractalWidget.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="FractalWindow.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ProgressDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="WidgetFractal.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Fractal.h">
-      <Filter>Fractals</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GeneralConfigurationDialog.ui">
+    <CustomBuild Include="src\gui\Fractals.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="GuiState.h">
+    <CustomBuild Include="src\gui\GaussianFilterConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\GeneralConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\LyapunovConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\LyapunovRandomRenderer.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\LyapunovRandomRendererDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelbrotConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaLayerConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaRandomRenderer2Dialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaRandomRendererDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaSineRendererDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MitchellNetravaliFilterConfigurationDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\ProgressDialog.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\WidgetFractal.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\BoxFilterConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\BuddhabrotConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\ChooseFractalWidget.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\FractalWindow.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\GaussianFilterConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\GeneralConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\LyapunovConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\LyapunovRandomRendererDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelbrotConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaRandomRendererDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaSineRendererDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MitchellNetravaliFilterConfigurationDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\ProgressDialog.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\WidgetFractal.h">
+      <Filter>GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\guiState\GuiState.h">
       <Filter>Gui states</Filter>
     </CustomBuild>
-    <CustomBuild Include="GeneralConfigurationDialog.h">
+    <CustomBuild Include="src\core\ProgressNotifier.h">
+      <Filter>Core</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\gui\MandelJuliaRandomRenderer2Dialog.h">
       <Filter>GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="MandelbrotConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelbrotConfigurationDialog.h">
+    <CustomBuild Include="src\gui\MandelJuliaLayerConfigurationDialog.h">
       <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="JobManager.h">
-      <Filter>Job</Filter>
-    </CustomBuild>
-    <CustomBuild Include="BoxFilterConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MitchellNetravaliFilterConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GaussianFilterConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="BoxFilterConfigurationDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MitchellNetravaliFilterConfigurationDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GaussianFilterConfigurationDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaRandomRendererDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaRandomRendererDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="BuddhabrotConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="BuddhabrotConfigurationDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaSineRendererDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaSineRendererDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="LyapunovConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="LyapunovConfigurationDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="LyapunovRandomRendererDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="LyapunovRandomRendererDialog.h">
-      <Filter>GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaRandomRenderer2Dialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaRandomRenderer2Dialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaLayerConfigurationDialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="MandelJuliaLayerConfigurationDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ProgressNotifier.h">
-      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_Fractals.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Array2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NonCopyable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Parameters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_WidgetFractal.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_ChooseFractalWidget.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_ProgressDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WithSmartPtr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectFactoryManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MandelbrotState.h">
-      <Filter>Gui states</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxFilter.h">
-      <Filter>Reconstruction filters</Filter>
-    </ClInclude>
-    <ClInclude Include="GaussianFilter.h">
-      <Filter>Reconstruction filters</Filter>
-    </ClInclude>
-    <ClInclude Include="MitchellNetravaliFilter.h">
-      <Filter>Reconstruction filters</Filter>
-    </ClInclude>
-    <ClInclude Include="ReconstructionFilter.h">
-      <Filter>Reconstruction filters</Filter>
-    </ClInclude>
-    <ClInclude Include="Mandelbrot.h">
-      <Filter>Fractals</Filter>
-    </ClInclude>
-    <ClInclude Include="Julia.h">
-      <Filter>Fractals</Filter>
-    </ClInclude>
-    <ClInclude Include="JuliaState.h">
-      <Filter>Gui states</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_GeneralConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_MandelbrotConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FractalJob.h">
-      <Filter>Job</Filter>
-    </ClInclude>
-    <ClInclude Include="Job.h">
-      <Filter>Job</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_BoxFilterConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_MitchellNetravaliFilterConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_GaussianFilterConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRendererDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SignalBlocker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Buddhabrot.h">
-      <Filter>Fractals</Filter>
-    </ClInclude>
-    <ClInclude Include="BuddhabrotJob.h">
-      <Filter>Job</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_BuddhabrotConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BuddhabrotState.h">
-      <Filter>Gui states</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_MandelJuliaSineRendererDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MandelJuliaBlackAndWhiteRenderer.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="MandelJuliaPredefRandomRenderer.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="MandelJuliaSineRenderer.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="Rng.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Lyapunov.h">
-      <Filter>Fractals</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_LyapunovConfigurationDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_LyapunovRandomRendererDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MandelJuliaBaseRenderer.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="LyapunovBaseRenderer.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="LyapunovRandomRenderer.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="LyapunovRenderer1.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="LyapunovState.h">
-      <Filter>Gui states</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRenderer2Dialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Newton.h">
-      <Filter>Fractals</Filter>
-    </ClInclude>
-    <ClInclude Include="NewtonState.h">
-      <Filter>Gui states</Filter>
-    </ClInclude>
-    <ClInclude Include="Complex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MandelJuliaRandomRenderer2.h">
-      <Filter>Renderers</Filter>
-    </ClInclude>
-    <ClInclude Include="exprtk.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FParser\fparser.hh">
       <Filter>FParser</Filter>
     </ClInclude>
@@ -665,20 +497,197 @@
     <ClInclude Include="FParser\extrasrc\fptypes.hh">
       <Filter>FParser</Filter>
     </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BoxFilterConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_BuddhabrotConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_ChooseFractalWidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_Fractals.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GaussianFilterConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GeneralConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LyapunovConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LyapunovRandomRenderer.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_LyapunovRandomRendererDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MandelbrotConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_MandelJuliaLayerConfigurationDialog.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="MathParser.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRenderer2Dialog.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="StrEnum.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaRandomRendererDialog.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImageUtils.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GeneratedFiles\ui_MandelJuliaSineRendererDialog.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="Maths.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GeneratedFiles\ui_MitchellNetravaliFilterConfigurationDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_ProgressDialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_WidgetFractal.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Buddhabrot.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Fractal.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Fractal2.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Julia.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Lyapunov.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Mandelbrot.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fractal\Newton.h">
+      <Filter>Fractals</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guiState\BuddhabrotState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guiState\JuliaState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guiState\LyapunovState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guiState\MandelbrotState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\guiState\NewtonState.h">
+      <Filter>Gui states</Filter>
+    </ClInclude>
+    <ClInclude Include="src\job\BuddhabrotJob.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="src\job\FractalJob.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="src\job\Job.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="src\job\JobManager.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filter\BoxFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filter\GaussianFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filter\MitchellNetravaliFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filter\ReconstructionFilter.h">
+      <Filter>Reconstruction filters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\LyapunovBaseRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\LyapunovRandomRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\LyapunovRenderer1.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\MandelJuliaBaseRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\MandelJuliaBlackAndWhiteRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\MandelJuliaPredefRandomRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\MandelJuliaRandomRenderer2.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\MandelJuliaSineRenderer.h">
+      <Filter>Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Array2D.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Color.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Complex.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\FractalComputationListener.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Image.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\MathParser.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Maths.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Parameters.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Rng.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\ImageUtils.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\Logger.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\NonCopyable.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\SignalBlocker.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\Singleton.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\StrEnum.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\Timer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools\WithSmartPtr.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\factory\ObjectFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\factory\ObjectFactoryManager.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

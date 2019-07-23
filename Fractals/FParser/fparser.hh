@@ -191,7 +191,7 @@ class FunctionParser_ld: public FunctionParserBase<long double> {};
 class FunctionParser_li: public FunctionParserBase<long> {};
 
 #include <complex>
-#include "Complex.h"
+#include "core/Complex.h"
 class FunctionParser_cd: public FunctionParserBase<std::complex<double> > {};
 class FunctionParser_cf: public FunctionParserBase<std::complex<float> > {};
 class FunctionParser_cld: public FunctionParserBase<std::complex<long double> > {};
