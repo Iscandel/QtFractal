@@ -14,11 +14,14 @@ BuddhabrotState::BuddhabrotState(const Parameters&)
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 BuddhabrotState::~BuddhabrotState()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotState::init()
 {
 	myWindow->resetParameters();
@@ -39,6 +42,8 @@ void BuddhabrotState::init()
 	QObject::connect(myActionGeneralConfig.get(), &QAction::triggered, this, &BuddhabrotState::onClickGeneralConfig);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotState::free()
 {
 	myWindow->removeActionFromToolbar(myActionConfigureFractal.get());
@@ -48,6 +53,8 @@ void BuddhabrotState::free()
 	myActionGeneralConfig.reset();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotState::onClickGeneralConfig()
 {
 	GeneralConfigurationDialog dlg(myWindow);
@@ -57,6 +64,8 @@ void BuddhabrotState::onClickGeneralConfig()
 	dlg.exec();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotState::onClickConfigureFractal()
 {
 	BuddhabrotConfigurationDialog dlg(myWindow);

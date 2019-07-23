@@ -7,11 +7,14 @@ ProgressNotifier::ProgressNotifier(float total)
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 ProgressNotifier::~ProgressNotifier()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ProgressNotifier::reportProgress(const std::string& message, float advance)
 {
 	float perc = advance / myTotal * 100.f;
@@ -19,12 +22,16 @@ void ProgressNotifier::reportProgress(const std::string& message, float advance)
 		myNotifiers[i]->reportProgress(message, perc);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ProgressNotifier::reportJobsEnded(const std::string& message, bool cancelled)
 {
 	for (int i = 0; i < myNotifiers.size(); i++)
 		myNotifiers[i]->reportJobsEnded(message, cancelled);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ProgressNotifier::reportDataModified(int minX, int maxX, int minY, int maxY, int overlapX, int overlapY, const std::vector<uint8_t>& modifiedData)
 {
 	for (int i = 0; i < myNotifiers.size(); i++)

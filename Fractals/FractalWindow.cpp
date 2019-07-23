@@ -13,20 +13,13 @@
 #include <qfiledialog.h>
 #include <qerrormessage.h>
 
-
+#include "Maths.h"
 #include "ProgressNotifier.h"
 #include "tools/Timer.h"
-
-#include <qpixmapcache.h>
 
 
 Timer timer;
 
-template<class T>
-T thresholding(T val, T min, T max)
-{
-	return val < min ? min : val  > max ? max : val;
-}
 
 std::vector<std::string> FractalWindow::myFractalNames;
 
@@ -76,9 +69,6 @@ FractalWindow::FractalWindow(QWidget *parent)
 	//ui.myLabelImage->setMinimumSize(out.getWidth(), out.getHeight());
 	QErrorMessage::qtHandler();
 
-	//typedef const std::vector<uint8_t> QtType;
-	//Q_DECLARE_METATYPE(Combination)
-	//qRegisterMetaType<Combination>("Combination");
 	typedef std::vector<uint8_t> QtType;
 	qRegisterMetaType<QtType>("std::vector<uint8_t>");
 
@@ -110,47 +100,50 @@ FractalWindow::FractalWindow(QWidget *parent)
 	//connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanApp()));
 	bool res = connect(ui.actionStop, SIGNAL(triggered()), this, SLOT(cancelComputation()));
 
-	//myFractal = std::shared_ptr<Fractal>(new Julia);
 	myProgress = ProgressDialog::ptr(new ProgressDialog);
-	//myFractal->addAdvanceListener(myProgress.get());
-	//myFractal->addComputationEndsListener(this);
-	//std::vector<QtUiNotifier2::ptr> p;
-	//QtUiNotifier2::ptr notifier2(new QtUiNotifier2);
-	//p.push_back(std::move(notifier2));
-	//p.clear();
-	//std::unique_ptr<Notifier> p2(new QtUiNotifier2);
-	//p.clearNotifiers();
-	//myProgress->show();
+
 	computeFractal(myCurrentParameters);	
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 FractalWindow::~FractalWindow()
 {
 	//ProgressNotifier::clearNotifiers();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::addActionToToolbar(QAction* action)
 {
 	ui.mainToolBar->addAction(action);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::removeActionFromToolbar(QAction* action)
 {
 	ui.mainToolBar->removeAction(action);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::resetParameters()
 {
 	myOriginParameters = Parameters();
 	myCurrentParameters = Parameters();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::initState(GuiState::ptr state)
 {
 	state->setFractalWindow(this);
 	state->setParameters(&myCurrentParameters);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::setGuiState(GuiState::ptr state)
 {
 	//initState(state);
@@ -158,10 +151,7 @@ void FractalWindow::setGuiState(GuiState::ptr state)
 	pushState(state);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Ajoute un nouvel état de jeu par dessus le précédent (intérêt dans le cas
-// d'un menu qui apparait en jeu. Le jeu est dessiné derrière, soit 2 états
-// affichés, mais seul le premier capte les évènements
+//=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::pushState(GuiState::ptr state)
 {
@@ -170,7 +160,7 @@ void FractalWindow::pushState(GuiState::ptr state)
 	state->init();
 }
 
-///////////////////////////////////////////////////////////////////////////////
+//=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
 bool FractalWindow::popState()
 {
@@ -185,6 +175,8 @@ bool FractalWindow::popState()
 	return false;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 bool FractalWindow::popState(GuiState::ptr state)
 {
 	std::vector<GuiState::ptr>::iterator it = myStates.erase(
@@ -193,6 +185,8 @@ bool FractalWindow::popState(GuiState::ptr state)
 	return !(it == myStates.end());
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::initFractalNames()
 {
 	if (myFractalNames.size() != 0)
@@ -217,6 +211,8 @@ void FractalWindow::initFractalNames()
 	
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int endY)
 {
 	double x1 = std::min(startX, endX); double x2 = std::max(startX, endX);
@@ -228,8 +224,7 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 	const double YMIN = myCurrentParameters.getDouble("ymin", -2.);
 	const double YMAX = myCurrentParameters.getDouble("ymax", 2.);
 
-	//On recalcule les nouvelles coordonnées du repère, en se servant de la taille
-	//du rectangle proportionnellement à celle de l'image 
+	//Recompute the new frame coordinates using rectangle size according to image size
 	x1 = XMIN + (x1 / width) * std::abs(XMIN - XMAX);
 	x2 = XMIN + (x2 / width) * std::abs(XMIN - XMAX);
 	y1 = YMIN + (y1 / height)* std::abs(YMIN - YMAX);
@@ -242,14 +237,13 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 
 	std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
 
-	//myProgress->show();
-
 	traceFractal();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::computeFractal(const Parameters& params)
 {
-	//To do
 	//if (myFractal->isComputing())
 	//	myFractal->cancelComputation(true);
 	std::string fractal = myCurrentParameters.getString("fractal", "Mandelbrot");
@@ -319,11 +313,10 @@ void FractalWindow::computeFractal(const Parameters& params)
 	//ui.myLabelImage->adjustSize();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::affectImage()
 {
-	std::cout << "affect" << std::endl;
-	return;
-
 	ui.myLabelImage->setPixmap(QPixmap());
 	myImage->postProcessColor();
 	Array2D<Pixel>& array = myImage->getPixels();
@@ -351,8 +344,8 @@ void FractalWindow::affectImage()
 	//	}
 	//}
 
-	ImageUtils::convert(array, overlapX, overlapY, sizeX, sizeY, myRefreshImage, ImageUtils::ARGB32);
-	image = QImage((uchar*)myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
+	ImageUtils::convert(array, overlapX, overlapY, sizeX, sizeY, myRefreshImage, ImageUtils::RGB32);
+	image = QImage((uchar*)myRefreshImage.data(), sizeX, sizeY, sizeX * ImageUtils::bytesPerPixelFromFormat(ImageUtils::RGB32), QImage::Format_RGB32);
 
 	QPixmap pixmap = QPixmap::fromImage(image);
 	//pixmap.detach();
@@ -360,10 +353,12 @@ void FractalWindow::affectImage()
 	ui.myLabelImage->adjustSize();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::computationEnds()
 {
 	std::cout << timer.elapsedTime() << std::endl;
-	std::cout << "fini" << std::endl;
+	
 	if (!myFractal->isComputing())
 	{
 		myProgressBar->hide();
@@ -374,11 +369,15 @@ void FractalWindow::computationEnds()
 	//affectImage();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::showTypeFractal()
 {
 	myTypeFractal.show();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::zoomPlus()
 {
 	double xmin = myCurrentParameters.getDouble("xmin", -2.);
@@ -400,11 +399,11 @@ void FractalWindow::zoomPlus()
 	myCurrentParameters.addDouble("ymin", ymin);
 	myCurrentParameters.addDouble("ymax", ymax);
 
-	//myProgress->show();
-
 	traceFractal();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::zoomMinus()
 {
 	double xmin = myCurrentParameters.getDouble("xmin", -2.);
@@ -412,31 +411,31 @@ void FractalWindow::zoomMinus()
 	double ymin = myCurrentParameters.getDouble("ymin", -2.);
 	double ymax = myCurrentParameters.getDouble("ymax", 2.);
 
-	double areaWidth = std::abs(xmax - xmin);   //Calcul de la taille de la fenêtre en x
-	double newWidth = areaWidth;    //Longueur à enlever au total
-	xmin -= newWidth / 2;                   //Calcul de la nouvelle coord en xmin
-	xmax += newWidth / 2;					//Calcul de la nouvelle coord en xmax
-	double areaHeight = std::abs(ymax - ymin);   //Calcul de la taille de la fenêtre en y
-	double newHeight = areaHeight;    //Longueur à enlever au total
-	ymin -= newHeight / 2;					//Calcul de la nouvelle coord en ymin
-	ymax += newHeight / 2;					//Calcul de la nouvelle coord en yMax
+	double areaWidth = std::abs(xmax - xmin);   //Window size X
+	double newWidth = areaWidth;    //New window size X
+	xmin -= newWidth / 2;                   //New xmin
+	xmax += newWidth / 2;					//New xmax
+	double areaHeight = std::abs(ymax - ymin);   //Window size Y
+	double newHeight = areaHeight;    //New window size X
+	ymin -= newHeight / 2;					
+	ymax += newHeight / 2;				
 
 	myCurrentParameters.addDouble("xmin", xmin);
 	myCurrentParameters.addDouble("xmax", xmax);
 	myCurrentParameters.addDouble("ymin", ymin);
 	myCurrentParameters.addDouble("ymax", ymax);
 
-	//myProgress->show();
-
 	traceFractal();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::setFractal(Fractal::ptr fractal)
 {
 	myFractal = fractal;
 
-	myFractal->addAdvanceListener(myProgress.get());
-	myFractal->addComputationEndsListener(this);
+	//myFractal->addAdvanceListener(myProgress.get());
+	//myFractal->addComputationEndsListener(this);
 
 	//Set filter, image
 	//myImage = Image::ptr(new Image(width, height));
@@ -444,6 +443,8 @@ void FractalWindow::setFractal(Fractal::ptr fractal)
 	//myFractal->setImage(myImage);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::traceFractal()
 {
 	timer.reset();
@@ -456,8 +457,6 @@ void FractalWindow::traceFractal()
 	myProgressBar->show();
 	myStatusLabel->show();
 	
-	//myProgress->resetProgressBar();
-	//myProgress->show();
 	computeFractal(myCurrentParameters);
 	
 }
@@ -483,9 +482,6 @@ void FractalWindow::computationAdvances(const QString& message, float perc)
 	myStatusLabel->setText(message);
 	myProgressBar->setValue(perc);
 	myProgressBar->repaint();
-
-	//myProgress->computationAdvances(perc);
-	//myProgress->repaint();
 }
 
 //void FractalWindow::update()
@@ -536,7 +532,7 @@ void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int ove
 //		tmpY++;
 //	}
 	
-	ImageUtils::convert(vecData, 3, minX, maxX, minY, maxY, overlapX, overlapY, sizeX, sizeY, myRefreshImage, ImageUtils::ARGB32);
+	ImageUtils::convert(vecData, 3, minX, maxX, minY, maxY, overlapX, overlapY, sizeX, sizeY, myRefreshImage, ImageUtils::RGB32);
 
 	QImage image((uchar*)myRefreshImage.data(), sizeX, sizeY, sizeX * 4, QImage::Format_RGB32);
 	QPixmap pixmap = QPixmap::fromImage(image);
@@ -546,6 +542,8 @@ void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int ove
 	//ui.myLabelImage->adjustSize();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::cleanApp()
 {
 	ProgressNotifier::clearNotifiers();
@@ -553,14 +551,14 @@ void FractalWindow::cleanApp()
 		myFractal->cancelComputation();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::closeEvent(QCloseEvent *event)
 {
 	cleanApp();
-	//ProgressNotifier::clearNotifiers();
+
 	QMainWindow::closeEvent(event);
 }
 
 
-//cancelComputation -> supprimer job done si pas de job qui étaient en cours
-//affect image à remettre
 //directConnection + emit updateUI

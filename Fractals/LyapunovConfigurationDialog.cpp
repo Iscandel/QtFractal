@@ -16,6 +16,8 @@ LyapunovConfigurationDialog::~LyapunovConfigurationDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovConfigurationDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -31,6 +33,8 @@ void LyapunovConfigurationDialog::setParameters(Parameters* params)
 	ui.myComboRenderer->setCurrentText(myParams->getString("renderer", "Random").c_str());
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovConfigurationDialog::onOk()
 {
 	myParams->addDouble("xmin", ui.mySpinXMin->value());
@@ -47,11 +51,15 @@ void LyapunovConfigurationDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovConfigurationDialog::onCancel()
 {
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovConfigurationDialog::onClickConfigureRenderer()
 {
 	if (ui.myComboRenderer->currentText() == "Random")

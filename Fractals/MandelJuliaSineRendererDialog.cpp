@@ -12,10 +12,14 @@ MandelJuliaSineRendererDialog::MandelJuliaSineRendererDialog(QWidget *parent, Pa
 	setParameters(params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaSineRendererDialog::~MandelJuliaSineRendererDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaSineRendererDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -47,6 +51,8 @@ void MandelJuliaSineRendererDialog::setParameters(Parameters* params)
 	ui.myRadioMode3D->setChecked(isMode3D);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaSineRendererDialog::onOk()
 {
 	std::vector<boost::any> amplitudes{ ui.mySpinAmplitudeR->value(), 
@@ -71,11 +77,15 @@ void MandelJuliaSineRendererDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaSineRendererDialog::onCancel()
 {
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaSineRendererDialog::initGUIElementVector(QDoubleSpinBox* element, const std::string& key, const std::vector<boost::any>& default, int index)
 {
 	std::vector<boost::any> vec = myParams->getVector(key, default);

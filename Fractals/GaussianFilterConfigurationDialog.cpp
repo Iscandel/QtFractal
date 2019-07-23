@@ -10,10 +10,14 @@ GaussianFilterConfigurationDialog::GaussianFilterConfigurationDialog(QWidget *pa
 	setParameters(params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 GaussianFilterConfigurationDialog::~GaussianFilterConfigurationDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GaussianFilterConfigurationDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -23,6 +27,8 @@ void GaussianFilterConfigurationDialog::setParameters(Parameters* params)
 	ui.mySpinW->setValue(myParams->getDouble("omega", ui.mySpinRadiusX->value()));
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GaussianFilterConfigurationDialog::onOk()
 {
 	myParams->addDouble("radiusX", ui.mySpinRadiusX->value());

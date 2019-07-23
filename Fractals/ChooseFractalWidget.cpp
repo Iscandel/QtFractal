@@ -11,21 +11,29 @@ ChooseFractalWidget::ChooseFractalWidget(QWidget *parent)
 	connect(ui.myOkButton, &QPushButton::clicked, this, &ChooseFractalWidget::onOk);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 ChooseFractalWidget::~ChooseFractalWidget()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ChooseFractalWidget::setFractalWindow(FractalWindow* window)
 {
 	myWindow = window;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ChooseFractalWidget::setFractalNames(const std::vector<std::string> names)
 {
 	for (std::string name : names)
 		ui.myComboBoxFractal->addItem(QString(name.c_str()));
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ChooseFractalWidget::onOk()
 {
 	if (myWindow)

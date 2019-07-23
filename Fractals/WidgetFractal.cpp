@@ -12,14 +12,19 @@ WidgetFractal::WidgetFractal(QWidget *parent)
 ,myStartY(0)
 ,myEndX(0)
 ,myEndY(0)
+,myIsDragMode(true)
 {
 	ui.setupUi(this);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 WidgetFractal::~WidgetFractal()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void WidgetFractal::paintEvent(QPaintEvent* event)
 {
 	//QLabel::paintEvent(event);
@@ -27,46 +32,79 @@ void WidgetFractal::paintEvent(QPaintEvent* event)
 	QPainter painter(this);
 	if (pixmap())
 	{
-		painter.drawPixmap(0, 0, *pixmap());
+		painter.drawPixmap(myPixmapOffset.x(), myPixmapOffset.y(), *pixmap());
 		painter.setPen(QColor(128, 128, 128));
 		painter.drawRect(myStartX, myStartY, myEndX - myStartX, myEndY - myStartY);
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void WidgetFractal::mousePressEvent(QMouseEvent* event)
 {
-	std::cout << event->x() << " " << event->y() << std::endl;
-	if (!myIsPressed)
+	if (myIsDragMode)
 	{
-		myStartX = myStartY = myEndX = myEndY = 0;
-	}
-
-	if (event->button() == Qt::LeftButton)
-	{
-		myIsPressed = true;
-		myStartX = event->x();
-		myStartY = event->y();
-		myEndX = myStartX;
-		myEndY = myStartY;
+		myLastMousePos = event->pos();
 	}
 	else
 	{
-		if (myStartX != myEndX && myStartY != myEndY)
+		if (!myIsPressed)
 		{
-			emit signalRightButtonDrawFractal(myStartX, myStartY, myEndX, myEndY);
 			myStartX = myStartY = myEndX = myEndY = 0;
+		}
+
+		if (event->button() == Qt::LeftButton)
+		{
+			//myIsPressed = true;
+			myStartX = event->x();
+			myStartY = event->y();
+			myEndX = myStartX;
+			myEndY = myStartY;
+		}
+		else
+		{
+			if (myStartX != myEndX && myStartY != myEndY)
+			{
+				emit signalRightButtonDrawFractal(myStartX, myStartY, myEndX, myEndY);
+				myStartX = myStartY = myEndX = myEndY = 0;
+			}
 		}
 	}
 
 	repaint();
 }
 
+void WidgetFractal::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (myIsDragMode)
+	{
+		if (pixmap())
+		{
+			emit signalRightButtonDrawFractal(-myPixmapOffset.x(), 
+											  -myPixmapOffset.y(), 
+											   pixmap()->width() - myPixmapOffset.x(), 
+											   pixmap()->height() - myPixmapOffset.y());
+			myPixmapOffset = QPoint();
+		}
+	}
+}
+
 void WidgetFractal::mouseMoveEvent(QMouseEvent* event)
 {
-	if (myIsPressed)
+	//NB mouseMoveEvent is only called if a mouse button is pressed (see MouseTracking to change the behaviour)
+	if (myIsDragMode)
 	{
-		myEndX = event->x();
-		myEndY = myStartY + (myEndX - myStartX);
+		myPixmapOffset += event->pos() - myLastMousePos;
+		myLastMousePos = event->pos();
 		repaint();
+	}
+	else
+	{
+		//if (myIsPressed)
+		{
+			myEndX = event->x();
+			myEndY = myStartY + (myEndX - myStartX);
+			repaint();
+		}
 	}
 }

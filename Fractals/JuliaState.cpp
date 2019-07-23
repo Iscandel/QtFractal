@@ -14,11 +14,14 @@ JuliaState::JuliaState(const Parameters&)
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 JuliaState::~JuliaState()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void JuliaState::init()
 {
 	myWindow->resetParameters();
@@ -39,12 +42,16 @@ void JuliaState::init()
 	QObject::connect(myActionGeneralConfig, &QAction::triggered, this, &JuliaState::onClickGeneralConfig);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void JuliaState::free()
 {
 	myWindow->removeActionFromToolbar(myActionGeneralConfig);
 	delete myActionGeneralConfig;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void JuliaState::onClickConfigureFractal()
 {
 	MandelbrotConfigurationDialog dlg(myWindow);
@@ -54,6 +61,8 @@ void JuliaState::onClickConfigureFractal()
 	dlg.exec();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void JuliaState::onClickGeneralConfig()
 {
 	GeneralConfigurationDialog dlg = new GeneralConfigurationDialog(myWindow);

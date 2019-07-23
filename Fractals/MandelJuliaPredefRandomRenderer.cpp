@@ -14,11 +14,14 @@ MandelJuliaPredefRandomRenderer::MandelJuliaPredefRandomRenderer(const Parameter
 	}
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaPredefRandomRenderer::~MandelJuliaPredefRandomRenderer()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color MandelJuliaPredefRandomRenderer::computeColor(int iterations, double preciseIter, double x, double y, double xPrime, double yPrime)
 {
 	/*Il nous faut réaliser un dégradé de couleurs...On a défini 5 couleurs

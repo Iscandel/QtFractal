@@ -10,11 +10,14 @@ NewtonState::NewtonState(const Parameters&)
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 NewtonState::~NewtonState()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void NewtonState::init()
 {
 	myWindow->resetParameters();
@@ -35,6 +38,8 @@ void NewtonState::init()
 	QObject::connect(myActionGeneralConfig.get(), &QAction::triggered, this, &NewtonState::onClickGeneralConfig);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void NewtonState::free()
 {
 	myWindow->removeActionFromToolbar(myActionConfigureFractal.get());
@@ -44,6 +49,8 @@ void NewtonState::free()
 	myActionGeneralConfig.reset();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void NewtonState::onClickGeneralConfig()
 {
 	GeneralConfigurationDialog dlg(myWindow);
@@ -53,6 +60,8 @@ void NewtonState::onClickGeneralConfig()
 	dlg.exec();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void NewtonState::onClickConfigureFractal()
 {
 	//MandelbrotConfigurationDialog dlg(myWindow);

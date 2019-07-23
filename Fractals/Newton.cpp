@@ -14,12 +14,15 @@ Newton::Newton(const Parameters& params)
 	}
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Newton::~Newton()
 {
 }
 
-//Calcule la suite définie par newton  : zn+1=zn - f(z)/f'(z)
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+//Complex sequence defined by Newton  : zn+1=zn - f(z)/f'(z)
 Color Newton::computePixel(double a, double b, const Parameters & params, ParserById& parserById)
 {
 	complexD z = complexD(a, b);
@@ -32,20 +35,20 @@ Color Newton::computePixel(double a, double b, const Parameters & params, Parser
 	complexD fDeZ(z - myZeros[0]);
 	complexD fDeZP(1, 0);
 
-	fDeZ = computeFDeZ(z, myZeros);   //On recalcule "f(z)" POUR LE NUMERATEUR
+	fDeZ = computeFDeZ(z, myZeros);   //Recompute "f(z)" for the numerator
 	if (myPoles.size() != 0)
 		fDeZP = computeFDeZ(z, myPoles);   //On recalcule "f(z)" POUR LE DENOMINATEUR
 
 								  //FDeZ = FDeZ.division(FDeZP);
-								  /*On calcule f'(z)*/
-								  /*On a (z-z1)(z-z2)...(z-zn). La dérivée d'un produit (uvw...z)' est :
+								  /*Compute f'(z)*/
+								  /*We have (z-z1)(z-z2)...(z-zn). Product derivative of (uvw...z)' is :
 								  * u'vw..z + uv'w...z + ... + uvw...z'
-								  * Ca c'est pour le numérateur et le dénominateur, pris séparément.
-								  * Pour calculer la dériver du rapport des 2, on utilise :
+								  * That is for the numerator and denom, separately.
+								  * For the resulting quotient, we have
 								  * f' = (u'v - uv') / v ²*/
 
 	complexD Temp;
-	fPrimeDeZ = (derived(z, myZeros) * fDeZP - derived(z, myPoles) * fDeZ) / (fDeZP * fDeZP);	//On recalcule f'(z)
+	fPrimeDeZ = (derived(z, myZeros) * fDeZP - derived(z, myPoles) * fDeZ) / (fDeZP * fDeZP);	//Recompute f'(z)
 	
 	int indexColor = 0;
 	bool found = false;
@@ -56,24 +59,22 @@ Color Newton::computePixel(double a, double b, const Parameters & params, Parser
 	while (iterations < myMaxIter)
 	{
 		complexD Tmp;
-		   
-		//if(a == -2 &&  b == -2) { System.out.println("t"+Tmp.re+" "+Tmp.im);System.out.println(Z.re+" "+Z.im);}
 
-		z = z - fDeZ / fPrimeDeZ;//On fait la division f(z)/f'(z)
+		z = z - fDeZ / fPrimeDeZ;//Divide f(z)/f'(z)
 
-		fDeZ = computeFDeZ(z, myZeros);   //On recalcule f(z)
+		fDeZ = computeFDeZ(z, myZeros);   //Recompute f(z)
 
 		//if (rendu == 2)
 		{
 			if (myPoles.size() != 0)
-				fDeZP = computeFDeZ(z, myPoles);   //On recalcule "f(z)" POUR LE DENOMINATEUR
+				fDeZP = computeFDeZ(z, myPoles);   //Recompute "f(z)" for denom
 			fDeZ = fDeZ / fDeZP;
 		}
 
-		fPrimeDeZ = (derived(z, myZeros) * fDeZP - derived(z, myPoles) * fDeZ) / (fDeZP * fDeZP);	//On recalcule f'(z)
+		fPrimeDeZ = (derived(z, myZeros) * fDeZP - derived(z, myPoles) * fDeZ) / (fDeZP * fDeZP);	//Recompute f'(z)
 
 		
-		/*On vérifie la convergence de la suite vers l'un des zéros ou des poles*/
+		/*Check the convergence of the sequence to any of the zeros or poles*/
 		double eps = 1e-2;
 		for (int j = 0; j < myZeros.size();j++)
 		{
@@ -138,6 +139,8 @@ Color Newton::computePixel(double a, double b, const Parameters & params, Parser
 	return Color(rouge, vert, bleu);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Newton::complexD Newton::computeFDeZ(const complexD& Z, const std::vector<complexD>& roots)
 {
 	complexD FDeZ(Z - roots[0]);
@@ -146,27 +149,30 @@ Newton::complexD Newton::computeFDeZ(const complexD& Z, const std::vector<comple
 	return FDeZ;
 }
 
-/*Calcule la dérivée d'un polynome à partir de ses racines, puis déduit sa valeur
-* en Z */
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+//Computes the derivative of a polynom from its roots, then deduces its value for Z
 Newton::complexD Newton::derived(const complexD& Z, const std::vector<complexD>& roots)
 {
 	int aUn = 0;
 	complexD FPrimeDeZ;
 	for (int j = 0; j < roots.size();j++)
 	{
-		complexD Produit(1, 0);
+		complexD product(1, 0);
 		for (int k = 0; k < roots.size();k++)
 		{
 			//ZerosTemp[aUn].re=ZerosTemp[aUn].im=1;
 			if (k != aUn)
-				Produit = Produit * (Z - roots[k]);  //Calcul du produit (ex u'vwx)
+				product = product * (Z - roots[k]);  //Product (ex u'vwx)
 		}
 		aUn++;
-		FPrimeDeZ = FPrimeDeZ + (Produit);  //On somme les produits pour obtenir la dérivée finale
+		FPrimeDeZ = FPrimeDeZ + (product);  //Sum the products to get the final derivative
 	}
 	return FPrimeDeZ;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Newton::rendu1(double a, double b, int indexColor, int iterations, double preciseIterations)
 {
 	double rouge = myColors[indexColor].r - preciseIterations*(myColors[indexColor].r / myMaxIter);
@@ -176,6 +182,8 @@ Color Newton::rendu1(double a, double b, int indexColor, int iterations, double 
 	return Color(rouge, vert, bleu);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Newton::rendu2(double a, double b, int indexColor, int iterations, double preciseIterations)
 {
 	double theta = -std::abs(std::atan2(b, a));
@@ -188,6 +196,8 @@ Color Newton::rendu2(double a, double b, int indexColor, int iterations, double 
 	return Color(r, g, bb);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Newton::rendu3(double a, double b, int indexColor, int iterations, double preciseIterations)
 {
 

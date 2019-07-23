@@ -24,7 +24,7 @@ public:
 
 	bool escapesToInfinity(double a, double b, bool passage2, int composante, std::vector<std::vector<TraceSample>>& trace);
 
-	void addComputationEndsListener(QObject* listener) override;
+	//void addComputationEndsListener(QObject* listener) override;
 
 	void postProcessing();
 

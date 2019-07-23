@@ -6,6 +6,8 @@ MandelJuliaLayerConfigurationDialog::MandelJuliaLayerConfigurationDialog(QWidget
 	ui.setupUi(this);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaLayerConfigurationDialog::~MandelJuliaLayerConfigurationDialog()
 {
 }

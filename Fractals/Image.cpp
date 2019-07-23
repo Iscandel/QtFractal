@@ -1,13 +1,9 @@
 #include "Image.h"
 
 #include "Logger.h"
+#include "Maths.h"
 #include "ReconstructionFilter.h"
 
-template<class T>
-T thresholding(T val, T min, T max)
-{
-	return val < min ? min : val  > max ? max : val;
-}
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
@@ -116,11 +112,13 @@ void Image::setFilter(ReconstructionFilter::ptr filter)
 	//myFilter->precompute();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Image::postProcessColor()
 {
-	for (int x = 0; x < mySizeX; x++)
+	for (int x = 0; x < myPixels.getWidth(); x++)
 	{
-		for (int y = 0; y < mySizeY; y++)
+		for (int y = 0; y < myPixels.getHeight(); y++)
 		{
 			myPixels(x, y).applyColor();
 		}
@@ -152,7 +150,6 @@ void Image::merge(Image& subScreen, std::vector<uint8_t>* modifiedData, bool row
 
 	std::lock_guard<std::mutex> lock(myMergeMutex);
 
-	int cpt = 0;
 	int tmpY = 0;
 	for (int y = offsetY; y < offsetY + sizeY; y++)
 	{
@@ -164,18 +161,20 @@ void Image::merge(Image& subScreen, std::vector<uint8_t>* modifiedData, bool row
 			if (modifiedData)
 			{
 				Color c = myPixels(x, y).myColor / myPixels(x, y).myWeight;
-
+				
 				if (rowMajor)
 				{
-					(*modifiedData)[(tmpY * sizeX + tmpX) * 3] = thresholding<uint8_t>(c.r * 255, 0, 255);
-					(*modifiedData)[(tmpY * sizeX + tmpX) * 3 + 1] = thresholding<uint8_t>(c.g * 255, 0, 255);
-					(*modifiedData)[(tmpY * sizeX + tmpX) * 3 + 2] = thresholding<uint8_t>(c.b * 255, 0, 255);
+					//NB : MitchellN filter tends to give negative value, so first clamp to int, then
+					//cast to uint8
+					(*modifiedData)[(tmpY * sizeX + tmpX) * 3] = (uint8_t)maths::thresholding<int>(c.r * 255, 0, 255);
+					(*modifiedData)[(tmpY * sizeX + tmpX) * 3 + 1] = (uint8_t)maths::thresholding<int>(c.g * 255, 0, 255);
+					(*modifiedData)[(tmpY * sizeX + tmpX) * 3 + 2] = (uint8_t)maths::thresholding<int>(c.b * 255, 0, 255);
 				}
 				else
 				{
-					(*modifiedData)[(tmpX * sizeY + tmpY) * 3] = thresholding<uint8_t>(c.r * 255, 0, 255);
-					(*modifiedData)[(tmpX * sizeY + tmpY) * 3 + 1] = thresholding<uint8_t>(c.g * 255, 0, 255);
-					(*modifiedData)[(tmpX * sizeY + tmpY) * 3 + 2] = thresholding<uint8_t>(c.b * 255, 0, 255);
+					(*modifiedData)[(tmpX * sizeY + tmpY) * 3] = (uint8_t)maths::thresholding<int>(c.r * 255, 0, 255);
+					(*modifiedData)[(tmpX * sizeY + tmpY) * 3 + 1] = (uint8_t)maths::thresholding<int>(c.g * 255, 0, 255);
+					(*modifiedData)[(tmpX * sizeY + tmpY) * 3 + 2] = (uint8_t)maths::thresholding<int>(c.b * 255, 0, 255);
 				}
 			}
 
@@ -186,6 +185,8 @@ void Image::merge(Image& subScreen, std::vector<uint8_t>* modifiedData, bool row
 	
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Image::getTrueImageMinMax(int& minX, int& maxX, int& minY, int& maxY)
 {
 	minX = myMinX; //(int)std::ceil(myMinX - myOverlapX);
@@ -201,6 +202,8 @@ void Image::getTrueImageMinMax(int& minX, int& maxX, int& minY, int& maxY)
 	//maxY = std::min((int)myPixels.getHeight() - 1, endY);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Image::resize(int sizeX, int sizeY, int minX, int minY)
 {
 	myPixels.setSize(sizeX, sizeY);

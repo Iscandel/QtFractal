@@ -5,30 +5,31 @@
 #include "FractalWindow.h"
 
 Fractal::Fractal(QObject *parent)
-	: QObject(parent)
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Fractal::~Fractal()
 {
 }
 
-void Fractal::addAdvanceListener(QObject* listener)//FractalComputationListener* listener)
-{
-	bool res = connect(&myManager, SIGNAL(signalComputationAdvances(int)), listener, SLOT(computationAdvances(int)));
-	std::cout << res << std::endl;
+//void Fractal::addAdvanceListener(QObject* listener)//FractalComputationListener* listener)
+//{
+//	bool res = connect(&myManager, SIGNAL(signalComputationAdvances(int)), listener, SLOT(computationAdvances(int)));
+//	std::cout << res << std::endl;
+//
+//	//myManager.signalComputationAdvances(10);
+//	//old
+//	//connect(this, SIGNAL(signalComputationAdvances(int)), listener, SLOT(computationAdvances(int)));
+//
+//	//myListeners.push_back(listener); /old 2
+//}
 
-	//myManager.signalComputationAdvances(10);
-	//old
-	//connect(this, SIGNAL(signalComputationAdvances(int)), listener, SLOT(computationAdvances(int)));
-
-	//myListeners.push_back(listener); /old 2
-}
-
-void Fractal::addComputationEndsListener(QObject* listener)
-{
-	connect(&myManager, &JobManager::signalJobsDone, (FractalWindow*)listener, &FractalWindow::computationEnds);
-}
+//void Fractal::addComputationEndsListener(QObject* listener)
+//{
+//	connect(&myManager, &JobManager::signalJobsDone, (FractalWindow*)listener, &FractalWindow::computationEnds);
+//}
 
 //void Fractal::addAdvanceListener2(ProgressDialog& obj)//FractalComputationListener* listener)
 //{
@@ -36,22 +37,24 @@ void Fractal::addComputationEndsListener(QObject* listener)
 //}
 
 
-void Fractal::dispatchComputationAdvances(int perc)
-{
-	emit signalComputationAdvances(perc);
-	//for (FractalComputationListener* listener : myListeners)
-	//{
-	//	listener->computationAdvances(perc);
-	//}
-}
+//void Fractal::dispatchComputationAdvances(int perc)
+//{
+//	emit signalComputationAdvances(perc);
+//	//for (FractalComputationListener* listener : myListeners)
+//	//{
+//	//	listener->computationAdvances(perc);
+//	//}
+//}
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GenericParallelizableFractal::compute(const Parameters& params, std::function<void()> callback)
 {
 	ILogger::log() << "Starting computation..\n";
 
 	initialize(params);
 
-	//ILogger::log() << "Elapsed time loading + acceleration structure : " << clock.elapsedTime() << "s.\n";
+
 
 	ILogger::log() << "Creating jobs...\n";
 
@@ -63,7 +66,6 @@ void GenericParallelizableFractal::compute(const Parameters& params, std::functi
 	std::vector<std::shared_ptr<Job> > jobs;
 	for (int currentY = 0; currentY < myImage->getSizeY(); currentY += blockSizeY)//myBlockSize.y())
 	{
-		//std::cout << currentY << std::endl;
 		for (int currentX = 0; currentX < myImage->getSizeX(); currentX += blockSizeX)//myBlockSize.x())
 		{
 			//std::shared_ptr<Sampler> sampler(mySampler->clone());
@@ -74,15 +76,26 @@ void GenericParallelizableFractal::compute(const Parameters& params, std::functi
 		}
 	}
 
-	myManager.setJobs(jobs, "Computation...", callback);
+	myManager.setJobs(jobs, "Computation...");//, callback);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GenericParallelizableFractal::cancelComputation(bool wait)
 {
 	myManager.cancelComputation(wait);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 bool GenericParallelizableFractal::isComputing()
 {
 	return !myManager.isIdle();
+}
+
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+void GenericParallelizableFractal::clean()
+{
+	myManager.destroyThreads();
 }

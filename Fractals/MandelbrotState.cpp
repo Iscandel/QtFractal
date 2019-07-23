@@ -13,11 +13,14 @@ MandelbrotState::MandelbrotState(const Parameters&)
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelbrotState::~MandelbrotState()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotState::init()
 {
 	myWindow->resetParameters();
@@ -38,6 +41,8 @@ void MandelbrotState::init()
 	QObject::connect(myActionGeneralConfig.get(), &QAction::triggered, this, &MandelbrotState::onClickGeneralConfig);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotState::free()
 {
 	myWindow->removeActionFromToolbar(myActionConfigureFractal.get());
@@ -47,6 +52,8 @@ void MandelbrotState::free()
 	myActionGeneralConfig.reset();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotState::onClickGeneralConfig()
 {
 	GeneralConfigurationDialog dlg(myWindow);
@@ -56,6 +63,8 @@ void MandelbrotState::onClickGeneralConfig()
 	dlg.exec();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotState::onClickConfigureFractal()
 {
 	MandelbrotConfigurationDialog dlg(myWindow);

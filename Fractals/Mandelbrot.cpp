@@ -16,7 +16,8 @@
 
 #include "exprtk.hpp"
 
-//double manger(double, double) { return 0.; }
+#include <qcolor.h>
+
 
 Mandelbrot::Mandelbrot(const Parameters& params)
 :myIsLogLog(params.getBool("logLog", false))
@@ -99,6 +100,8 @@ Mandelbrot::~Mandelbrot()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Mandelbrot::initRenderer(const std::string& renderer, const Parameters& params)
 {
 	if (renderer == "Black & white")
@@ -167,111 +170,111 @@ void Mandelbrot::initRenderer(const std::string& renderer, const Parameters& par
 	//}
 }
 
-void Mandelbrot::computeFull(const Parameters& params)//, Array2D<Color>& out)
-{
-	Array2D<Color>& out = *myArray;
+//void Mandelbrot::computeFull(const Parameters& params)//, Array2D<Color>& out)
+//{
+//	Array2D<Color>& out = *myArray;
+//
+//	const double XMIN = params.getDouble("xmin", -2.);
+//	const double XMAX = params.getDouble("xmax", 2.);
+//	const double YMIN = params.getDouble("ymin", -2.);
+//	const double YMAX = params.getDouble("ymax", 2.);
+//	myIsLogLog = params.getBool("logLog", false);
+//	myMaxIt = params.getInt("maxIter", 100);
+//	int width = out.getWidth();
+//	int height = out.getHeight();
+//	
+//	//for (int i = 0; i < 6;i++)          //On sauvegarde le tableau de couleurs de l'objet Infos
+//	//	Couleurs[i] = Infos.getCouleur(i);
+//
+//	//BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
+//	////création de l’image au moyen de la classe BufferedImage
+//	//WritableRaster raster = image.getRaster();
+//	////appel de la méthode getRaster() afin d’obtenir un objet de type WritableRaster, vous    
+//	////permettant d’accéder aux pixels de l’image et de les modifier.
+//	//ColorModel model = image.getColorModel(); //renvoie le modèle de couleur de l’image       
+//	//										  //mémorisée.
+//
+//	//this.maxIterations = Infos.getIterations();    //Sauvegarde du nombre max d'itérations
+//	//fractalColor = Couleurs[5];                   //Couleur de l'Ensemble
+//	//int argb = fractalColor.getRGB();             //Renvoie le code RGB de la couleur
+//	//Object colorData = model.getDataElements(argb, null);
+//	//this.typeRepresentation = Infos.getTypeRepresentation();
+//	//System.out.println(Infos.getTypeRepresentation());
+//
+//	int cpt = 0;  //Un compteur, pour la barre de progression
+//	int coeffRefresh = 0;
+//
+//	for (int i = 0; i < width; i++)		//boucle sur tous les pixels de l’image
+//	{
+//		for (int j = 0; j < height; j++)
+//		{
+//			//if (Stop.getStop())    //Si on a cliqué sur Stop
+//			//{
+//			//	i = largeur - 1;  //On passe aux derniers pixels de l'image, pour arrêter. On pourrait aussi faire un break
+//			//	j = hauteur - 1;
+//			//	/*On prévient l'utilisateur*/
+//			//	JOptionPane.showMessageDialog(null,
+//			//		"Interruption du calcul.", "Information",
+//			//		JOptionPane.INFORMATION_MESSAGE);
+//			//}
+//
+//			/*On calcule le point courant. Il est situé entre XMIN et XMAX (resp. YMIN et YMAX),
+//			*  et il y a largeur points entre XMIN et XMAX (resp. longueur points entre YMIN etYMAX)*/
+//			double a = XMIN + i * (XMAX - XMIN) / width;
+//			double b = YMIN + j * (YMAX - YMIN) / height;
+//			double preciseIter;
+//			int iterations;
+//			double x, y;
+//			double xPrime, yPrime;
+//			double sum;
+//			if (!escapesToInfinity(a, b, iterations, preciseIter, x, y, xPrime, yPrime, sum, ParserById()))
+//			{
+//				//argb = fractalColor.getRGB();   //Affecte le code RGB à un entier (compris entre 0 et 256^3)
+//
+//				out(i, j) = Color(1., 0., 0.);
+//			}
+//
+//			else  //Si ça ne diverge pas
+//			{
+//				//if (typeRepresentation == "Dégradé de gris") //On regarde le mode de représentation graphique choisi -Gris ici-
+//				{
+//					double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur
+//					int rgb;
+//
+//					if (!myIsLogLog)
+//						rgb = (int)(iterations*coeff);
+//					else  //Adoucissement log-log
+//					{
+//						double fin = preciseIter - iterations;
+//						double coeff2 = fin *coeff;
+//						rgb = (int)((iterations*coeff) + coeff2);
+//						rgb = rgb > 255 ? 255 : rgb;
+//					}
+//
+//					/*On détermine la couleur pour le point en cours de calcul,
+//					dépendante du nombre d'itérations*/
+//					Color fractal = Color(rgb / 255.);
+//
+//					out(i, j) = fractal;
+//
+//					//argb = fractal.getRGB();    //On récupère le code RGB de la couleur
+//					//colorData = model.getDataElements(argb, null);
+//					//raster.setDataElements(i, j, colorData);
+//				}
+//			}
+//			int perc = (int)(((double)cpt / (width * height)) * 100);
+//			if (perc > myRefreshFrequency * coeffRefresh)
+//			{
+//				dispatchComputationAdvances(perc);
+//				coeffRefresh++;
+//			}
+//			cpt++;
+//		}
+//	}
+//}
 
-	const double XMIN = params.getDouble("xmin", -2.);
-	const double XMAX = params.getDouble("xmax", 2.);
-	const double YMIN = params.getDouble("ymin", -2.);
-	const double YMAX = params.getDouble("ymax", 2.);
-	myIsLogLog = params.getBool("logLog", false);
-	myMaxIt = params.getInt("maxIter", 100);
-	int width = out.getWidth();
-	int height = out.getHeight();
-	
-	//for (int i = 0; i < 6;i++)          //On sauvegarde le tableau de couleurs de l'objet Infos
-	//	Couleurs[i] = Infos.getCouleur(i);
-
-	//BufferedImage image = new BufferedImage(largeur, hauteur, BufferedImage.TYPE_INT_ARGB);
-	////création de l’image au moyen de la classe BufferedImage
-	//WritableRaster raster = image.getRaster();
-	////appel de la méthode getRaster() afin d’obtenir un objet de type WritableRaster, vous    
-	////permettant d’accéder aux pixels de l’image et de les modifier.
-	//ColorModel model = image.getColorModel(); //renvoie le modèle de couleur de l’image       
-	//										  //mémorisée.
-
-	//this.maxIterations = Infos.getIterations();    //Sauvegarde du nombre max d'itérations
-	//fractalColor = Couleurs[5];                   //Couleur de l'Ensemble
-	//int argb = fractalColor.getRGB();             //Renvoie le code RGB de la couleur
-	//Object colorData = model.getDataElements(argb, null);
-	//this.typeRepresentation = Infos.getTypeRepresentation();
-	//System.out.println(Infos.getTypeRepresentation());
-
-	int cpt = 0;  //Un compteur, pour la barre de progression
-	int coeffRefresh = 0;
-
-	for (int i = 0; i < width; i++)		//boucle sur tous les pixels de l’image
-	{
-		for (int j = 0; j < height; j++)
-		{
-			//if (Stop.getStop())    //Si on a cliqué sur Stop
-			//{
-			//	i = largeur - 1;  //On passe aux derniers pixels de l'image, pour arrêter. On pourrait aussi faire un break
-			//	j = hauteur - 1;
-			//	/*On prévient l'utilisateur*/
-			//	JOptionPane.showMessageDialog(null,
-			//		"Interruption du calcul.", "Information",
-			//		JOptionPane.INFORMATION_MESSAGE);
-			//}
-
-			/*On calcule le point courant. Il est situé entre XMIN et XMAX (resp. YMIN et YMAX),
-			*  et il y a largeur points entre XMIN et XMAX (resp. longueur points entre YMIN etYMAX)*/
-			double a = XMIN + i * (XMAX - XMIN) / width;
-			double b = YMIN + j * (YMAX - YMIN) / height;
-			double preciseIter;
-			int iterations;
-			double x, y;
-			double xPrime, yPrime;
-			double sum;
-			if (!escapesToInfinity(a, b, iterations, preciseIter, x, y, xPrime, yPrime, sum, ParserById()))
-			{
-				//argb = fractalColor.getRGB();   //Affecte le code RGB à un entier (compris entre 0 et 256^3)
-
-				out(i, j) = Color(1., 0., 0.);
-			}
-
-			else  //Si ça ne diverge pas
-			{
-				//if (typeRepresentation == "Dégradé de gris") //On regarde le mode de représentation graphique choisi -Gris ici-
-				{
-					double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur
-					int rgb;
-
-					if (!myIsLogLog)
-						rgb = (int)(iterations*coeff);
-					else  //Adoucissement log-log
-					{
-						double fin = preciseIter - iterations;
-						double coeff2 = fin *coeff;
-						rgb = (int)((iterations*coeff) + coeff2);
-						rgb = rgb > 255 ? 255 : rgb;
-					}
-
-					/*On détermine la couleur pour le point en cours de calcul,
-					dépendante du nombre d'itérations*/
-					Color fractal = Color(rgb / 255.);
-
-					out(i, j) = fractal;
-
-					//argb = fractal.getRGB();    //On récupère le code RGB de la couleur
-					//colorData = model.getDataElements(argb, null);
-					//raster.setDataElements(i, j, colorData);
-				}
-			}
-			int perc = (int)(((double)cpt / (width * height)) * 100);
-			if (perc > myRefreshFrequency * coeffRefresh)
-			{
-				dispatchComputationAdvances(perc);
-				coeffRefresh++;
-			}
-			cpt++;
-		}
-	}
-}
-
-#include <qcolor.h>
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Mandelbrot::computePixel(double a, double b, const Parameters& params, ParserById& parserById)//, Array2D<Color>& out)//std::vector<FunctionParser_cd>& parsers
 {
 	myIsLogLog = params.getBool("logLog", false);
@@ -419,6 +422,8 @@ Color Mandelbrot::computePixel(double a, double b, const Parameters& params, Par
 	//}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 bool Mandelbrot::escapesToInfinity(double a, double b, int& iterations, double& preciseIter, double& x, double& y, double& xPrime, double& yPrime, double& value, ParserById& parserById)
 {
 	x = 0.0;
@@ -911,6 +916,8 @@ void Mandelbrot::computeBranching(int iterations, double x, double y, double xne
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Mandelbrot::normalizeBranching(int iterations, int skipLastIterBranching, double& sum, double& prevSum)
 {
 	switch (myComputationType & BRANCHING)
@@ -951,6 +958,8 @@ void Mandelbrot::normalizeBranching(int iterations, int skipLastIterBranching, d
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Mandelbrot::compute3D(double a, double b, double x, double y, double xPrime, double yPrime, int iterations, double preciseIter, double addEndMeanSum, ParserById& parserById)
 {
 	double saveX = x;
@@ -1035,6 +1044,8 @@ Color Mandelbrot::compute3D(double a, double b, double x, double y, double xPrim
 	//return myRenderer->computeColor(iterations, value, x, y, xPrime, yPrime);//*lightIntensity * std::abs(dot);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 double Mandelbrot::rerange3DHeight(double value, ParserById& parserById)
 {
 	auto parser = parserById.find(Mandelbrot::RERANGE_3D_HEIGHT);
@@ -1049,6 +1060,8 @@ double Mandelbrot::rerange3DHeight(double value, ParserById& parserById)
 	return value;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Mandelbrot::predefinedAndRandomRenderer(int iterations, double preciseIter)
 {
 	/*Il nous faut réaliser un dégradé de couleurs...On a défini 5 couleurs
@@ -1110,32 +1123,30 @@ Color Mandelbrot::predefinedAndRandomRenderer(int iterations, double preciseIter
 	green = (CouleurDAvant.g + ((variable)) * coeffG);
 	blue = (CouleurDAvant.b + ((variable)) * coeffB);
 
-	if (myIsLogLog)  //Si adoucissement log-log choisi, calculs supplémentaires
+	if (myIsLogLog) 
 	{
 		double fin = preciseIter - iterations;
 
 		coeffR = coeffR * fin;
 		coeffG = coeffG * fin;
 		coeffB = coeffB * fin;
-		//red = (int)(red + coeffR) > 255 ? 255 : (int)(red + coeffR) < 0 ? 0 : (int)(red + coeffR);
-		////System.out.println(rouge);
-		//green = (int)(green + coeffG)> 255 ? 255 : (int)(green + coeffG)< 0 ? 0 : (int)(green + coeffG);
-		//blue = (int)(blue + coeffB)> 255 ? 255 : (int)(blue + coeffB)< 0 ? 0 : (int)(blue + coeffB);
 	}
 
-	fractal = Color(red + coeffR, green + coeffG, blue + coeffB);   //On crée la couleur
+	fractal = Color(red + coeffR, green + coeffG, blue + coeffB);  
 
 	return fractal;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Mandelbrot::blackAndWhiteRenderer(int iterations, double preciseIter)
 {
-	double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur
+	double coeff = 255 / myMaxIt;    
 	int rgb;
 
 	if (!myIsLogLog)
 		rgb = (int)(iterations*coeff);
-	else  //Adoucissement log-log
+	else 
 	{
 		double fin = preciseIter - iterations;
 		double coeff2 = fin *coeff;
@@ -1143,11 +1154,11 @@ Color Mandelbrot::blackAndWhiteRenderer(int iterations, double preciseIter)
 		rgb = rgb > 255 ? 255 : rgb;
 	}
 
-	/*On détermine la couleur pour le point en cours de calcul,
-	dépendante du nombre d'itérations*/
 	return Color(rgb / 255.);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Mandelbrot::sineRenderer(int iterations, double preciseIter, bool is3Dmode)
 {
 	Color fractal;
@@ -1158,12 +1169,8 @@ Color Mandelbrot::sineRenderer(int iterations, double preciseIter, bool is3Dmode
 		double r = (double)(myAmplitudes[0]*std::sin(myPulsations[0]*preciseIter + myPhases[0]));
 		double g = (double)(myAmplitudes[1]*std::sin(myPulsations[1]*preciseIter + myPhases[1]));
 		double bl = (double)(myAmplitudes[2]*std::sin(myPulsations[2]*preciseIter + myPhases[2]));
-		//System.out.println((int)(rouge*255.99));
-		//rouge = (int)(r*255.99) > 255 ? 255 : (int)(r*255.99) < 0 ? 0 : (int)(r*255.99);
-		//vert = (int)(g*255.99) > 255 ? 255 : (int)(g*255.99) < 0 ? 0 : (int)(g*255.99);
-		//bleu = (int)(bl*255.99) > 255 ? 255 : (int)(bl*255.99) < 0 ? 0 : (int)(bl*255.99);
 
-		fractal = Color(r, g, bl);   //On crée la couleur
+		fractal = Color(r, g, bl);  
 	}
 	else
 	{

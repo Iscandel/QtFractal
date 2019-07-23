@@ -62,10 +62,14 @@ MandelJuliaRandomRendererDialog::MandelJuliaRandomRendererDialog(QWidget *parent
 	setParameters(params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaRandomRendererDialog::~MandelJuliaRandomRendererDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::setParameters(Parameters* params)
 {
 	std::vector<boost::any> vec = myParams->getVector("iterationColors", std::vector<boost::any>());
@@ -79,6 +83,8 @@ void MandelJuliaRandomRendererDialog::setParameters(Parameters* params)
 
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onValueScrollbarsChanged(int value)
 {
 	//QObject* obj = sender();
@@ -89,14 +95,13 @@ void MandelJuliaRandomRendererDialog::onValueScrollbarsChanged(int value)
 
 	int selectedRadio = getIndexSelectedRadio();
 
-	//std::cout << selectedRadio << std::endl;
-	//std::cout << "signal lancé" << std::endl;
-
 	myColors[selectedRadio].r = ui.myScrollBarRed->value() / 255.;
 	myColors[selectedRadio].g = ui.myScrollBarGreen->value() / 255.;
 	myColors[selectedRadio].b = ui.myScrollBarBlue->value() / 255.;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onOk()
 {
 	std::vector<boost::any> myColorVector;
@@ -110,16 +115,22 @@ void MandelJuliaRandomRendererDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onCancel()
 {
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onRadioChanged(int checked)
 {
 	updateGUI();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::setPreviewColor(int r, int g, int b)
 {
 	int alpha = 255;
@@ -131,6 +142,8 @@ void MandelJuliaRandomRendererDialog::setPreviewColor(int r, int g, int b)
 	ui.myLabelColorPreview->setStyleSheet("QLabel { background-color: rgba(" + values + "); }");
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 int MandelJuliaRandomRendererDialog::getIndexSelectedRadio()
 {
 	if (ui.myRadioColor1->isChecked())
@@ -149,6 +162,8 @@ int MandelJuliaRandomRendererDialog::getIndexSelectedRadio()
 		return -1;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onPredefined()
 {
 	myColors[0] = Color(1., 0., 0.);
@@ -160,6 +175,8 @@ void MandelJuliaRandomRendererDialog::onPredefined()
 	updateGUI();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onRandom()
 {
 	for(int i = 0; i < 6; i++)
@@ -168,6 +185,8 @@ void MandelJuliaRandomRendererDialog::onRandom()
 	updateGUI();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::updateGUI()
 {
 	int selectedRadio = getIndexSelectedRadio();

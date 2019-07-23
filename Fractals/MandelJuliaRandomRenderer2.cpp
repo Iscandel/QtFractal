@@ -15,11 +15,14 @@ MandelJuliaRandomRenderer2::MandelJuliaRandomRenderer2(const Parameters& params)
 	}
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaRandomRenderer2::~MandelJuliaRandomRenderer2()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color MandelJuliaRandomRenderer2::computeColor(int iterations, double preciseIter, double x, double y, double xPrime, double yPrime)
 {
 	if (std::isnan(preciseIter) || std::isinf(preciseIter))
@@ -46,7 +49,7 @@ Color MandelJuliaRandomRenderer2::computeColor(int iterations, double preciseIte
 			correctedIt = correctedIt - (int)correctedIt;
 	}
 
-	//The color ranges associated to lambda (which is [0-1]) depends on the number of colors
+	//The color ranges associated to lambda (which is [0-1]) depending on the number of colors
 	double range = myIsCyclicLastToFirst ? 1. / myIterationsColors.size() : 1. / (myIterationsColors.size() - 1);
 	//Select the appropriate part of the range
 	int indexRange = correctedIt / range;

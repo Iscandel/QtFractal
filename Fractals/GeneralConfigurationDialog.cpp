@@ -19,11 +19,14 @@ GeneralConfigurationDialog::GeneralConfigurationDialog(QWidget *parent)
 	connect(ui.myButtonConfigFilter, &QPushButton::clicked, this, &GeneralConfigurationDialog::onConfigure);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 GeneralConfigurationDialog::~GeneralConfigurationDialog()
 {
-	std::cout << "boum" << std::endl;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GeneralConfigurationDialog::setParameters(Parameters* params) 
 { 
 	myParams = params; 
@@ -34,6 +37,8 @@ void GeneralConfigurationDialog::setParameters(Parameters* params)
 	ui.myComboFilterType->setCurrentText(myParams->getString("filter", "Box").c_str());
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GeneralConfigurationDialog::onOk()
 {
 	myParams->addInt("threadNumber", ui.mySpinNbThreads->value());
@@ -48,11 +53,15 @@ void GeneralConfigurationDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GeneralConfigurationDialog::onCancel()
 {
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GeneralConfigurationDialog::onOverSamplingValueChanged(int value)
 {
 	if (value > 1)
@@ -66,6 +75,8 @@ void GeneralConfigurationDialog::onOverSamplingValueChanged(int value)
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void GeneralConfigurationDialog::onConfigure()
 {
 	if(ui.myComboFilterType->currentText() == "Box")

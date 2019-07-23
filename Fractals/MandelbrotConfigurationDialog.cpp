@@ -20,10 +20,14 @@ MandelbrotConfigurationDialog::MandelbrotConfigurationDialog(QWidget *parent)
 	//	&MandelbrotConfigurationDialog::onRendererValueChanged);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelbrotConfigurationDialog::~MandelbrotConfigurationDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotConfigurationDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -74,6 +78,8 @@ void MandelbrotConfigurationDialog::setParameters(Parameters* params)
 	std::cout << val << std::endl;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotConfigurationDialog::onOk()
 {
 	myParams->addDouble("xmin", ui.mySpinXMin->value());
@@ -134,17 +140,23 @@ void MandelbrotConfigurationDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotConfigurationDialog::onCancel()
 {
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotConfigurationDialog::onRendererValueChanged(const std::string& value)
 {
 	//if(value == "Random")
 
 }	
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MandelbrotConfigurationDialog::onClickConfigureRenderer()
 {
 	if (ui.myComboRenderer->currentText() == "Random")

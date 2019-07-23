@@ -15,22 +15,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// \brief This class allows multithreaded computation of image chunks
 ///////////////////////////////////////////////////////////////////////////////
-class JobManager : public QObject
+class JobManager
 {
-public:
-	Q_OBJECT
+
 
 public:
 	ProgressNotifier myProgress; //to change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 public:
 	void setJoinMode(bool join) { myIsJoinMode = join; }
 
-signals:
-	void signalComputationAdvances(int perc);
-	void signalJobsDone();
-
-protected:
-	void dispatchComputationAdvances(int perc);
+//protected:
+//	void dispatchComputationAdvances(int perc);
 public:
 	JobManager();
 	~JobManager(void);
@@ -60,7 +55,7 @@ public:
 	bool isIdle();
 
 	void addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::function<void()> callback);
-	void setJobs(const std::vector<std::shared_ptr<Job> >& jobs, const std::string& progressMessage, std::function<void()> callback);
+	void setJobs(const std::vector<std::shared_ptr<Job> >& jobs, const std::string& progressMessage);//, std::function<void()> callback);
 
 	//void stopJobs();
 
@@ -74,7 +69,7 @@ public:
 
 	void setShowProgress(bool show) { myIsShowProgress = show; }
 
-	void jobsDone();
+	//void jobsDone();
 
 	void cancelComputation(bool wait);
 
@@ -100,7 +95,7 @@ protected:
 	bool myIsJoinMode;
 	std::string myProgressMessage;
 
-	std::function<void()> myEndCallback;
+	//std::function<void()> myEndCallback;
 };
 
 

@@ -127,7 +127,7 @@ void JobManager::addJobs(const std::vector<std::shared_ptr<Job> >& jobs, std::fu
 	////ILogger::log() << "Render time : " << clock.elapsedTime() << " s.\n";
 }
 
-void JobManager::setJobs(const std::vector<std::shared_ptr<Job> >& jobs, const std::string& progressMessage, std::function<void()> callback)
+void JobManager::setJobs(const std::vector<std::shared_ptr<Job> >& jobs, const std::string& progressMessage)//, std::function<void()> callback)
 {
 	//Timer clock;
 	myProgressMessage = progressMessage;
@@ -285,13 +285,17 @@ void JobManager::jobRun()
 	}
 }
 
-void JobManager::jobsDone()
-{
-	//myThreads.clear();
-	emit signalJobsDone();
-	//myEndCallback();
-}
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+//void JobManager::jobsDone()
+//{
+//	//myThreads.clear();
+//	emit signalJobsDone();
+//	//myEndCallback();
+//}
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void JobManager::cancelComputation(bool wait)
 {
 	myIsCancelled = true;
@@ -299,6 +303,8 @@ void JobManager::cancelComputation(bool wait)
 		join();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void JobManager::showProgress()
 {
 	std::lock_guard<std::mutex> lock(myProgressMutex);
@@ -314,7 +320,9 @@ void JobManager::showProgress()
 	}
 }
 
-void JobManager::dispatchComputationAdvances(int perc)
-{
-	emit signalComputationAdvances(perc);
-}
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+//void JobManager::dispatchComputationAdvances(int perc)
+//{
+//	emit signalComputationAdvances(perc);
+//}

@@ -9,10 +9,14 @@ BuddhabrotConfigurationDialog::BuddhabrotConfigurationDialog(QWidget *parent)
 	connect(ui.myButtonCancel, &QPushButton::clicked, this, &BuddhabrotConfigurationDialog::onCancel);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 BuddhabrotConfigurationDialog::~BuddhabrotConfigurationDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotConfigurationDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -29,6 +33,8 @@ void BuddhabrotConfigurationDialog::setParameters(Parameters* params)
 
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotConfigurationDialog::onOk()
 {
 	myParams->addDouble("xmin", ui.mySpinXMin->value());
@@ -46,6 +52,8 @@ void BuddhabrotConfigurationDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BuddhabrotConfigurationDialog::onCancel()
 {
 	hide();

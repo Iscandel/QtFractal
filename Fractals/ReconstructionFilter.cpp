@@ -9,6 +9,8 @@ ReconstructionFilter::ReconstructionFilter(double radiusX, double radiusY)
 	//precompute();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 ReconstructionFilter::ReconstructionFilter(const Parameters& params)
 :myResolution(32)
 {
@@ -18,11 +20,14 @@ ReconstructionFilter::ReconstructionFilter(const Parameters& params)
 	//precompute();
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 ReconstructionFilter::~ReconstructionFilter(void)
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ReconstructionFilter::precompute()
 {
 	myPrecomputedValues.resize(myResolution * myResolution);

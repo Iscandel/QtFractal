@@ -9,11 +9,14 @@ MandelJuliaBlackAndWhiteRenderer::MandelJuliaBlackAndWhiteRenderer(const Paramet
 	myFractalColor = params.getColor("fractalColor", Color());
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaBlackAndWhiteRenderer::~MandelJuliaBlackAndWhiteRenderer()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color MandelJuliaBlackAndWhiteRenderer::computeColor(int iterations, double preciseIter, double x, double y, double xPrime, double yPrime)
 {
 	double coeff = 255 / myMaxIt;    //On calcule le coefficient, pour la couleur

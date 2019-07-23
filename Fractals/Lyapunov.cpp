@@ -26,11 +26,14 @@ Lyapunov::Lyapunov(const Parameters& params)
 	initRenderer(myStrRenderer, params);
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Lyapunov::~Lyapunov()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Lyapunov::initRenderer(const std::string& renderer, const Parameters& params)
 {
 	if (renderer == "Predefined 1")
@@ -43,6 +46,8 @@ void Lyapunov::initRenderer(const std::string& renderer, const Parameters& param
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Lyapunov::computePixel(double a, double b, const Parameters& params, ParserById& parserById)
 {
 	double P = myInitialValue;
@@ -105,6 +110,8 @@ Color Lyapunov::computePixel(double a, double b, const Parameters& params, Parse
 	//return Color(coeffR, coeffG, coeffB);  //On crée la couleur avec les composantes RGB
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 double Lyapunov::getCoefficient(int index, double a, double b)
 {
 	char c = mySequence[index % mySequence.size()];
@@ -114,6 +121,8 @@ double Lyapunov::getCoefficient(int index, double a, double b)
 		return b;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Lyapunov::rendu1(double lambda)
 {
 	double coeffR, coeffG, coeffB;
@@ -137,6 +146,8 @@ Color Lyapunov::rendu1(double lambda)
 	return Color(coeffR, coeffG, coeffB);  //On crée la couleur avec les composantes RGB
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Lyapunov::rendu2(double lambda)
 {
 	if (lambda > 0) {
@@ -154,6 +165,8 @@ Color Lyapunov::rendu2(double lambda)
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Lyapunov::rendu3(double lambda)
 {
 	Color col1(0.9, 0.9, 0.1);

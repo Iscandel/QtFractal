@@ -17,10 +17,14 @@ Julia::Julia(const Parameters& params)
 	initRenderer(myStrRenderer, params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Julia::~Julia()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Julia::initRenderer(const std::string& renderer, const Parameters& params)
 {
 	if (renderer == "Black & white")
@@ -41,6 +45,8 @@ void Julia::initRenderer(const std::string& renderer, const Parameters& params)
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color Julia::computePixel(double a, double b, const Parameters& params, ParserById& parserById)//, Array2D<Color>& out)
 {
 	//Array2D<Color>& out = *myArray;
@@ -104,6 +110,8 @@ Color Julia::computePixel(double a, double b, const Parameters& params, ParserBy
 	//}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 bool Julia::escapesToInfinity(double a, double b, double initialX, double initialY, int& iterations, double& preciseIter, double& x, double& y, double& xPrime, double& yPrime)
 {
 	x = initialX;       // -0.6;

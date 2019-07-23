@@ -11,10 +11,14 @@ MitchellNetravaliFilterConfigurationDialog::MitchellNetravaliFilterConfiguration
 	setParameters(params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MitchellNetravaliFilterConfigurationDialog::~MitchellNetravaliFilterConfigurationDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MitchellNetravaliFilterConfigurationDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -24,6 +28,8 @@ void MitchellNetravaliFilterConfigurationDialog::setParameters(Parameters* param
 	ui.mySpinC->setValue(myParams->getDouble("C", 0.33));
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MitchellNetravaliFilterConfigurationDialog::onOk()
 {
 	myParams->addDouble("radiusX", ui.mySpinRadiusX->value());
@@ -34,6 +40,8 @@ void MitchellNetravaliFilterConfigurationDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void MitchellNetravaliFilterConfigurationDialog::onCancel()
 {
 	hide();

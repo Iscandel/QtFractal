@@ -12,11 +12,14 @@ LyapunovState::LyapunovState(const Parameters&)
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 LyapunovState::~LyapunovState()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovState::init()
 {
 	myWindow->resetParameters();
@@ -37,6 +40,8 @@ void LyapunovState::init()
 	QObject::connect(myActionGeneralConfig.get(), &QAction::triggered, this, &LyapunovState::onClickGeneralConfig);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovState::free()
 {
 	myWindow->removeActionFromToolbar(myActionConfigureFractal.get());
@@ -46,6 +51,8 @@ void LyapunovState::free()
 	myActionGeneralConfig.reset();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovState::onClickGeneralConfig()
 {
 	GeneralConfigurationDialog dlg(myWindow);
@@ -55,6 +62,8 @@ void LyapunovState::onClickGeneralConfig()
 	dlg.exec();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovState::onClickConfigureFractal()
 {
 	LyapunovConfigurationDialog dlg(myWindow);

@@ -19,7 +19,8 @@ GenericFractalJob::GenericFractalJob(int offsetX, int offsetY, int sizeX, int si
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 GenericFractalJob::~GenericFractalJob()
 {
 }
@@ -72,10 +73,8 @@ void GenericFractalJob::run()
 
 	for (int y = myOffsetY; y < endY; y++)
 	{
-		//std::cout << y << std::endl;
 		for (int x = myOffsetX; x < endX; x++)
 		{
-			//std::cout << "x " << x << std::endl;
 			for (int i = 0; i < oversampling; i++)
 			{
 				for (int j = 0; j < oversampling; j++)
@@ -89,8 +88,7 @@ void GenericFractalJob::run()
 						//double xx = (double)x;// +sample.x();
 						//double yy = (double)y;// +sample.y();
 
-						//On calcule le point courant. Il est situé entre XMIN et XMAX (resp. YMIN et YMAX),
-						//et il y a largeur points entre XMIN et XMAX (resp. longueur points entre YMIN etYMAX)
+						//Current point
 						double a = XMIN + xx * (XMAX - XMIN) / width;
 						double b = YMIN + yy * (YMAX - YMIN) / height;
 						Color col = myFractal->computePixel(a, b, myParameters, parsers);

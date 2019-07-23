@@ -6,7 +6,8 @@ MandelJuliaBaseRenderer::MandelJuliaBaseRenderer()
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaBaseRenderer::~MandelJuliaBaseRenderer()
 {
 }

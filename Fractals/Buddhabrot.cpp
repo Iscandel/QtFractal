@@ -22,18 +22,20 @@ Buddhabrot::Buddhabrot(const Parameters& params)
 	XMAX = params.getDouble("ymax", 2.);
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Buddhabrot::~Buddhabrot()
 {
 }
 
-void Buddhabrot::addComputationEndsListener(QObject* listener)
-{
-	connect(&myManager, &JobManager::signalJobsDone, (Buddhabrot*) this, &Buddhabrot::postProcessing); //First to be called, important
-	Fractal::addComputationEndsListener(listener);
-}
+//void Buddhabrot::addComputationEndsListener(QObject* listener)
+//{
+//	connect(&myManager, &JobManager::signalJobsDone, (Buddhabrot*) this, &Buddhabrot::postProcessing); //First to be called, important
+//	Fractal::addComputationEndsListener(listener);
+//}
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Buddhabrot::compute(const Parameters& params, std::function<void()> callback)
 {
 	//myManager.setJoinMode(true);
@@ -82,9 +84,11 @@ void Buddhabrot::compute(const Parameters& params, std::function<void()> callbac
 	//	myManager.addJobs(jobs, callback);
 	//});
 
-	myManager.setJobs(jobs, "Computation...", callback);
+	myManager.setJobs(jobs, "Computation...");//, callback);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 std::vector<std::vector<TraceSample>> Buddhabrot::computePixel(double a, double b, const Parameters& params)
 {
 
@@ -127,6 +131,8 @@ std::vector<std::vector<TraceSample>> Buddhabrot::computePixel(double a, double 
 	return trace;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void Buddhabrot::postProcessing()
 {
 	std::cout << "post processing" << std::endl;
@@ -206,6 +212,8 @@ void Buddhabrot::postProcessing()
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 bool Buddhabrot::escapesToInfinity(double a, double b, bool passage2, int composante, std::vector<std::vector<TraceSample>>& trace)
 {
 	double x = 0.0;

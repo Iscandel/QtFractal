@@ -9,27 +9,22 @@
 
 #include <memory>
 
-#include <QObject>
 
-
-class Fractal : public QObject
+class Fractal
 {
-	Q_OBJECT
-
 public:
 	typedef std::shared_ptr<Fractal> ptr;
+
 public:
 	Fractal(QObject *parent = nullptr);
 	~Fractal();
-
-	//virtual void computeFull(const Parameters& params) = 0; //à suppr
 
 	//virtual void compute(const Parameters& params, Array2D<Color>& out) = 0;
 	virtual void compute(const Parameters& params, std::function<void()> callback) = 0;
 	virtual void cancelComputation(bool wait = true) {};
 
-	virtual void addAdvanceListener(QObject* listener);//FractalComputationListener* listener);
-	virtual void addComputationEndsListener(QObject* listener);//FractalComputationListener* listener);
+	//virtual void addAdvanceListener(QObject* listener);//FractalComputationListener* listener);
+	//virtual void addComputationEndsListener(QObject* listener);//FractalComputationListener* listener);
 
 	void setArray(Array2D<Color>& array) { myArray = &array; }
 
@@ -37,12 +32,10 @@ public:
 
 	virtual void initialize(const Parameters&) {}
 	virtual bool isComputing() = 0;
+	virtual void clean() {}
 
-signals:
-	void signalComputationAdvances(int perc);
-
-protected:
-	void dispatchComputationAdvances(int perc);
+//protected:
+//	void dispatchComputationAdvances(int perc);
 
 protected:
 //	std::vector<FractalComputationListener*> myListeners;
@@ -65,4 +58,5 @@ public:
 	virtual Color computePixel(double x, double y, const Parameters& params, ParserById& parserById) = 0;
 	void cancelComputation(bool wait) override;
 	bool isComputing() override;
+	virtual void clean() override;
 };

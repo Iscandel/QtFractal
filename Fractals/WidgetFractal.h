@@ -18,6 +18,8 @@ public:
 	WidgetFractal(QWidget *parent = Q_NULLPTR);
 	~WidgetFractal();
 
+	void setDragMode(bool drag) { myIsDragMode = drag;}
+
 signals:
 	void signalRightButtonDrawFractal(int startX, int startY, int endX, int endY);
 
@@ -25,6 +27,7 @@ protected:
 	void paintEvent(QPaintEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
 	Ui::WidgetFractal ui;
@@ -34,6 +37,10 @@ private:
 	int myStartY;
 	int myEndX;
 	int myEndY;
+
+	bool myIsDragMode;
+	QPoint myLastMousePos;
+	QPoint myPixmapOffset;
 };
 
 //class WidgetFractal2 : public QOpenGLWidget

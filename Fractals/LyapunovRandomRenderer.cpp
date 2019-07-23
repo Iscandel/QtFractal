@@ -10,11 +10,14 @@ LyapunovRandomRenderer::LyapunovRandomRenderer(const Parameters& params)
 	}
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 LyapunovRandomRenderer::~LyapunovRandomRenderer()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color LyapunovRandomRenderer::computeColor(double lambda)
 {
 	double correctedLambda = lambda < 0 ? std::max(0., 1 + lambda) : std::min(1., 1 - lambda);

@@ -11,6 +11,7 @@ class ImageUtils
 public:
 	enum Format
 	{
+		RGB32,
 		ARGB32,
 		RGBA32
 	};
@@ -25,7 +26,6 @@ public:
 	static void convert(const Array2D<Pixel>& source, int overlapX, int overlapY,
 		int imageSizeX, int imageSizeY, std::vector<uint32_t>& dest, Format format);
 
-protected:
 	template<class T>
 	static T numberColorFromFormat(Format format, int a, int r, int g, int b);
 
@@ -36,7 +36,9 @@ template<class T>
 T ImageUtils::numberColorFromFormat(Format format, int a, int r, int g, int b)
 {
 	T intColor;
-	if (format == ARGB32)
+	if (format == RGB32)
+		intColor = Color::toARGB32(0xff, r, g, b);
+	else if (format == ARGB32)
 		intColor = Color::toARGB32(a, r, g, b);
 	else if (format == RGBA32)
 		intColor = Color::toRGBA32(r, g, b, a);

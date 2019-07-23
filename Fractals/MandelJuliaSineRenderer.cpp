@@ -22,11 +22,14 @@ MandelJuliaSineRenderer::MandelJuliaSineRenderer(const Parameters& params)
 
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 MandelJuliaSineRenderer::~MandelJuliaSineRenderer()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 Color MandelJuliaSineRenderer::computeColor(int iter, double preciseIter, double x, double y, double xPrime, double yPrime)
 {
 	double reDiv = x*xPrime + y*yPrime;

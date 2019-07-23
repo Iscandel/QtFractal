@@ -48,7 +48,7 @@ public:
 	Mandelbrot(const Parameters& params= Parameters());
 	~Mandelbrot();
 
-	void computeFull(const Parameters& params);//, Array2D<Color>& out) override;
+	//void computeFull(const Parameters& params);//, Array2D<Color>& out) override;
 
 	Color computePixel(double x, double y, const Parameters& params, ParserById& parserById) override;//, Array2D<Color>& out) override;
 

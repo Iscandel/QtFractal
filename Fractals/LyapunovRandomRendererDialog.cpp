@@ -21,10 +21,14 @@ LyapunovRandomRendererDialog::LyapunovRandomRendererDialog(QWidget *parent, Para
 	setParameters(params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 LyapunovRandomRendererDialog::~LyapunovRandomRendererDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -38,6 +42,8 @@ void LyapunovRandomRendererDialog::setParameters(Parameters* params)
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onOk()
 {
 	std::vector<boost::any> myColorVector;
@@ -55,11 +61,15 @@ void LyapunovRandomRendererDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onCancel()
 {
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onRandom()
 {
 	ui.myListColors->clear();
@@ -71,6 +81,8 @@ void LyapunovRandomRendererDialog::onRandom()
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onAddColor()
 {
 	QColor color = QColorDialog::getColor();
@@ -88,6 +100,9 @@ void LyapunovRandomRendererDialog::onDeleteColor()
 		delete item;
 	}
 }
+
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onMoveUp()
 {
 	int index = ui.myListColors->currentRow();
@@ -98,6 +113,9 @@ void LyapunovRandomRendererDialog::onMoveUp()
 	}
 
 }
+
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onMoveDown()
 {
 	int index = ui.myListColors->currentRow();

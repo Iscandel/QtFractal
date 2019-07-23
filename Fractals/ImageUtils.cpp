@@ -3,26 +3,28 @@
 #include "Color.h"
 #include "Logger.h"
 #include "Image.h"
+#include "Maths.h"
 
-template<class T>
-T thresholding(T val, T min, T max)
-{
-	return val < min ? min : val  > max ? max : val;
-}
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 ImageUtils::ImageUtils()
 {
 }
 
-
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 ImageUtils::~ImageUtils()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 int ImageUtils::bytesPerPixelFromFormat(Format format)
 {
 	int bytesPerPixel;
-	if (format == ARGB32)
+	if (format == RGB32)
+		bytesPerPixel = 4;
+	else if (format == ARGB32)
 		bytesPerPixel = 4;
 	else if (format == RGBA32)
 		bytesPerPixel = 4;
@@ -32,6 +34,8 @@ int ImageUtils::bytesPerPixelFromFormat(Format format)
 	return bytesPerPixel;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ImageUtils::convert(const std::vector<uint8_t>& source, int sourceBytesPerPixel, int minX, int maxX, int minY, int maxY, 
 	int overlapX, int overlapY,	int imageSizeX, int imageSizeY, std::vector<uint32_t>& dest, Format format)
 {
@@ -41,15 +45,15 @@ void ImageUtils::convert(const std::vector<uint8_t>& source, int sourceBytesPerP
 	int blockSize = maxX - minX;
 
 	//Due to borders, the "overlap" first and last pixels should not be taken into account
-	if (minX == 0)
+	if (minX < overlapX)
 		maxX -= overlapX;
-	else if (maxX >= imageSizeX)
+	else if (maxX > imageSizeX)
 		maxX = imageSizeX;
-	else
+	else //central blocks are fully copied with 
 		overlapX = 0;
-	if (minY == 0)
+	if (minY < overlapY)
 		maxY -= overlapY;
-	else if (maxY >= imageSizeY)
+	else if (maxY > imageSizeY)
 		maxY = imageSizeY;
 	else
 		overlapY = 0;
@@ -77,6 +81,8 @@ void ImageUtils::convert(const std::vector<uint8_t>& source, int sourceBytesPerP
 	}
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void ImageUtils::convert(const Array2D<Pixel>& source, int overlapX, int overlapY,
 	int imageSizeX, int imageSizeY, std::vector<uint32_t>& dest, Format format)
 {
@@ -90,9 +96,9 @@ void ImageUtils::convert(const Array2D<Pixel>& source, int overlapX, int overlap
 			const Pixel& col = source(i + overlapX, j + overlapY);
 			uint32_t intCol = numberColorFromFormat<uint32_t>(format,
 				(uint8_t)0xff,
-				(uint8_t)thresholding<int>(col.myColor.r * 255., 0, 255),
-				(uint8_t)thresholding<int>(col.myColor.r * 255., 0, 255),
-				(uint8_t)thresholding<int>(col.myColor.r * 255., 0, 255));
+				(uint8_t)maths::thresholding<int>(col.myColor.r * 255., 0, 255),
+				(uint8_t)maths::thresholding<int>(col.myColor.g * 255., 0, 255),
+				(uint8_t)maths::thresholding<int>(col.myColor.b * 255., 0, 255));
 
 			dest[(j * imageSizeX + i)] = intCol;
 		}

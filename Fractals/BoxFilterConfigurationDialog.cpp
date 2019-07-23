@@ -10,10 +10,14 @@ BoxFilterConfigurationDialog::BoxFilterConfigurationDialog(QWidget *parent, Para
 	setParameters(params);
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 BoxFilterConfigurationDialog::~BoxFilterConfigurationDialog()
 {
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BoxFilterConfigurationDialog::setParameters(Parameters* params)
 {
 	myParams = params;
@@ -21,6 +25,8 @@ void BoxFilterConfigurationDialog::setParameters(Parameters* params)
 	ui.mySpinRadiusY->setValue(myParams->getDouble("radiusY", 0.5));
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BoxFilterConfigurationDialog::onOk()
 {
 	myParams->addDouble("radiusX", ui.mySpinRadiusX->value());
@@ -29,6 +35,8 @@ void BoxFilterConfigurationDialog::onOk()
 	hide();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void BoxFilterConfigurationDialog::onCancel()
 {
 	hide();
