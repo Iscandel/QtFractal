@@ -90,6 +90,7 @@
    <addaction name="actionChoose_fractal"/>
    <addaction name="actionZoomPlus"/>
    <addaction name="actionZoomMinus"/>
+   <addaction name="actionDrag_mode"/>
    <addaction name="actionTrace_fractal"/>
    <addaction name="actionStop"/>
   </widget>
@@ -141,6 +142,17 @@
     </font>
    </property>
   </action>
+  <action name="actionDrag_mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Drag mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch th fractal manipulation modes</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -150,8 +162,6 @@
    <header>widgetfractal.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="Fractals.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

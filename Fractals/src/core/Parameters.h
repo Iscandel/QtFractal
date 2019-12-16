@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Color.h"
+#include "core/Types.h"
 
 #include <boost\any.hpp>
 #include <map>
@@ -28,7 +29,7 @@ public:
 	//void addVector(const std::string& name, const Vector3d& val);
 	void addColor(const std::string& name, const Color& val);
 	void addVector(const std::string& name, const std::vector<boost::any>& val);
-	//void addTransform(const std::string& name, Transform::ptr val);
+	void addTransform(const std::string& name, const Transform& val);
 
 	
 
@@ -39,7 +40,7 @@ public:
 	//Point3d getPoint(const std::string& name, const Point3d& defaultValue) const;
 	std::vector<boost::any> getVector(const std::string& name, const std::vector<boost::any>& defaultValue) const;
 	Color getColor(const std::string& name, const Color& defaultValue) const;
-	//Transform::ptr getTransform(const std::string& name, Transform::ptr defaultValue) const;
+	Transform getTransform(const std::string& name, const Transform& defaultValue) const;
 
 
 	bool hasInt(const std::string& name) const;
@@ -79,6 +80,7 @@ protected:
 	//Color
 	std::map<std::string, Color> myColor;
 	//Transform
-	//std::map<std::string, Transform::ptr> myTransform;
+	std::map<std::string, Transform, std::less<std::string>, 
+		Eigen::aligned_allocator<std::pair<const std::string, Transform>> > myTransform;
 };
 

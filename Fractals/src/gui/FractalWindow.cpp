@@ -12,8 +12,10 @@
 
 #include <qfiledialog.h>
 #include <qerrormessage.h>
+#include <QtWidgets/QCheckbox.h>
 
 #include "core/Maths.h"
+#include "core/OrthographicCamera.h"
 #include "core/ProgressNotifier.h"
 #include "tools/Timer.h"
 
@@ -84,8 +86,8 @@ FractalWindow::FractalWindow(QWidget *parent)
 	//connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalReportDataModified, this, &FractalWindow::refreshImage, Qt::ConnectionType::DirectConnection); //direct connection is ok only if view refresh is then call with emit
 	ProgressNotifier::addNotifier(notifier);
 
-	connect(ui.myLabelImage, SIGNAL(signalRightButtonDrawFractal(int, int, int, int)), 
-		this, SLOT(rightButtonDrawFractal(int, int, int, int)));
+	connect(ui.myLabelImage, SIGNAL(signalRightButtonDrawFractal(int, int, int, int, float)), 
+		this, SLOT(rightButtonDrawFractal(int, int, int, int, float)));
 
 	connect(ui.actionChoose_fractal, SIGNAL(triggered()), this, SLOT(showTypeFractal()));
 
@@ -99,6 +101,27 @@ FractalWindow::FractalWindow(QWidget *parent)
 	bool res = connect(ui.actionStop, SIGNAL(triggered()), this, SLOT(cancelComputation()));
 
 	myProgress = ProgressDialog::ptr(new ProgressDialog);
+
+	
+	//QCheckBox* checkDragMode = new QCheckBox(ui.statusBar);
+	//ui.mainToolBar->addWidget(checkDragMode);
+	connect(ui.actionDrag_mode, SIGNAL(toggled(bool)), this, SLOT(changeDragMode()));
+
+	myCamera = std::make_shared<OrthographicCamera>();
+	real scaleX = 2.;
+	real scaleY = 2.;
+	Transform transform;
+	Eigen::Vector2d scale(scaleX, scaleY);
+	Eigen::Rotation2D<real> rot;
+	Eigen::Vector2d translation;
+	transform.fromPositionOrientationScale(translation, rot, scale);
+	myCurrentParameters.addTransform("toWorld", transform);
+	//myCurrentParameters.addDouble("scaleX", scaleX);
+	//myCurrentParameters.addDouble("scaleY", scaleY);
+
+	Eigen::Affine2d affine = Eigen::Affine2d::Identity();
+	affine.prescale(Eigen::Vector2d(scaleX, scaleY));
+	myCamera->setWorldTransform(affine);
 
 	computeFractal(myCurrentParameters);	
 }
@@ -211,27 +234,109 @@ void FractalWindow::initFractalNames()
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int endY)
+void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int endY, float angle)
 {
 	double x1 = std::min(startX, endX); double x2 = std::max(startX, endX);
 	double y1 = std::min(startY, endY); double y2 = std::max(startY, endY);
 	int width = myCurrentParameters.getInt("sizeX", 800);
 	int height = myCurrentParameters.getInt("sizeY", 800);
-	const double XMIN = myCurrentParameters.getDouble("xmin", -2.);
-	const double XMAX = myCurrentParameters.getDouble("xmax", 2.);
-	const double YMIN = myCurrentParameters.getDouble("ymin", -2.);
-	const double YMAX = myCurrentParameters.getDouble("ymax", 2.);
+	// double XMIN = myCurrentParameters.getDouble("xmin", -2.);
+	// double XMAX = myCurrentParameters.getDouble("xmax", 2.);
+	// double YMIN = myCurrentParameters.getDouble("ymin", -2.);
+	// double YMAX = myCurrentParameters.getDouble("ymax", 2.);
+	// double ANGLE = myCurrentParameters.getDouble("angle", 0.);
+
+	//double sumAngle = myCurrentParameters.getDouble("angle", 0.) + angle;
+
+	//double scaleX = myCurrentParameters.getDouble("scaleX", 2.);
+	//double scaleY = myCurrentParameters.getDouble("scaleY", 2.);
+	//double cx = myCurrentParameters.getDouble("centerX", 0.);
+	//double cy = myCurrentParameters.getDouble("centerY", 0.);
+	//Eigen::Vector2d center(cx, cy);
+
+
+	//Eigen::Affine2d affine = Eigen::Affine2d::Identity();
+	//affine.prescale(Eigen::Vector2d(scaleX, scaleY));
+	//affine.prerotate(-sumAngle * M_PI / 180.);
+	//affine.pretranslate(center);
+	//myCamera->setWorldTransform(affine);
+
+	//scaleX *= (x2 - x1) / width;
+	//scaleY *= (y2 - y1) / height;
+	//myCurrentParameters.addDouble("scaleX", scaleX);
+	//myCurrentParameters.addDouble("scaleY", scaleY);
+
+	//double normCenterX = ((x2 + x1) / 2. - width / 2.) / (width / 2.); //[-1 1]
+	//double normCenterY = ((y2 + y1) / 2. - height / 2.) / (height / 2.); //[-1 1]
+	//auto transformedCenter = affine * Eigen::Vector3d(normCenterX, normCenterY, 1);
+	//myCurrentParameters.addDouble("centerX", transformedCenter(0));
+	//myCurrentParameters.addDouble("centerY", transformedCenter(1));
+
+
+	//
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	Eigen::Matrix2d scale;
+	Eigen::Matrix2d mRot;
+	
+	//transform.computeRotationScaling<Eigen::Matrix2d, Eigen::Vector2d>((Eigen::Matrix2d*)nullptr, (Eigen::Vector2d*)nullptr);
+	transform.computeRotationScaling(&mRot, &scale);
+	Eigen::Vector2d translation = transform.translation();
+	Eigen::Rotation2D<real> rot;
+	rot.fromRotationMatrix(mRot);
+	rot.angle() -= angle  * M_PI / 180.;
+	transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal()));
+	std::cout << scale << std::endl;
+	std::cout << scale.diagonal() << std::endl;
+	
+	double normCenterX = ((x2 + x1) / 2. - width / 2.) / (width / 2.); //[-1 1]
+	double normCenterY = ((y2 + y1) / 2. - height / 2.) / (height / 2.); //[-1 1]
+	auto transformedCenter = transform * Eigen::Vector3d(normCenterX, normCenterY, 1);
+	transform.fromPositionOrientationScale(transformedCenter.segment(0,2), rot, Eigen::Vector2d(scale.diagonal()));
+	myCurrentParameters.addTransform("toWorld", transform);
+	//
+
+
+	//double centerX = width / 2.;
+	//double centerY = height / 2.;
+	//double theta = sumAngle * M_PI / 180.;
+	//double cosTheta = std::cos(theta);
+	//double sinTheta = std::sin(theta);
+	//double r00 = cosTheta; double r01 = sinTheta; double r10 = -sinTheta; double r11 = cosTheta;
+
+	//Eigen::Affine2d affine = Eigen::Affine2d::Identity();
+	//affine.pretranslate(Eigen::Vector2d(-width/2., -height/2.));
+	//affine.prerotate(Eigen::Rotation2D<double>(sumAngle * M_PI / 180.));
+	//affine.pretranslate(Eigen::Vector2d((r00 * centerX + r01 * centerY), (r10 * centerX + r11 * centerY)));
+	//auto transform = affine;//.inverse();
+	//Eigen::Vector3d p1(startX, startY, 1);
+	//p1 = transform * p1;
+	//Eigen::Vector3d p2(endX, endY, 1);
+	//p2 = transform * p2;
+	//x1 = std::min(p1.x(), p2.x());y1 = std::min(p1.y(), p2.y());
+	//x2 = std::max(p1.x(), p2.x());y2 = std::max(p1.y(), p2.y());
 
 	//Recompute the new frame coordinates using rectangle size according to image size
-	x1 = XMIN + (x1 / width) * std::abs(XMIN - XMAX);
-	x2 = XMIN + (x2 / width) * std::abs(XMIN - XMAX);
-	y1 = YMIN + (y1 / height)* std::abs(YMIN - YMAX);
-	y2 = YMIN + (y2 / height)* std::abs(YMIN - YMAX);
+	//x1 = XMIN + (x1 / width) * std::abs(XMIN - XMAX);
+	//x2 = XMIN + (x2 / width) * std::abs(XMIN - XMAX);
+	//y1 = YMIN + (y1 / height)* std::abs(YMIN - YMAX);
+	//y2 = YMIN + (y2 / height)* std::abs(YMIN - YMAX);
 
-	myCurrentParameters.addDouble("xmin", x1);
-	myCurrentParameters.addDouble("xmax", x2);
-	myCurrentParameters.addDouble("ymin", y1);
-	myCurrentParameters.addDouble("ymax", y2);
+
+	//double theta = -myCurrentParameters.getDouble("angle", 0.)  * M_PI / 180.;
+	//double cosTheta = std::cos(theta);
+	//double sinTheta = std::sin(theta);
+	//x1 = cosTheta * x1 - sinTheta * y1;
+	//y1 = sinTheta * x1 + cosTheta * y1;
+	//x2 = cosTheta * x2 - sinTheta * y2;
+	//y2 = sinTheta * x2 + cosTheta * y2;
+	//if (x2 < x1) std::swap(x1, x2);
+	//if (y2 < y1) std::swap(y1, y2);
+
+	//myCurrentParameters.addDouble("xmin", x1);
+	//myCurrentParameters.addDouble("xmax", x2);
+	//myCurrentParameters.addDouble("ymin", y1);
+	//myCurrentParameters.addDouble("ymax", y2);
+	//myCurrentParameters.addDouble("angle", sumAngle);
 
 	traceFractal();
 }
@@ -253,6 +358,7 @@ void FractalWindow::computeFractal(const Parameters& params)
 	//myArray.setSize(width, height);
 	//myFractal->setArray(myArray);
 
+	myCamera->setSize(width, height);
 	myImage = Image::ptr(new Image(width, height));
 	if (myCurrentParameters.getBool("useFilter", false))
 	{
@@ -263,6 +369,9 @@ void FractalWindow::computeFractal(const Parameters& params)
 	}
 		
 	myFractal->setImage(myImage);
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	myCamera->setWorldTransform(transform);
+	myFractal->setCamera(myCamera);
 	int minX, maxX, minY, maxY;
 	myImage->getTrueImageMinMax(minX, maxX, minY, maxY);
 
@@ -376,24 +485,40 @@ void FractalWindow::showTypeFractal()
 ///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::zoomPlus()
 {
-	double xmin = myCurrentParameters.getDouble("xmin", -2.);
-	double xmax = myCurrentParameters.getDouble("xmax", 2.);
-	double ymin = myCurrentParameters.getDouble("ymin", -2.);
-	double ymax = myCurrentParameters.getDouble("ymax", 2.);
+	//double scaleX = myCurrentParameters.getDouble("scaleX", 2.);
+	//double scaleY = myCurrentParameters.getDouble("scaleY", 2.);
+	//myCurrentParameters.addDouble("scaleX", scaleX / 2.);
+	//myCurrentParameters.addDouble("scaleY", scaleY / 2.);
 
-	double areaWidth = std::abs(xmax - xmin);   //Window size X
-	double newWidth = areaWidth / 2.;    //New window size X
-	xmin += newWidth / 2;                   //New xmin
-	xmax -= newWidth / 2;					//New xmax
-	double areaHeight = std::abs(ymax - ymin);   //Window size Y
-	double newHeight = areaHeight / 2;    //New window size X
-	ymin += newHeight / 2;					
-	ymax -= newHeight / 2;					
-	
-	myCurrentParameters.addDouble("xmin", xmin);
-	myCurrentParameters.addDouble("xmax", xmax);
-	myCurrentParameters.addDouble("ymin", ymin);
-	myCurrentParameters.addDouble("ymax", ymax);
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	Eigen::Matrix2d scale;
+	Eigen::Matrix2d mRot;
+
+	transform.computeRotationScaling(&mRot, &scale);
+	Eigen::Vector2d translation = transform.translation();
+	Eigen::Rotation2D<real> rot;
+	rot.fromRotationMatrix(mRot);
+	transform.fromPositionOrientationScale(translation, rot,Eigen::Vector2d(scale.diagonal()) / 2.);
+	myCurrentParameters.addTransform("toWorld", transform);
+
+	//double xmin = myCurrentParameters.getDouble("xmin", -2.);
+	//double xmax = myCurrentParameters.getDouble("xmax", 2.);
+	//double ymin = myCurrentParameters.getDouble("ymin", -2.);
+	//double ymax = myCurrentParameters.getDouble("ymax", 2.);
+
+	//double areaWidth = std::abs(xmax - xmin);   //Window size X
+	//double newWidth = areaWidth / 2.;    //New window size X
+	//xmin += newWidth / 2;                   //New xmin
+	//xmax -= newWidth / 2;					//New xmax
+	//double areaHeight = std::abs(ymax - ymin);   //Window size Y
+	//double newHeight = areaHeight / 2;    //New window size X
+	//ymin += newHeight / 2;					
+	//ymax -= newHeight / 2;					
+	//
+	//myCurrentParameters.addDouble("xmin", xmin);
+	//myCurrentParameters.addDouble("xmax", xmax);
+	//myCurrentParameters.addDouble("ymin", ymin);
+	//myCurrentParameters.addDouble("ymax", ymax);
 
 	traceFractal();
 }
@@ -402,26 +527,48 @@ void FractalWindow::zoomPlus()
 ///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::zoomMinus()
 {
-	double xmin = myCurrentParameters.getDouble("xmin", -2.);
-	double xmax = myCurrentParameters.getDouble("xmax", 2.);
-	double ymin = myCurrentParameters.getDouble("ymin", -2.);
-	double ymax = myCurrentParameters.getDouble("ymax", 2.);
+	//double scaleX = myCurrentParameters.getDouble("scaleX", 2.);
+	//double scaleY = myCurrentParameters.getDouble("scaleY", 2.);
+	//myCurrentParameters.addDouble("scaleX", scaleX * 2.);
+	//myCurrentParameters.addDouble("scaleY", scaleY * 2.);
 
-	double areaWidth = std::abs(xmax - xmin);   //Window size X
-	double newWidth = areaWidth;    //New window size X
-	xmin -= newWidth / 2;                   //New xmin
-	xmax += newWidth / 2;					//New xmax
-	double areaHeight = std::abs(ymax - ymin);   //Window size Y
-	double newHeight = areaHeight;    //New window size X
-	ymin -= newHeight / 2;					
-	ymax += newHeight / 2;				
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	Eigen::Matrix2d scale;
+	Eigen::Matrix2d mRot;
+	
+	transform.computeRotationScaling(&mRot, &scale);
+	Eigen::Vector2d translation = transform.translation();
+	Eigen::Rotation2D<real> rot;rot.fromRotationMatrix(mRot);
+	transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal() * 2.));
+	myCurrentParameters.addTransform("toWorld", transform);
 
-	myCurrentParameters.addDouble("xmin", xmin);
-	myCurrentParameters.addDouble("xmax", xmax);
-	myCurrentParameters.addDouble("ymin", ymin);
-	myCurrentParameters.addDouble("ymax", ymax);
+	//double xmin = myCurrentParameters.getDouble("xmin", -2.);
+	//double xmax = myCurrentParameters.getDouble("xmax", 2.);
+	//double ymin = myCurrentParameters.getDouble("ymin", -2.);
+	//double ymax = myCurrentParameters.getDouble("ymax", 2.);
+
+	//double areaWidth = std::abs(xmax - xmin);   //Window size X
+	//double newWidth = areaWidth;    //New window size X
+	//xmin -= newWidth / 2;                   //New xmin
+	//xmax += newWidth / 2;					//New xmax
+	//double areaHeight = std::abs(ymax - ymin);   //Window size Y
+	//double newHeight = areaHeight;    //New window size X
+	//ymin -= newHeight / 2;					
+	//ymax += newHeight / 2;				
+
+	//myCurrentParameters.addDouble("xmin", xmin);
+	//myCurrentParameters.addDouble("xmax", xmax);
+	//myCurrentParameters.addDouble("ymin", ymin);
+	//myCurrentParameters.addDouble("ymax", ymax);
 
 	traceFractal();
+}
+
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
+void FractalWindow::changeDragMode()
+{
+	ui.myLabelImage->setDragMode(ui.actionDrag_mode->isChecked());
 }
 
 //=============================================================================
@@ -457,11 +604,15 @@ void FractalWindow::traceFractal()
 	
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::cancelComputation()
 {
 	myFractal->cancelComputation();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::saveFractal()
 {
 	QString fileName = QFileDialog::getSaveFileName(this,
@@ -473,6 +624,8 @@ void FractalWindow::saveFractal()
 	ILogger::log() << "saved ? " << saved << " " << fileName.toStdString() << "\n";
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::computationAdvances(const QString& message, float perc)
 {
 	myStatusLabel->setText(message);
@@ -484,6 +637,8 @@ void FractalWindow::computationAdvances(const QString& message, float perc)
 //{
 //
 //}
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void FractalWindow::refreshImage(int minX, int maxX, int minY, int maxY, int overlapX, int overlapY, const std::vector<uint8_t>& vecData)
 {
 	//ui.myLabelImage->setPixmap(QPixmap());

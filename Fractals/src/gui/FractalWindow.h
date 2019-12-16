@@ -93,13 +93,15 @@ protected:
 	void closeEvent(QCloseEvent *event) override;
 
 public slots:
-	void rightButtonDrawFractal(int startX, int startY, int endX, int endY);
+	void rightButtonDrawFractal(int startX, int startY, int endX, int endY, float angle);
 
 	void showTypeFractal();
 
 	void zoomPlus();
 
 	void zoomMinus();
+
+	void changeDragMode();
 
 	void traceFractal();
 
@@ -134,6 +136,7 @@ private:
 	Array2D<Color> myArray; //old
 
 	Image::ptr myImage;
+	Camera::ptr myCamera;
 
 	std::vector<GuiState::ptr> myStates;
 

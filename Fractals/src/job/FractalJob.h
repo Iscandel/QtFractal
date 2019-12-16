@@ -19,7 +19,7 @@ public:
 	};
 
 public:
-	GenericFractalJob(int offsetX, int offsetY, int sizeX, int sizeY, GenericParallelizableFractal* fractal, const Parameters& params, Image::ptr image);//, int witdh, int height);
+	GenericFractalJob(int offsetX, int offsetY, int sizeX, int sizeY, GenericParallelizableFractal* fractal, const Parameters& params, Image::ptr image, Camera::ptr camera);//, int witdh, int height);
 	~GenericFractalJob();
 
 	void run() override;
@@ -33,6 +33,7 @@ protected:
 	int mySizeY;
 	bool myIsFinished;
 	Image::ptr myImage;
+	Camera::ptr myCamera;
 	//int myWidth;
 	//int myHeight;
 

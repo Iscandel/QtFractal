@@ -71,7 +71,7 @@ void GenericParallelizableFractal::compute(const Parameters& params, std::functi
 			//std::shared_ptr<Sampler> sampler(mySampler->clone());
 			//sampler->seed(currentX, currentY);
 
-			std::shared_ptr<Job> job(new GenericFractalJob(currentX, currentY, blockSizeX, blockSizeY, this, params, myImage));
+			std::shared_ptr<Job> job(new GenericFractalJob(currentX, currentY, blockSizeX, blockSizeY, this, params, myImage, myCamera));
 			jobs.push_back(job);
 		}
 	}

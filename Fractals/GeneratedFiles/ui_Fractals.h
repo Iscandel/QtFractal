@@ -36,6 +36,7 @@ public:
     QAction *actionZoomMinus;
     QAction *actionTrace_fractal;
     QAction *actionStop;
+    QAction *actionDrag_mode;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QScrollArea *scrollArea;
@@ -72,6 +73,9 @@ public:
         actionStop = new QAction(FractalsClass);
         actionStop->setObjectName(QStringLiteral("actionStop"));
         actionStop->setFont(font);
+        actionDrag_mode = new QAction(FractalsClass);
+        actionDrag_mode->setObjectName(QStringLiteral("actionDrag_mode"));
+        actionDrag_mode->setCheckable(true);
         centralWidget = new QWidget(FractalsClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -128,6 +132,7 @@ public:
         mainToolBar->addAction(actionChoose_fractal);
         mainToolBar->addAction(actionZoomPlus);
         mainToolBar->addAction(actionZoomMinus);
+        mainToolBar->addAction(actionDrag_mode);
         mainToolBar->addAction(actionTrace_fractal);
         mainToolBar->addAction(actionStop);
 
@@ -146,6 +151,10 @@ public:
         actionZoomMinus->setText(QApplication::translate("FractalsClass", "Zoom -", Q_NULLPTR));
         actionTrace_fractal->setText(QApplication::translate("FractalsClass", "Trace fractal", Q_NULLPTR));
         actionStop->setText(QApplication::translate("FractalsClass", "Stop", Q_NULLPTR));
+        actionDrag_mode->setText(QApplication::translate("FractalsClass", "Drag mode", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        actionDrag_mode->setToolTip(QApplication::translate("FractalsClass", "Switch th fractal manipulation modes", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
         myLabelImage->setText(QApplication::translate("FractalsClass", "TextLabel", Q_NULLPTR));
         menuFile->setTitle(QApplication::translate("FractalsClass", "File", Q_NULLPTR));
         menuFractal->setTitle(QApplication::translate("FractalsClass", "Fractal", Q_NULLPTR));

@@ -4,6 +4,7 @@
 #include "core/Image.h"
 //#include "core/FractalComputationListener.h"
 #include "job/JobManager.h"
+#include "core/Camera.h"
 #include "core/MathParser.h"
 #include "core/Parameters.h"
 
@@ -29,6 +30,7 @@ public:
 	void setArray(Array2D<Color>& array) { myArray = &array; }
 
 	void setImage(Image::ptr image) { myImage = image; }
+	void setCamera(Camera::ptr camera) { myCamera = camera; }
 
 	virtual void initialize(const Parameters&) {}
 	virtual bool isComputing() = 0;
@@ -42,6 +44,8 @@ protected:
 	Array2D<Color>* myArray; //old
 
 	Image::ptr myImage;
+
+	Camera::ptr myCamera;
 
 	JobManager myManager;
 
