@@ -32,8 +32,8 @@ protected:
 	int mySizeX;
 	int mySizeY;
 	bool myIsFinished;
-	Image::ptr myImage;
-	Camera::ptr myCamera;
+	Image* myImage;
+	Camera* myCamera;
 	//int myWidth;
 	//int myHeight;
 

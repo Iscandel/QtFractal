@@ -3,6 +3,8 @@
 #include "qevent.h"
 #include "qpainter.h"
 
+#include "core/Types.h"
+
 #include <iostream>
 
 WidgetFractal::WidgetFractal(QWidget *parent)
@@ -85,6 +87,8 @@ void WidgetFractal::mousePressEvent(QMouseEvent* event)
 	repaint();
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void WidgetFractal::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (myIsDragMode)
@@ -112,6 +116,8 @@ void WidgetFractal::mouseReleaseEvent(QMouseEvent *event)
 	myButtonPressed = Qt::NoButton;
 }
 
+//=============================================================================
+///////////////////////////////////////////////////////////////////////////////
 void WidgetFractal::mouseMoveEvent(QMouseEvent* event)
 {
 	//NB mouseMoveEvent is only called if a mouse button is pressed (see MouseTracking to change the behaviour)
@@ -151,4 +157,37 @@ void WidgetFractal::mouseMoveEvent(QMouseEvent* event)
 			repaint();
 		}
 	}
+}
+
+void WidgetFractal::wheelEvent(QWheelEvent * event)
+{
+	if (myIsDragMode)
+	{
+		real normalizedValue = (event->delta() / 120.); //To get the minimal stepsize in [-1, 1]
+		real ratio = 1.;
+		real minRatio = 0.7;
+		if (event->delta() > 0)
+			ratio = minRatio / normalizedValue;
+		else
+			ratio = -1./minRatio * normalizedValue;
+	
+		real startX = ratio * (0 - event->x()) + event->x();
+		real endX = ratio * (pixmap()->width() - event->x()) + event->x();
+		real startY = ratio * (0 - event->y()) + event->y();
+		real endY = ratio * (pixmap()->height() - event->y()) + event->y();
+
+		emit signalRightButtonDrawFractal(startX, startY, endX, endY, myAngle);
+	}
+	//left'  = ratio*(left -clickx)+clickx
+	//right' = ratio*(right-clickx)+clickx
+
+	//newMapWidth = zoomFactor * mapArea.width;//lets say that zoomFactor = <1.0, maxZoomFactor>
+	//newMapHeight = zoomFactor * mapArea.height;
+
+	//mapArea.left = mapClickPoint.x - (windowClickPoint.x - windowArea.left) * (newMapWidth / windowArea.width());
+	//mapArea.top = mapClickPoint.y - (windowArea.bottom - windowClickPoint.y) * (newMapHeight / windowArea.height());
+	//mapArea.right = mapArea.left + newWidth;
+	//mapArea.bottom = mapArea.top + newHeight;
+
+	//scale += (event->delta() / 120); //or use any other step for zooming 
 }

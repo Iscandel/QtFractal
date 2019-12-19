@@ -17,6 +17,7 @@ public:
 	Camera(const Parameters&);
 	~Camera();
 
+	virtual Point2r getIndexSpacePoint(real a, real b) = 0;
 	virtual Point2r getWorldSpacePoint(real x, real y) = 0;
 
 	void setWorldTransform(Eigen::Affine2d& transform) { myTransform = transform; }

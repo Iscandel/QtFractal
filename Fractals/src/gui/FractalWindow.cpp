@@ -285,13 +285,14 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 	rot.fromRotationMatrix(mRot);
 	rot.angle() -= angle  * M_PI / 180.;
 	transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal()));
-	std::cout << scale << std::endl;
-	std::cout << scale.diagonal() << std::endl;
+
+	real scaleX = scale.diagonal()(0) * (x2 - x1) / width;
+	real scaleY = scale.diagonal()(1) * (y2 - y1) / height;
 	
 	double normCenterX = ((x2 + x1) / 2. - width / 2.) / (width / 2.); //[-1 1]
 	double normCenterY = ((y2 + y1) / 2. - height / 2.) / (height / 2.); //[-1 1]
 	auto transformedCenter = transform * Eigen::Vector3d(normCenterX, normCenterY, 1);
-	transform.fromPositionOrientationScale(transformedCenter.segment(0,2), rot, Eigen::Vector2d(scale.diagonal()));
+	transform.fromPositionOrientationScale(transformedCenter.segment(0,2), rot, Eigen::Vector2d(scaleX, scaleY));
 	myCurrentParameters.addTransform("toWorld", transform);
 	//
 
@@ -594,7 +595,8 @@ void FractalWindow::traceFractal()
 	if (myFractal)
 		myFractal->cancelComputation(true);
 
-	ui.myLabelImage->setPixmap(QPixmap());
+	//Not good, because size is missing
+	//ui.myLabelImage->setPixmap(QPixmap());
 
 	myProgressBar->setValue(0);
 	myProgressBar->show();

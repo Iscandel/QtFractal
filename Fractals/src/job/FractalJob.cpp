@@ -18,8 +18,8 @@ GenericFractalJob::GenericFractalJob(int offsetX, int offsetY, int sizeX, int si
 , myIsFinished(false)
 , myFractal(fractal)
 , myParameters(params)
-, myImage(image)
-, myCamera(camera)
+, myImage(image.get())
+, myCamera(camera.get())
 , myProgress(0)
 //,myWidth(width)
 //,myHeight(height)
@@ -49,11 +49,11 @@ void GenericFractalJob::run()
 	int oversampling = myParameters.getInt("oversampling", 1);
 
 	//Compute the domain point
-	const double XMIN = myParameters.getDouble("xmin", -2.);
-	const double XMAX = myParameters.getDouble("xmax", 2.);
-	const double YMIN = myParameters.getDouble("ymin", -2.);
-	const double YMAX = myParameters.getDouble("ymax", 2.);
-	const double ANGLE = myParameters.getDouble("angle", 0.); //invert angle...
+	//const double XMIN = myParameters.getDouble("xmin", -2.);
+	//const double XMAX = myParameters.getDouble("xmax", 2.);
+	//const double YMIN = myParameters.getDouble("ymin", -2.);
+	//const double YMAX = myParameters.getDouble("ymax", 2.);
+	//const double ANGLE = myParameters.getDouble("angle", 0.); //invert angle...
 
 	int width = myImage->getSizeX();
 	int height = myImage->getSizeY();
@@ -80,16 +80,16 @@ void GenericFractalJob::run()
 	}
 
 	//ok
-	double theta = ANGLE * M_PI / 180.;
-	double scaleX = myParameters.getDouble("scaleX", 2.);
-	double scaleY = myParameters.getDouble("scaleY", 2.);
-	double cx = myParameters.getDouble("centerX", 0.);
-	double cy = myParameters.getDouble("centerY", 0.);
-	Eigen::Vector2d center(cx, cy);
-	Eigen::Affine2d affine = Eigen::Affine2d::Identity();
-	affine.prescale(Eigen::Vector2d(scaleX, scaleY));
-	affine.prerotate(-theta);
-	affine.pretranslate(center);
+	//double theta = ANGLE * M_PI / 180.;
+	//double scaleX = myParameters.getDouble("scaleX", 2.);
+	//double scaleY = myParameters.getDouble("scaleY", 2.);
+	//double cx = myParameters.getDouble("centerX", 0.);
+	//double cy = myParameters.getDouble("centerY", 0.);
+	//Eigen::Vector2d center(cx, cy);
+	//Eigen::Affine2d affine = Eigen::Affine2d::Identity();
+	//affine.prescale(Eigen::Vector2d(scaleX, scaleY));
+	//affine.prerotate(-theta);
+	//affine.pretranslate(center);
 
 
 	for (int y = myOffsetY; y < endY; y++)
@@ -154,9 +154,7 @@ void GenericFractalJob::run()
 
 						//new
 						Point2r worldPoint = myCamera->getWorldSpacePoint(xx, yy);
-						real a = worldPoint(0);
-						real b = worldPoint(1);
-						Color col = myFractal->computePixel(a, b, myParameters, parsers);
+						Color col = myFractal->computePixel(worldPoint(0), worldPoint(1), myParameters, parsers);
 
 						//double a = (xx - width / 2.) / (width / 2.); //[-1 1]
 						//double b = (yy - height / 2.) / (height / 2.); //[-1 1]
