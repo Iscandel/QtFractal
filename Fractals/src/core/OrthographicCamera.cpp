@@ -20,16 +20,23 @@ Point2r OrthographicCamera::getWorldSpacePoint(real x, real y)
 	double a = (x - myWidth / 2.) / (myWidth / 2.); //[-1 1]
 	double b = (y - myHeight / 2.) / (myHeight / 2.); //[-1 1]
 
-	Eigen::Vector3d vec(a, b, 1);
-	vec = myTransform * vec;
+	//old
+	//Eigen::Vector3d vec(a, b, 1);
+	//vec = myTransform * vec;
 
-	return Point2r(vec(0), vec(1));
+	//return Point2r(vec(0), vec(1));
+
+	return myTransform.transform(Point2r(a, b));
 }
 
 Point2r OrthographicCamera::getIndexSpacePoint(real a, real b)
 {
-	Eigen::Vector3d vec(a, b, 1);
-	vec = myTransform.inverse() * vec;
+	//old
+	//Eigen::Vector3d vec(a, b, 1);
+	//vec = myTransform.inverse() * vec;
+
+	Point2r vec(a, b);
+	vec = myTransform.inv().transform(vec);
 
 	//Rescale x and y in the range [-1, 1]
 	//a = (vec(0) - myWidth / 2.) / (myWidth / 2.); //[-1 1]

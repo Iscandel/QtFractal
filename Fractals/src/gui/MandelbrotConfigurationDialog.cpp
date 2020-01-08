@@ -83,15 +83,21 @@ void MandelbrotConfigurationDialog::setParameters(Parameters* params)
 void MandelbrotConfigurationDialog::onOk()
 {
 	//
+	//real scaleX = 2.;
+	//real scaleY = 2.;
+	//Transform transform;
+	//Eigen::Vector2d scale(scaleX, scaleY);
+	//Eigen::Rotation2D<real> rot;
+	//Eigen::Vector2d translation(0, 0);
+	//transform.fromPositionOrientationScale(translation, rot, scale);
+	//myParams->addTransform("toWorld", transform);
+	//
+
 	real scaleX = 2.;
 	real scaleY = 2.;
 	Transform transform;
-	Eigen::Vector2d scale(scaleX, scaleY);
-	Eigen::Rotation2D<real> rot;
-	Eigen::Vector2d translation(0, 0);
-	transform.fromPositionOrientationScale(translation, rot, scale);
+	transform.setScale(Point2r(scaleX, scaleY));
 	myParams->addTransform("toWorld", transform);
-	//
 
 	myParams->addDouble("xmin", ui.mySpinXMin->value());
 	myParams->addDouble("ymin", ui.mySpinYMin->value());

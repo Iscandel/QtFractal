@@ -1,8 +1,7 @@
 #pragma once
 
-#include <Eigen/Core>
-#include <Eigen/Geometry>
+#include "core/BaseTypes.h"
+#include "core/Transform.h"
 
-typedef double real;
-typedef Eigen::Matrix<real, 2, 1> Point2r;
-typedef Eigen::Affine2d Transform;
+//typedef Eigen::Affine2d Transform;
+typedef Transform2TRS Transform;

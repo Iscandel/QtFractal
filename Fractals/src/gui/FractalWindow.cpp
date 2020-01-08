@@ -108,20 +108,31 @@ FractalWindow::FractalWindow(QWidget *parent)
 	connect(ui.actionDrag_mode, SIGNAL(toggled(bool)), this, SLOT(changeDragMode()));
 
 	myCamera = std::make_shared<OrthographicCamera>();
+
+	//Ok
+	//real scaleX = 2.;
+	//real scaleY = 2.;
+	//Transform transform;
+	//Eigen::Vector2d scale(scaleX, scaleY);
+	//Eigen::Rotation2D<real> rot;
+	//Eigen::Vector2d translation;
+	//transform.fromPositionOrientationScale(translation, rot, scale);
+	//myCurrentParameters.addTransform("toWorld", transform);
+	////myCurrentParameters.addDouble("scaleX", scaleX);
+	////myCurrentParameters.addDouble("scaleY", scaleY);
+
+	//Eigen::Affine2d affine = Eigen::Affine2d::Identity();
+	//affine.prescale(Eigen::Vector2d(scaleX, scaleY));
+	//myCamera->setWorldTransform(affine);
+	//
+
 	real scaleX = 2.;
 	real scaleY = 2.;
 	Transform transform;
-	Eigen::Vector2d scale(scaleX, scaleY);
-	Eigen::Rotation2D<real> rot;
-	Eigen::Vector2d translation;
-	transform.fromPositionOrientationScale(translation, rot, scale);
+	Point2r scale(scaleX, scaleY);
+	transform.setScale(scale);
 	myCurrentParameters.addTransform("toWorld", transform);
-	//myCurrentParameters.addDouble("scaleX", scaleX);
-	//myCurrentParameters.addDouble("scaleY", scaleY);
-
-	Eigen::Affine2d affine = Eigen::Affine2d::Identity();
-	affine.prescale(Eigen::Vector2d(scaleX, scaleY));
-	myCamera->setWorldTransform(affine);
+	myCamera->setWorldTransform(transform);
 
 	computeFractal(myCurrentParameters);	
 }
@@ -273,28 +284,38 @@ void FractalWindow::rightButtonDrawFractal(int startX, int startY, int endX, int
 	//myCurrentParameters.addDouble("centerY", transformedCenter(1));
 
 
+	//ok
+	//Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	//Eigen::Matrix2d scale;
+	//Eigen::Matrix2d mRot;
 	//
-	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
-	Eigen::Matrix2d scale;
-	Eigen::Matrix2d mRot;
-	
-	//transform.computeRotationScaling<Eigen::Matrix2d, Eigen::Vector2d>((Eigen::Matrix2d*)nullptr, (Eigen::Vector2d*)nullptr);
-	transform.computeRotationScaling(&mRot, &scale);
-	Eigen::Vector2d translation = transform.translation();
-	Eigen::Rotation2D<real> rot;
-	rot.fromRotationMatrix(mRot);
-	rot.angle() -= angle  * M_PI / 180.;
-	transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal()));
+	////transform.computeRotationScaling<Eigen::Matrix2d, Eigen::Vector2d>((Eigen::Matrix2d*)nullptr, (Eigen::Vector2d*)nullptr);
+	//transform.computeRotationScaling(&mRot, &scale);
+	//Eigen::Vector2d translation = transform.translation();
+	//Eigen::Rotation2D<real> rot;
+	//rot.fromRotationMatrix(mRot);
+	//rot.angle() -= angle  * M_PI / 180.;
+	//transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal()));
 
-	real scaleX = scale.diagonal()(0) * (x2 - x1) / width;
-	real scaleY = scale.diagonal()(1) * (y2 - y1) / height;
-	
-	double normCenterX = ((x2 + x1) / 2. - width / 2.) / (width / 2.); //[-1 1]
-	double normCenterY = ((y2 + y1) / 2. - height / 2.) / (height / 2.); //[-1 1]
-	auto transformedCenter = transform * Eigen::Vector3d(normCenterX, normCenterY, 1);
-	transform.fromPositionOrientationScale(transformedCenter.segment(0,2), rot, Eigen::Vector2d(scaleX, scaleY));
-	myCurrentParameters.addTransform("toWorld", transform);
+	//double normCenterX = ((x2 + x1) / 2. - width / 2.) / (width / 2.); //[-1 1]
+	//double normCenterY = ((y2 + y1) / 2. - height / 2.) / (height / 2.); //[-1 1]
+	//auto transformedCenter = transform * Eigen::Vector3d(normCenterX, normCenterY, 1);
 	//
+	//real scaleX = scale.diagonal()(0) * (x2 - x1) / width;
+	//real scaleY = scale.diagonal()(1) * (y2 - y1) / height;
+	//transform.fromPositionOrientationScale(transformedCenter.segment(0,2), rot, Eigen::Vector2d(scaleX, scaleY));
+	//myCurrentParameters.addTransform("toWorld", transform);
+	//
+
+	//
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform());
+	transform.rotate(-angle);
+	myCamera->setWorldTransform(transform);
+	auto transformedCenter = myCamera->getWorldSpacePoint((x2 + x1) / 2., (y2 + y1) / 2.);
+	Point2r scaleRatio((x2 - x1) / width, (y2 - y1) / height);
+	transform.setFromPositionRotationScale(transformedCenter, transform.getRotationAngle(), transform.getScale().array() * scaleRatio.array());
+
+	myCurrentParameters.addTransform("toWorld", transform);
 
 
 	//double centerX = width / 2.;
@@ -370,7 +391,7 @@ void FractalWindow::computeFractal(const Parameters& params)
 	}
 		
 	myFractal->setImage(myImage);
-	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::identity());
 	myCamera->setWorldTransform(transform);
 	myFractal->setCamera(myCamera);
 	int minX, maxX, minY, maxY;
@@ -491,15 +512,21 @@ void FractalWindow::zoomPlus()
 	//myCurrentParameters.addDouble("scaleX", scaleX / 2.);
 	//myCurrentParameters.addDouble("scaleY", scaleY / 2.);
 
-	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
-	Eigen::Matrix2d scale;
-	Eigen::Matrix2d mRot;
+	//ok
+	//Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	//Eigen::Matrix2d scale;
+	//Eigen::Matrix2d mRot;
 
-	transform.computeRotationScaling(&mRot, &scale);
-	Eigen::Vector2d translation = transform.translation();
-	Eigen::Rotation2D<real> rot;
-	rot.fromRotationMatrix(mRot);
-	transform.fromPositionOrientationScale(translation, rot,Eigen::Vector2d(scale.diagonal()) / 2.);
+	//transform.computeRotationScaling(&mRot, &scale);
+	//Eigen::Vector2d translation = transform.translation();
+	//Eigen::Rotation2D<real> rot;
+	//rot.fromRotationMatrix(mRot);
+	//transform.fromPositionOrientationScale(translation, rot,Eigen::Vector2d(scale.diagonal()) / 2.);
+	//myCurrentParameters.addTransform("toWorld", transform);
+	//
+
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::identity());
+	transform.setScale(transform.getScale() / 2.);
 	myCurrentParameters.addTransform("toWorld", transform);
 
 	//double xmin = myCurrentParameters.getDouble("xmin", -2.);
@@ -533,14 +560,20 @@ void FractalWindow::zoomMinus()
 	//myCurrentParameters.addDouble("scaleX", scaleX * 2.);
 	//myCurrentParameters.addDouble("scaleY", scaleY * 2.);
 
-	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
-	Eigen::Matrix2d scale;
-	Eigen::Matrix2d mRot;
-	
-	transform.computeRotationScaling(&mRot, &scale);
-	Eigen::Vector2d translation = transform.translation();
-	Eigen::Rotation2D<real> rot;rot.fromRotationMatrix(mRot);
-	transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal() * 2.));
+	//ok
+	//Transform transform = myCurrentParameters.getTransform("toWorld", Transform::Identity());
+	//Eigen::Matrix2d scale;
+	//Eigen::Matrix2d mRot;
+	//
+	//transform.computeRotationScaling(&mRot, &scale);
+	//Eigen::Vector2d translation = transform.translation();
+	//Eigen::Rotation2D<real> rot;rot.fromRotationMatrix(mRot);
+	//transform.fromPositionOrientationScale(translation, rot, Eigen::Vector2d(scale.diagonal() * 2.));
+	//myCurrentParameters.addTransform("toWorld", transform);
+	//
+
+	Transform transform = myCurrentParameters.getTransform("toWorld", Transform::identity());
+	transform.setScale(transform.getScale() * 2.);
 	myCurrentParameters.addTransform("toWorld", transform);
 
 	//double xmin = myCurrentParameters.getDouble("xmin", -2.);
