@@ -26,7 +26,7 @@ public:
 
 	//void addComputationEndsListener(QObject* listener) override;
 
-	void postProcessing();
+	void postProcessing(const std::string&, bool);
 
 	bool isComputing() override;
 
@@ -36,10 +36,10 @@ protected:
 	int myMaxItGreen;
 	int myMaxItBlue;
 	int myRefreshFrequency;
-	double XMIN;
-	double XMAX;
-	double YMIN;
-	double YMAX;
+	//double XMIN;
+	//double XMAX;
+	//double YMIN;
+	//double YMAX;
 	std::string myRenderer;
 	int myWidth;
 	int myHeight;

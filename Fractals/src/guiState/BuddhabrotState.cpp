@@ -26,7 +26,14 @@ void BuddhabrotState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-//	myWindow->addParameter("fractal", FractalWindow::getStrFractalName(FractalWindow::BUDDHABROT));
+	myWindow->addParameter("fractal", ObjectStaticType<Buddhabrot>::get());//FractalWindow::getStrFractalName(FractalWindow::BUDDHABROT));
+
+	//Notifier::ptr notifier(new QtUiNotifier("Buddhabrot"));
+
+	//myWindow->connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalJobsDone, myWindow, &FractalWindow::computationEnds, Qt::DirectConnection);
+
+	//ProgressNotifier::addNotifier(notifier);
+	//ProgressNotifier::moveToFront(notifier->getName());
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));

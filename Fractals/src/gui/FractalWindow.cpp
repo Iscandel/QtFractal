@@ -224,13 +224,13 @@ void FractalWindow::initFractalNames()
 	if (myFractalNames.size() != 0)
 		return;
 
-#define USE_FIRST_ELEMENT(x, y)  x,
-#define USE_SECOND_ELEMENT(x, y) y,
-
-	const char *STRING[] =
-	{
-		MYLIST(USE_SECOND_ELEMENT)
-	};
+//#define USE_FIRST_ELEMENT(x, y)  x,
+//#define USE_SECOND_ELEMENT(x, y) y,
+//
+//	const char *STRING[] =
+//	{
+//		MYLIST(USE_SECOND_ELEMENT)
+//	};
 
 	auto vec = ObjectFactoryManager<Fractal>::getInstance()->getFactoryList();
 	for (auto factory : vec)

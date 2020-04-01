@@ -17,16 +17,16 @@
 #include <map>
 
 //Macro pour associer une des valeurs d'énum à des chaines de caractères
-#define MYLIST(x)       \
-x(MANDELBROT, "Mandelbrot") \
-x(JULIA,   "Julia") \
-x(BUDDHABROT,   "Buddhabrot") \
-x(LYAPUNOV,   "Lyapunov") \
-x(NEWTON,   "Newton") \
-x(END,  "")
-
-#define USE_FIRST_ELEMENT(x, y)  x,
-#define USE_SECOND_ELEMENT(x, y) y,
+//#define MYLIST(x)       \
+//x(MANDELBROT, "Mandelbrot") \
+//x(JULIA,   "Julia") \
+//x(BUDDHABROT,   "Buddhabrot") \
+//x(LYAPUNOV,   "Lyapunov") \
+//x(NEWTON,   "Newton") \
+//x(END,  "")
+//
+//#define USE_FIRST_ELEMENT(x, y)  x,
+//#define USE_SECOND_ELEMENT(x, y) y,
 
 class Fractal;
 
@@ -35,10 +35,10 @@ class FractalWindow : public QMainWindow//, public FractalComputationListener
 	Q_OBJECT
 
 public:
-	enum FractalNames
-	{
-		MYLIST(USE_FIRST_ELEMENT)
-	};
+	//enum FractalNames
+	//{
+	//	MYLIST(USE_FIRST_ELEMENT)
+	//};
 
 public:
 	FractalWindow(QWidget *parent = Q_NULLPTR);
@@ -73,17 +73,17 @@ public:
 public:
 	static void initFractalNames();
 
-	static std::string getStrFractalName(FractalNames name)
-	{
-		static bool init = false;
+	//static std::string getStrFractalName(FractalNames name)
+	//{
+	//	static bool init = false;
 
-		if (!init)
-		{
-			initFractalNames();
-			init = true;
-		}
-		return myFractalNames[name];
-	}
+	//	if (!init)
+	//	{
+	//		initFractalNames();
+	//		init = true;
+	//	}
+	//	return myFractalNames[name];
+	//}
 
 public:
 	//void computationAdvances(int perc) override;

@@ -971,23 +971,29 @@ Color Mandelbrot::compute3D(double a, double b, double x, double y, double xPrim
 
 	Eigen::Vector3d p1(a, b, rerange3DHeight(value, parserById));//std::log(std::sqrt(x*x + y*y));// / (std::pow(myBailout, 12));
 	Color col1 = myRenderer->computeColor(iterations, value, x, y, xPrime, yPrime);
-	double px = (a - XMIN) * myWidth / (XMAX - XMIN);
-	double py = (b - YMIN) * myHeight / (YMAX - YMIN);
+	//double px = (a - XMIN) * myWidth / (XMAX - XMIN);
+	//double py = (b - YMIN) * myHeight / (YMAX - YMIN);
 
-	a = XMIN + (px + 1.) * (XMAX - XMIN) / myWidth;
-	b = YMIN + (py + 0.5) * (YMAX - YMIN) / myHeight;
+	Point2r p = myCamera->getIndexSpacePoint(a, b);
+	Point2r ab = myCamera->getWorldSpacePoint(p.x() + 1., p.y() + 0.5);
 
-	escapesToInfinity(a, b, iterations, preciseIter, x, y, xPrime, yPrime, addEndMeanSum, parserById);
+	//a = XMIN + (px + 1.) * (XMAX - XMIN) / myWidth;
+	//b = YMIN + (py + 0.5) * (YMAX - YMIN) / myHeight;
+
+	escapesToInfinity(ab.x(), ab.y(), iterations, preciseIter, x, y, xPrime, yPrime, addEndMeanSum, parserById);
 	value = myComputationType & ADDEND ? addEndMeanSum : preciseIter / myMaxIt;
-	Eigen::Vector3d p2(a, b, rerange3DHeight(value, parserById));//std::log(std::sqrt(x*x + y*y));// / (std::pow(myBailout, 12));
+	Eigen::Vector3d p2(ab.x(), ab.y(), rerange3DHeight(value, parserById));//std::log(std::sqrt(x*x + y*y));// / (std::pow(myBailout, 12));
 	
 	Color col2 = myRenderer->computeColor(iterations, value, x, y, xPrime, yPrime);
 
-	a = XMIN + (px + 0.5) * (XMAX - XMIN) / myWidth;
-	b = YMIN + (py + 1.) * (YMAX - YMIN) / myHeight;
-	escapesToInfinity(a, b, iterations, preciseIter, x, y, xPrime, yPrime, addEndMeanSum, parserById);
+	//a = XMIN + (px + 0.5) * (XMAX - XMIN) / myWidth;
+	//b = YMIN + (py + 1.) * (YMAX - YMIN) / myHeight;
+
+	ab = myCamera->getWorldSpacePoint(p.x() + 0.5, p.y() + 1.);
+
+	escapesToInfinity(ab.x(), ab.y(), iterations, preciseIter, x, y, xPrime, yPrime, addEndMeanSum, parserById);
 	value = myComputationType & ADDEND ? addEndMeanSum : preciseIter / myMaxIt;
-	Eigen::Vector3d p3(a, b, rerange3DHeight(value, parserById));//std::log(std::sqrt(x*x + y*y));// / (std::pow(myBailout, 12));
+	Eigen::Vector3d p3(ab.x(), ab.y(), rerange3DHeight(value, parserById));//std::log(std::sqrt(x*x + y*y));// / (std::pow(myBailout, 12));
 	Color col3 = myRenderer->computeColor(iterations, value, x, y, xPrime, yPrime);
 
 	double centerX = -0.667;//(XMAX + XMIN) / 2.;

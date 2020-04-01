@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Job.h"
+
+#include "core/Camera.h"
 #include "core/Image.h"
 #include "core/Parameters.h"
 
@@ -9,7 +11,7 @@ class Buddhabrot;
 class BuddhabrotJob : public Job
 {
 public:
-	BuddhabrotJob(int offsetX, int offsetY, int sizeX, int sizeY, Buddhabrot* fractal, const Parameters& params, Image::ptr imageRed, Image::ptr imageGreen, Image::ptr imageBlue);//Image::ptr image);
+	BuddhabrotJob(int offsetX, int offsetY, int sizeX, int sizeY, Buddhabrot* fractal, const Parameters& params, Camera::ptr camera, Image::ptr imageRed, Image::ptr imageGreen, Image::ptr imageBlue);//Image::ptr image);
 	~BuddhabrotJob();
 
 	void run() override;
@@ -25,6 +27,7 @@ protected:
 	int mySizeY;
 	bool myIsFinished;
 	Image::ptr myImage;
+	Camera* myCamera;
 
 	std::shared_ptr<Image> myImageRed;
 	std::shared_ptr<Image> myImageGreen;

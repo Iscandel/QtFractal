@@ -23,7 +23,7 @@ void CliffordState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", "Clifford");
+	myWindow->addParameter("fractal", ObjectStaticType<Clifford>::get());
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));
@@ -36,7 +36,7 @@ void CliffordState::init()
 	myWindow->addActionToToolbar(myActionGeneralConfig.get());
 
 	//QObject::connect(myActionConfigureFractal.get(), &QAction::triggered, this, &LyapunovState::onClickConfigureFractal);
-	//QObject::connect(myActionGeneralConfig.get(), &QAction::triggered, this, &LyapunovState::onClickGeneralConfig);
+	QObject::connect(myActionGeneralConfig.get(), &QAction::triggered, this, &CliffordState::onClickGeneralConfig);
 }
 
 //=============================================================================
@@ -54,11 +54,11 @@ void CliffordState::free()
 ///////////////////////////////////////////////////////////////////////////////
 void CliffordState::onClickGeneralConfig()
 {
-	//GeneralConfigurationDialog dlg(myWindow);
-	//dlg.setWindowModality(Qt::WindowModality::WindowModal);
-	//dlg.setParameters(myParams);
-	//dlg->setAttribute(Qt::WA_DeleteOnClose);
-	//dlg.exec();
+	GeneralConfigurationDialog dlg(myWindow);
+	dlg.setWindowModality(Qt::WindowModality::WindowModal);
+	dlg.setParameters(myParams);
+	//dlg.setAttribute(Qt::WA_DeleteOnClose);
+	dlg.exec();
 }
 
 //=============================================================================

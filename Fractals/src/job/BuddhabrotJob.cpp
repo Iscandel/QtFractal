@@ -2,7 +2,7 @@
 
 #include "fractal/Buddhabrot.h"
 
-BuddhabrotJob::BuddhabrotJob(int offsetX, int offsetY, int sizeX, int sizeY, Buddhabrot* fractal, const Parameters& params, Image::ptr imageRed, Image::ptr imageGreen, Image::ptr imageBlue)//Image::ptr image)
+BuddhabrotJob::BuddhabrotJob(int offsetX, int offsetY, int sizeX, int sizeY, Buddhabrot* fractal, const Parameters& params, Camera::ptr camera, Image::ptr imageRed, Image::ptr imageGreen, Image::ptr imageBlue)//Image::ptr image)
 :myOffsetX(offsetX)
 ,myOffsetY(offsetY)
 ,mySizeX(sizeX)
@@ -13,6 +13,7 @@ BuddhabrotJob::BuddhabrotJob(int offsetX, int offsetY, int sizeX, int sizeY, Bud
 ,myImageRed(imageRed)
 ,myImageGreen(imageGreen)
 ,myImageBlue(imageBlue)
+,myCamera(camera.get())
 //,myImage(image)
 {
 }
@@ -76,18 +77,20 @@ void BuddhabrotJob::run()
 						//double yy = (double)y;// +sample.y();
 
 						//Compute the domain point
-						const double XMIN = myParameters.getDouble("xmin", -2.);
-						const double XMAX = myParameters.getDouble("xmax", 2.);
-						const double YMIN = myParameters.getDouble("ymin", -2.);
-						const double YMAX = myParameters.getDouble("ymax", 2.);
+						Point2r p = myCamera->getWorldSpacePoint(xx, yy);
+
+						//const double XMIN = myParameters.getDouble("xmin", -2.);
+						//const double XMAX = myParameters.getDouble("xmax", 2.);
+						//const double YMIN = myParameters.getDouble("ymin", -2.);
+						//const double YMAX = myParameters.getDouble("ymax", 2.);
 						int width = myImageRed->getSizeX();
 						int height = myImageRed->getSizeY();
 
 						//On calcule le point courant. Il est situé entre XMIN et XMAX (resp. YMIN et YMAX),
 						//et il y a largeur points entre XMIN et XMAX (resp. longueur points entre YMIN etYMAX)
-						double a = XMIN + xx * (XMAX - XMIN) / width;
-						double b = YMIN + yy * (YMAX - YMIN) / height;
-						std::vector<std::vector<TraceSample>> trace = myFractal->computePixel(a, b, myParameters);
+						//double a = XMIN + xx * (XMAX - XMIN) / width;
+						//double b = YMIN + yy * (YMAX - YMIN) / height;
+						std::vector<std::vector<TraceSample>> trace = myFractal->computePixel(p.x(), p.y(), myParameters);
 
 						Color col(1., 1., 1.);
 						for (int i = 0; i < trace[0].size(); i++)

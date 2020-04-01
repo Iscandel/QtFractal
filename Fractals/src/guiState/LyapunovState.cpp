@@ -24,7 +24,7 @@ void LyapunovState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", "Lyapunov");
+	myWindow->addParameter("fractal", ObjectStaticType<Lyapunov>::get());
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));

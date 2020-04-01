@@ -24,7 +24,7 @@ public:
 	void compute(const Parameters& params, std::function<void()> callback) override;
 
 	//vector of components, containing the vector of traces for each component
-	std::vector<TraceSample> computePixel(double a, double b, const Parameters& params);
+	std::vector<TraceSample> computePixel(double a, double b, int maxIt);
 
 	//bool escapesToInfinity(double a, double b, bool passage2, int composante, std::vector<std::vector<TraceSample>>& trace);
 

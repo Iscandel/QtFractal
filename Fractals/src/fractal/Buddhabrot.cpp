@@ -15,17 +15,32 @@ Buddhabrot::Buddhabrot(const Parameters& params)
 	, myHeight(params.getInt("sizeY", 800))
 	, myLightIntensity(params.getDouble("lightIntensity", 2.3))
 {
+	//std::string name = ObjectStaticType<Buddhabrot>::get();
+	//Notifier::ptr notifier(new GeneralNotifier("Buddhabrot"));
+
+	//myWindow->connect((QtUiNotifier*)notifier.get(), &QtUiNotifier::signalJobsDone, myWindow, &FractalWindow::computationEnds, Qt::DirectConnection);
+
+	//ProgressNotifier::addNotifier(notifier);
+	//ProgressNotifier::moveToFront(notifier->getName());
+
 	//Temporary transpose
-	YMIN = params.getDouble("xmin", -2.);
-	YMAX = params.getDouble("xmax", 2.);
-	XMIN = params.getDouble("ymin", -2.);
-	XMAX = params.getDouble("ymax", 2.);
+	//YMIN = params.getDouble("xmin", -2.);
+	//YMAX = params.getDouble("xmax", 2.);
+	//XMIN = params.getDouble("ymin", -2.);
+	//XMAX = params.getDouble("ymax", 2.);
+
+	auto tmp = new GeneralNotifier("buddhabrot");
+	tmp->setOnJobEnded(std::bind(&Buddhabrot::postProcessing, this, std::placeholders::_1, std::placeholders::_2));
+	Notifier::ptr notifier(tmp);
+	ProgressNotifier::addNotifier(notifier);
+	ProgressNotifier::moveToFront(tmp->getName());
 }
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
 Buddhabrot::~Buddhabrot()
 {
+	ProgressNotifier::removeNotifier("buddhabrot");
 }
 
 //void Buddhabrot::addComputationEndsListener(QObject* listener)
@@ -75,7 +90,7 @@ void Buddhabrot::compute(const Parameters& params, std::function<void()> callbac
 			//std::shared_ptr<Sampler> sampler(mySampler->clone());
 			//sampler->seed(currentX, currentY);
 
-			std::shared_ptr<Job> job(new BuddhabrotJob(currentX, currentY, blockSizeX, blockSizeY, this, params, myImageRed, myImageGreen, myImageBlue));
+			std::shared_ptr<Job> job(new BuddhabrotJob(currentX, currentY, blockSizeX, blockSizeY, this, params, myCamera, myImageRed, myImageGreen, myImageBlue));
 			jobs.push_back(job);
 		}
 	}
@@ -133,7 +148,7 @@ std::vector<std::vector<TraceSample>> Buddhabrot::computePixel(double a, double 
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-void Buddhabrot::postProcessing()
+void Buddhabrot::postProcessing(const std::string&, bool)
 {
 	std::cout << "post processing" << std::endl;
 
@@ -228,14 +243,16 @@ bool Buddhabrot::escapesToInfinity(double a, double b, bool passage2, int compos
 
 		if (passage2 == true && iterations >= 2)
 		{
-			if (x > XMIN && x < XMAX && y > YMIN && y < YMAX)
+			Point2r p = myCamera->getIndexSpacePoint(x, y);
+
+			if (p.x() > 0 && p.x() < myImage->getSizeX() && p.y() > 0 && p.y() < myImage->getSizeY())
+			//if (x > XMIN && x < XMAX && y > YMIN && y < YMAX)
 			{
-				double n =(((x - XMIN) * myWidth) / (XMAX - XMIN));
-				double m = (((y - YMIN) * myHeight) / (YMAX - YMIN));
+				//double n =(((x - XMIN) * myWidth) / (XMAX - XMIN));
+				//double m = (((y - YMIN) * myHeight) / (YMAX - YMIN));
 			
-				if (composante == 0) trace[0].push_back(TraceSample{ n, m });//lesPointsR[n][m]++;
-				if (composante == 1) trace[1].push_back(TraceSample{ n, m });//lesPointsG[n][m]++;
-				if (composante == 2) trace[2].push_back(TraceSample{ n, m });//lesPointsB[n][m]++;
+				trace[composante].push_back(TraceSample{ p.x(), p.y() });
+				
 			}
 		}
 
