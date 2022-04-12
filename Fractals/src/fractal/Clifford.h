@@ -17,6 +17,7 @@ struct TraceSample
 class Clifford :
 	public Fractal
 {
+	REGISTER_FRACTAL_PRATICAL_NAME(Clifford)
 public:
 	Clifford(const Parameters& params);
 	~Clifford();

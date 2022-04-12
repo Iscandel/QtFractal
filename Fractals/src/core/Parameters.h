@@ -3,7 +3,7 @@
 #include "Color.h"
 #include "core/Types.h"
 
-#include <boost\any.hpp>
+#include <any>
 #include <map>
 
 template<class Type>
@@ -28,7 +28,7 @@ public:
 	void addString(const std::string& name, const std::string& val);
 	//void addVector(const std::string& name, const Vector3d& val);
 	void addColor(const std::string& name, const Color& val);
-	void addVector(const std::string& name, const std::vector<boost::any>& val);
+	void addVector(const std::string& name, const std::vector<std::any>& val);
 	void addTransform(const std::string& name, const Transform& val);
 
 	
@@ -38,7 +38,7 @@ public:
 	double getDouble(const std::string& name, double defaultValue) const;
 	std::string getString(const std::string& name, const std::string& defaultValue) const;
 	//Point3d getPoint(const std::string& name, const Point3d& defaultValue) const;
-	std::vector<boost::any> getVector(const std::string& name, const std::vector<boost::any>& defaultValue) const;
+	std::vector<std::any> getVector(const std::string& name, const std::vector<std::any>& defaultValue) const;
 	Color getColor(const std::string& name, const Color& defaultValue) const;
 	Transform getTransform(const std::string& name, const Transform& defaultValue) const;
 
@@ -76,7 +76,7 @@ protected:
 	//String
 	std::map<std::string, std::string> myString;
 	//Vector
-	std::map<std::string, std::vector<boost::any>> myVector;
+	std::map<std::string, std::vector<std::any>> myVector;
 	//Color
 	std::map<std::string, Color> myColor;
 	//Transform

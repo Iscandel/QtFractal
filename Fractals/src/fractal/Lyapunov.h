@@ -7,6 +7,7 @@
 class Lyapunov :
 	public GenericParallelizableFractal
 {
+	REGISTER_FRACTAL_PRATICAL_NAME(Lyapunov)
 public:
 	Lyapunov(const Parameters& params);
 	~Lyapunov();

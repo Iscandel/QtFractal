@@ -22,8 +22,8 @@ CliffordState::~CliffordState()
 void CliffordState::init()
 {
 	myWindow->resetParameters();
-	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", ObjectStaticType<Clifford>::get());
+	//myWindow->addParameter("fractal", ObjectStaticType<Clifford>::get());
+	myWindow->addParameter("fractal", "Clifford");
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));
@@ -72,4 +72,5 @@ void CliffordState::onClickConfigureFractal()
 	//dlg.exec();
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Clifford>::get(), CliffordState, GuiState)
+//FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Clifford>::get(), CliffordState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(Clifford::PRACTICAL_NAME, CliffordState, GuiState)

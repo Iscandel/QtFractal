@@ -26,7 +26,7 @@ void JuliaState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", "Julia");
+	myWindow->addParameter("fractal", Julia::PRACTICAL_NAME);
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));
@@ -73,4 +73,5 @@ void JuliaState::onClickGeneralConfig()
 
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Julia>::get(), JuliaState, GuiState)
+//FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Julia>::get(), JuliaState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(Julia::PRACTICAL_NAME, JuliaState, GuiState)

@@ -8,8 +8,8 @@
 #include "core/Complex.h"
 
 #include <complex>
-#define FP_SUPPORT_COMPLEX_DOUBLE_TYPE
-#include <sol.hpp>
+//#define FP_SUPPORT_COMPLEX_DOUBLE_TYPE
+//#include <sol.hpp>
 #include "exprtk.hpp"
 #include "FParser\fparser.hh"
 
@@ -17,6 +17,7 @@
 class Mandelbrot :
 	public GenericParallelizableFractal
 {
+	REGISTER_FRACTAL_PRATICAL_NAME(Mandelbrot)
 public:
 	enum ParserType
 	{
@@ -111,7 +112,7 @@ protected:
 	int myHeight;
 
 	//
-	sol::state lua;
+	//sol::state lua;
 	//ComplexD point;
 	//ComplexD z;
 	//

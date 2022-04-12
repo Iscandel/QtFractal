@@ -4,9 +4,9 @@
 
 LyapunovRandomRenderer::LyapunovRandomRenderer(const Parameters& params)
 {
-	std::vector<boost::any> tmp = params.getVector("lambdaColors", std::vector<boost::any>());
+	std::vector<std::any> tmp = params.getVector("lambdaColors", std::vector<std::any>());
 	for (auto elem : tmp) {
-		myColors.push_back(boost::any_cast<Color>(elem));
+		myColors.push_back(std::any_cast<Color>(elem));
 	}
 }
 

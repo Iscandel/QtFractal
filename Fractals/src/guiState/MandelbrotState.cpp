@@ -25,7 +25,7 @@ void MandelbrotState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", "Mandelbrot");
+	myWindow->addParameter("fractal", Mandelbrot::PRACTICAL_NAME);
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));
@@ -77,4 +77,5 @@ void MandelbrotState::onClickConfigureFractal()
 //getStaticType<Mandelbrot>() is better than Mandelbrot only because it can only work if the fractal type was defined
 //Moreover, it is evaluated at compile time, so there is no issues with the class order definition, 
 //ie getStaticType<Mandelbrot>() always exist when the macro is called
-FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Mandelbrot>::get(), MandelbrotState, GuiState)
+//FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Mandelbrot>::get(), MandelbrotState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(Mandelbrot::PRACTICAL_NAME, MandelbrotState, GuiState)

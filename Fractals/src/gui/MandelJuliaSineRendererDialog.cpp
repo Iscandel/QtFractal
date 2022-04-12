@@ -24,19 +24,19 @@ void MandelJuliaSineRendererDialog::setParameters(Parameters* params)
 {
 	myParams = params;
 
-	std::vector<boost::any> amplitudes{ 0.2, 0.3, 0.4 };
+	std::vector<std::any> amplitudes{ 0.2, 0.3, 0.4 };
 
 	initGUIElementVector(ui.mySpinAmplitudeR, "amplitudes", amplitudes, 0);
 	initGUIElementVector(ui.mySpinAmplitudeG, "amplitudes", amplitudes, 1);
 	initGUIElementVector(ui.mySpinAmplitudeB, "amplitudes", amplitudes, 2);
 
-	std::vector<boost::any> pulsations{ 0.2, 0.3, 0.4 };
+	std::vector<std::any> pulsations{ 0.2, 0.3, 0.4 };
 
 	initGUIElementVector(ui.mySpinPulsationR, "pulsations", pulsations, 0);
 	initGUIElementVector(ui.mySpinPulsationG, "pulsations", pulsations, 1);
 	initGUIElementVector(ui.mySpinPulsationB, "pulsations", pulsations, 2);
 
-	std::vector<boost::any> phases{ 0.2, 0.3, 0.4 };
+	std::vector<std::any> phases{ 0.2, 0.3, 0.4 };
 	initGUIElementVector(ui.mySpinPhaseR, "phases", phases, 0);
 	initGUIElementVector(ui.mySpinPhaseG, "phases", phases, 1);
 	initGUIElementVector(ui.mySpinPhaseB, "phases", phases, 2);
@@ -55,13 +55,13 @@ void MandelJuliaSineRendererDialog::setParameters(Parameters* params)
 ///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaSineRendererDialog::onOk()
 {
-	std::vector<boost::any> amplitudes{ ui.mySpinAmplitudeR->value(), 
+	std::vector<std::any> amplitudes{ ui.mySpinAmplitudeR->value(), 
 										ui.mySpinAmplitudeG->value(), 
 										ui.mySpinAmplitudeB->value() };
-	std::vector<boost::any> pulsations{ ui.mySpinPulsationR->value(), 
+	std::vector<std::any> pulsations{ ui.mySpinPulsationR->value(), 
 										ui.mySpinPulsationG->value(), 
 										ui.mySpinPulsationB->value() };
-	std::vector<boost::any> phases{ ui.mySpinPhaseR->value(), 
+	std::vector<std::any> phases{ ui.mySpinPhaseR->value(), 
 									ui.mySpinPhaseG->value(), 
 									ui.mySpinPhaseB->value() };
 
@@ -86,8 +86,8 @@ void MandelJuliaSineRendererDialog::onCancel()
 
 //=============================================================================
 ///////////////////////////////////////////////////////////////////////////////
-void MandelJuliaSineRendererDialog::initGUIElementVector(QDoubleSpinBox* element, const std::string& key, const std::vector<boost::any>& default, int index)
+void MandelJuliaSineRendererDialog::initGUIElementVector(QDoubleSpinBox* element, const std::string& key, const std::vector<std::any>& default, int index)
 {
-	std::vector<boost::any> vec = myParams->getVector(key, default);
-	element->setValue(boost::any_cast<double>(vec[index]));
+	std::vector<std::any> vec = myParams->getVector(key, default);
+	element->setValue(std::any_cast<double>(vec[index]));
 }

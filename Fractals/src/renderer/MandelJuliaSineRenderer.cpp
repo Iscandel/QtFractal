@@ -8,17 +8,17 @@ MandelJuliaSineRenderer::MandelJuliaSineRenderer(const Parameters& params)
 
 	myFractalColor = params.getColor("fractalColor", Color());
 	myIs3DMode = params.getBool("isMode3D", false);
-	std::vector<boost::any> tmp = params.getVector("amplitudes", std::vector<boost::any>());
+	std::vector<std::any> tmp = params.getVector("amplitudes", std::vector<std::any>());
 	for (auto elem : tmp)
-		myAmplitudes.push_back(boost::any_cast<double>(elem));
+		myAmplitudes.push_back(std::any_cast<double>(elem));
 
-	tmp = params.getVector("phases", std::vector<boost::any>());
+	tmp = params.getVector("phases", std::vector<std::any>());
 	for (auto elem : tmp)
-		myPhases.push_back(boost::any_cast<double>(elem));
+		myPhases.push_back(std::any_cast<double>(elem));
 
-	tmp = params.getVector("pulsations", std::vector<boost::any>());
+	tmp = params.getVector("pulsations", std::vector<std::any>());
 	for (auto elem : tmp)
-		myPulsations.push_back(boost::any_cast<double>(elem));
+		myPulsations.push_back(std::any_cast<double>(elem));
 
 }
 

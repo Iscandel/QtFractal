@@ -8,6 +8,8 @@
 
 #include "fractal/Mandelbrot.h"
 
+#include <any>
+
 MandelbrotConfigurationDialog::MandelbrotConfigurationDialog(QWidget *parent)
 	: QDialog(parent)
 {
@@ -57,10 +59,10 @@ void MandelbrotConfigurationDialog::setParameters(Parameters* params)
 	int val = std::log(myParams->getInt("computationType", 1)) / std::log(2);
 	ui.myComboComputationType->setCurrentIndex(val);
 
-	std::vector<boost::any> vec = myParams->getVector("parsers", std::vector<boost::any>());
+	std::vector<std::any> vec = myParams->getVector("parsers", std::vector<std::any>());
 	for (unsigned int i = 0; i < vec.size(); i++)
 	{
-		MathParser parser = boost::any_cast<MathParser>(vec[i]);
+		MathParser parser = std::any_cast<MathParser>(vec[i]);
 		if(parser.getId() == Mandelbrot::FUNCTION)
 		{
 			ui.myCheckBoxUseFunction->setChecked(true);
@@ -128,7 +130,7 @@ void MandelbrotConfigurationDialog::onOk()
 	myParams->addInt("computationType", std::pow(2, ui.myComboComputationType->currentIndex()));
 
 	//
-	std::vector<boost::any> parsers;
+	std::vector<std::any> parsers;
 	std::map<int, std::string> functionById;
 	if (ui.myCheckBoxUseFunction->isChecked()) {
 		std::string vars = "zn, zprev, zpprev, c";

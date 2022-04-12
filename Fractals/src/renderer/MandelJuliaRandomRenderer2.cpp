@@ -9,9 +9,9 @@ MandelJuliaRandomRenderer2::MandelJuliaRandomRenderer2(const Parameters& params)
 	myMaxIt = params.getInt("maxIter", 100);
 
 	myFractalColor = params.getColor("fractalColor", Color());
-	std::vector<boost::any> tmp = params.getVector("iterationColors", std::vector<boost::any>());
+	std::vector<std::any> tmp = params.getVector("iterationColors", std::vector<std::any>());
 	for (auto elem : tmp) {
-		myIterationsColors.push_back(boost::any_cast<Color>(elem));
+		myIterationsColors.push_back(std::any_cast<Color>(elem));
 	}
 }
 

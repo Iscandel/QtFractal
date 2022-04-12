@@ -6,6 +6,7 @@
 class Julia :
 	public GenericParallelizableFractal
 {
+	REGISTER_FRACTAL_PRATICAL_NAME(Julia)
 public:
 	Julia(const Parameters&);
 	~Julia();

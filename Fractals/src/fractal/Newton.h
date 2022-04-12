@@ -9,6 +9,7 @@
 class Newton :
 	public GenericParallelizableFractal
 {
+	REGISTER_FRACTAL_PRATICAL_NAME(Newton)
 public:
 	typedef std::complex<double> complexD;
 

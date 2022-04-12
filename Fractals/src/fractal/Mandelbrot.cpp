@@ -38,27 +38,27 @@ Mandelbrot::Mandelbrot(const Parameters& params)
 {
 	initRenderer(myStrRenderer, params);
 	//myComputationType = AVERAGE_CURVATURE_1;
-	lua.open_libraries();
+	//lua.open_libraries();
 
-	// "bark" namespacing in Lua
-	// namespacing is just putting things in a table
-	//sol::table bark = lua.create_named_table("bark");
-	lua.new_usertype<ComplexD>("Complex"
-		, sol::constructors<ComplexD(), ComplexD(double, double)>()
-		, "re", &ComplexD::re
-		, "im", &ComplexD::im
-		, "abs", &ComplexD::abs);
-	lua["Complex"][sol::meta_function::addition] = (ComplexD (*)(const ComplexD&, const ComplexD&))&operator+;
-	lua["Complex"][sol::meta_function::multiplication] = (ComplexD(*)(const ComplexD&, const ComplexD&))&operator*;
-	lua["Complex"][sol::meta_function::to_string] = (std::ostream& (*)(std::ostream& o, const ComplexD& z)) &operator <<;
-	lua["Complex"][sol::meta_function::power_of] = &ComplexD::pow;
-	//	"g", &my_class::g); // the usual
+	//// "bark" namespacing in Lua
+	//// namespacing is just putting things in a table
+	////sol::table bark = lua.create_named_table("bark");
+	//lua.new_usertype<ComplexD>("Complex"
+	//	, sol::constructors<ComplexD(), ComplexD(double, double)>()
+	//	, "re", &ComplexD::re
+	//	, "im", &ComplexD::im
+	//	, "abs", &ComplexD::abs);
+	//lua["Complex"][sol::meta_function::addition] = (ComplexD (*)(const ComplexD&, const ComplexD&))&operator+;
+	//lua["Complex"][sol::meta_function::multiplication] = (ComplexD(*)(const ComplexD&, const ComplexD&))&operator*;
+	//lua["Complex"][sol::meta_function::to_string] = (std::ostream& (*)(std::ostream& o, const ComplexD& z)) &operator <<;
+	//lua["Complex"][sol::meta_function::power_of] = &ComplexD::pow;
+	////	"g", &my_class::g); // the usual
 
-	std::string s = "c = Complex.new(3, 4) "
-		"d = Complex.new(4, 5) "
-		"a = c + d "
-		"print(a)";
-	lua.script(s);
+	//std::string s = "c = Complex.new(3, 4) "
+	//	"d = Complex.new(4, 5) "
+	//	"a = c + d "
+	//	"print(a)";
+	//lua.script(s);
 
 	//exprtk
 	typedef exprtk::symbol_table<double> symbol_table_t;

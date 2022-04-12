@@ -2,7 +2,7 @@
 
 #include "tools/SignalBlocker.h"
 
-#include <boost/any.hpp>
+//#include <boost/any.hpp>
 
 MandelJuliaRandomRendererDialog::MandelJuliaRandomRendererDialog(QWidget *parent, Parameters* params)
 	: QDialog(parent)
@@ -72,10 +72,10 @@ MandelJuliaRandomRendererDialog::~MandelJuliaRandomRendererDialog()
 ///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::setParameters(Parameters* params)
 {
-	std::vector<boost::any> vec = myParams->getVector("iterationColors", std::vector<boost::any>());
+	std::vector<std::any> vec = myParams->getVector("iterationColors", std::vector<std::any>());
 	for (unsigned int i = 0; i < vec.size(); i++)
 	{
-		myColors[i] = boost::any_cast<Color>(vec[i]);
+		myColors[i] = std::any_cast<Color>(vec[i]);
 	}
 
 	myColors[myColors.size() - 1] = myParams->getColor("fractalColor", Color());
@@ -104,7 +104,7 @@ void MandelJuliaRandomRendererDialog::onValueScrollbarsChanged(int value)
 ///////////////////////////////////////////////////////////////////////////////
 void MandelJuliaRandomRendererDialog::onOk()
 {
-	std::vector<boost::any> myColorVector;
+	std::vector<std::any> myColorVector;
 	myColorVector.resize(myColors.size() - 1); //subtract fractal color (last element)
 	for (unsigned int i = 0; i < myColors.size() - 1; i++)
 		myColorVector[i] = myColors[i];

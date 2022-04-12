@@ -29,7 +29,7 @@ public:
 	//Color myFractalColor;
 
 protected:
-	void initGUIElementVector(QDoubleSpinBox* element, const std::string& key, const std::vector<boost::any>& default, int index);
+	void initGUIElementVector(QDoubleSpinBox* element, const std::string& key, const std::vector<std::any>& default, int index);
 
 private:
 	Ui::MandelJuliaSineRendererDialog ui;

@@ -26,7 +26,8 @@ void BuddhabrotState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", ObjectStaticType<Buddhabrot>::get());//FractalWindow::getStrFractalName(FractalWindow::BUDDHABROT));
+	//myWindow->addParameter("fractal", ObjectStaticType<Buddhabrot>::get());//FractalWindow::getStrFractalName(FractalWindow::BUDDHABROT));
+	myWindow->addParameter("fractal", Buddhabrot::PRACTICAL_NAME);
 
 	//Notifier::ptr notifier(new QtUiNotifier("Buddhabrot"));
 
@@ -83,4 +84,5 @@ void BuddhabrotState::onClickConfigureFractal()
 }
 
 //FACTORY_REGISTER_TYPE_WITH_KEY(FractalWindow::getStrFractalName(FractalWindow::BUDDHABROT), BuddhabrotState, GuiState)
-FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Buddhabrot>::get(), BuddhabrotState, GuiState)
+//FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Buddhabrot>::get(), BuddhabrotState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(Buddhabrot::PRACTICAL_NAME, BuddhabrotState, GuiState)

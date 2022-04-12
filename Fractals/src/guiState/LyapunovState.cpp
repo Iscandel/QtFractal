@@ -24,7 +24,8 @@ void LyapunovState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", ObjectStaticType<Lyapunov>::get());
+	//myWindow->addParameter("fractal", ObjectStaticType<Lyapunov>::get());
+	myWindow->addParameter("fractal", Lyapunov::PRACTICAL_NAME);
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));
@@ -73,4 +74,5 @@ void LyapunovState::onClickConfigureFractal()
 	dlg.exec();
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Lyapunov>::get(), LyapunovState, GuiState)
+//FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Lyapunov>::get(), LyapunovState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY(Lyapunov::PRACTICAL_NAME, LyapunovState, GuiState)

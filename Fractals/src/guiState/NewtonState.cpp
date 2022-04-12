@@ -22,7 +22,8 @@ void NewtonState::init()
 {
 	myWindow->resetParameters();
 	//myWindow->setFractal(std::shared_ptr<Mandelbrot>(new Mandelbrot));
-	myWindow->addParameter("fractal", ObjectStaticType<Newton>::get());
+	//myWindow->addParameter("fractal", ObjectStaticType<Newton>::get());
+	myWindow->addParameter("fractal", "Newton");
 
 	myActionConfigureFractal.reset(new QAction);
 	myActionConfigureFractal->setObjectName(QStringLiteral("actionConfigureFractal"));
@@ -71,4 +72,5 @@ void NewtonState::onClickConfigureFractal()
 	//dlg.exec();
 }
 
-FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Newton>::get(), NewtonState, GuiState)
+//FACTORY_REGISTER_TYPE_WITH_KEY(ObjectStaticType<Newton>::get(), NewtonState, GuiState)
+FACTORY_REGISTER_TYPE_WITH_KEY("Newton", NewtonState, GuiState)

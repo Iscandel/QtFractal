@@ -13,6 +13,8 @@ struct TraceSample
 class Buddhabrot :
 	public Fractal
 {
+	REGISTER_FRACTAL_PRATICAL_NAME(Buddhabrot)
+
 public:
 	Buddhabrot(const Parameters& params);
 	~Buddhabrot();

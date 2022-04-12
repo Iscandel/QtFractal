@@ -10,6 +10,10 @@
 
 #include <memory>
 
+#define REGISTER_FRACTAL_PRATICAL_NAME(Name) \
+public: \
+	constexpr static auto PRACTICAL_NAME = #Name; \
+	
 
 class Fractal
 {

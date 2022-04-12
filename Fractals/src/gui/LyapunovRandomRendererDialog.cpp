@@ -32,10 +32,10 @@ LyapunovRandomRendererDialog::~LyapunovRandomRendererDialog()
 void LyapunovRandomRendererDialog::setParameters(Parameters* params)
 {
 	myParams = params;
-	std::vector<boost::any> vec = myParams->getVector("lambdaColors", std::vector<boost::any>());
+	std::vector<std::any> vec = myParams->getVector("lambdaColors", std::vector<std::any>());
 	for (unsigned int i = 0; i < vec.size(); i++)
 	{
-		Color color = boost::any_cast<Color>(vec[i]);
+		Color color = std::any_cast<Color>(vec[i]);
 		QListWidgetItem* item = new QListWidgetItem(QString().setNum(i));
 		item->setBackgroundColor(QColor(color.r * 255, color.g * 255, color.b * 255));
 		ui.myListColors->addItem(item);
@@ -46,7 +46,7 @@ void LyapunovRandomRendererDialog::setParameters(Parameters* params)
 ///////////////////////////////////////////////////////////////////////////////
 void LyapunovRandomRendererDialog::onOk()
 {
-	std::vector<boost::any> myColorVector;
+	std::vector<std::any> myColorVector;
 	myColorVector.resize(ui.myListColors->count());
 	for (unsigned int i = 0; i < ui.myListColors->count(); i++)
 	{

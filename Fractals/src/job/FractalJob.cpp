@@ -72,10 +72,10 @@ void GenericFractalJob::run()
 	//if(func != "")
 	//	parsers[0] = MathParser(func, "zn, zprev, zpprev, c");
 
-	std::vector<boost::any> vec = myParameters.getVector("parsers", std::vector<boost::any>());
+	std::vector<std::any> vec = myParameters.getVector("parsers", std::vector<std::any>());
 	for (unsigned int i = 0; i < vec.size(); i++)
 	{
-		MathParser parser = boost::any_cast<MathParser>(vec[i]);
+		MathParser parser = std::any_cast<MathParser>(vec[i]);
 		parsers[parser.getId()] = parser;
 	}
 

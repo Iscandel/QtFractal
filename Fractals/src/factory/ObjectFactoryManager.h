@@ -114,15 +114,20 @@ std::vector<typename ObjectFactory<ReturnType>::ptr> ObjectFactoryManager<Return
 
 //Should we define template<class T> struct WidgetStaticType; instead
 //and get an error during the compilation if the class hasn't been
-//registered ?
 template<class T>
 struct ObjectStaticType
 {
-	static const char* get() {
-		throw std::runtime_error("Missing widget static type. "
-			"Did you forget to register your class type ?");
-	}
+	static const char* get();
 };
+//registered ?
+//template<class T>
+//struct ObjectStaticType
+//{
+//	static const char* get() {
+//		throw std::runtime_error("Missing widget static type. "
+//			"Did you forget to register your class type ?");
+//	}
+//};
 
 
 #define FACTORY_REGISTER_TYPE(ObjectType, BaseType) \
@@ -159,7 +164,7 @@ struct ObjectType ##_ \
 template<> \
 struct ObjectStaticType<ObjectType> \
 { \
-	static const char* get() {return #ObjectType;} \
+	constexpr static const char* get() {return #ObjectType;} \
 };
 
 //
